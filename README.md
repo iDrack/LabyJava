@@ -1,7 +1,7 @@
 ---
-title: Projet de COO, Le Labyrinthe
-author: Charles Kempa, Thomas Dignoire & Dimitri Wacquez
-date: Février 2021 - Mars 2021
+Titre: Projet de COO, Le Labyrinthe
+Auteurs: Charles Kempa, Thomas Dignoire & Dimitri Wacquez
+Date: Février 2021 - Mars 2021
 ---
 # LabyJava
 
@@ -17,16 +17,18 @@ et à revenir à son point de départ remporte cette passionnante chasse aux tr�
 
 ## Makefile et lancement
 
-* [A faire]
+* [A faire] (c'est mieux avec un makefile ^^)
 
-## Contenus
+## Contenus Java
 
 * [A faire]
 
 ### Règles du jeu
 
 * Mélanger les plaques face cachée, puis les placer sur les emplacements libres du plateau pour créer un labyrinthe aléatoire. La
-plaque supplémentaire servira à faire coulisser les couloirs du labyrinthe. Mélanger à leur tour les 24 cartes Objectif face cachée.
+plaque supplémentaire servira à faire coulisser les couloirs du labyrinthe. 
+
+* Mélanger à leur tour les 24 cartes Objectif face cachée.
 En distribuer le même nombre à chaque joueur. Chacun les empile devant lui sans les regarder. Chaque joueur choisit ensuite
 un pion qu’il place sur sa case Départ au coin du plateau de la couleur correspondante.
 
@@ -79,5 +81,4 @@ déplacer le mieux dans le labyrinthe et il remporte la partie !
 * gitHub : [https://github.com/iDrack/LabyJava](https://github.com/iDrack/LabyJava)
 * Trello : [https://trello.com/b/P4kokWbU/labyjava](https://trello.com/b/P4kokWbU/labyjava)
 
-
-* Jeu du Labyrinthe : [https://www.regledujeu.fr/labyrinthe/](https://www.regledujeu.fr/labyrinthe/)
+Jeu du Labyrinthe : [https://www.regledujeu.fr/labyrinthe/](https://www.regledujeu.fr/labyrinthe/)
