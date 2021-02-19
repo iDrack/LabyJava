@@ -1,8 +1,8 @@
 import java.util.ArrayList;
 
-public class CouloirMobile extends Couloir {
+public class CouloirMobile extends CouloirImpl {
     private ArrayList<Pion> pions = new ArrayList<Pion>() ;
-    private Boolean posee;
+    private boolean posee;
 
     public CouloirMobile(){
         // Todo

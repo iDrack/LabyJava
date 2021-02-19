@@ -1,27 +1,9 @@
 import java.util.ArrayList;
 
-public class Jeu {
-    private Plateau plateau;
-    private ArrayList<Couloir> couloirs = new ArrayList<Couloir>();
-    private ArrayList<Objectif> objectifs = new ArrayList<Objectif>();
-    private ArrayList<Pion> pions = new ArrayList<Pion>();
-    private CouloirMobile supplementaire;
-    private PositionInsertion positionOrigine;
-    private ArrayList<Joueur> joueurs = new ArrayList<Joueur>();
+public interface Jeu {
 
-    public Jeu(){
-        int min = 110;
-        Joueur joueurC = joueurs.get(0);
-        for (Joueur joueur : joueurs){
-            if (joueur.getAge() < min ){
-                min = joueur.getAge();
-                joueurC = joueur;
-                // ...
-            }
-        }
 
-        // ...
-    }
+    public void enregistrer(Joueur joueur, Couleur couleur);
 
     public void modifierCouloirs(PositionInsertion pos){
         if(pos != positionOrigine){
@@ -52,4 +34,5 @@ public class Jeu {
     public Boolean aGagne(Joueur j){
         // Todo
     }
+    public ArrayList<Couloir> couloirs();
 }

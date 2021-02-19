@@ -9,7 +9,5 @@ public enum PositionInsertion{
             }
         }
         return null;
-    } 
-
+    }
 }
-    

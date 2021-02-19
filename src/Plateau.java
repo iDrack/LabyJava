@@ -16,7 +16,7 @@ public class Plateau {
         return null;
     }
 
-    public void deplacer(Position pos, Pion pion){
-        // Todo
+    public Objectif déplacer(Position pos, Pion pion){
+        return null;
     }
 }
