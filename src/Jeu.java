@@ -36,4 +36,20 @@ public class Jeu {
     public void preparer(){
         // Todo
     }
+
+    public void jouer(){
+        Joueur joueur;
+        do {
+            joueur = prochainJoueur();
+            joueur.joue();
+        } while(! aGagne(joueur));
+    }
+
+    public Joueur prochainJoueur(){
+        // Todo
+    }
+
+    public Boolean aGagne(Joueur j){
+        // Todo
+    }
 }

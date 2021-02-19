@@ -5,7 +5,7 @@ public class Plateau {
     private ArrayList<CouloirMobile> couloirsMobiles = new ArrayList<CouloirMobile>();
     
     public Plateau(){
-        // Todo
+        
     }
 
     public CouloirMobile modifierCouloirs(PositionInsertion pos, CouloirMobile c){
@@ -14,5 +14,9 @@ public class Plateau {
     
     public static Boolean estAtteignable(Position orig, Position dest){
         return null;
+    }
+
+    public void deplacer(Position pos, Pion pion){
+        // Todo
     }
 }
