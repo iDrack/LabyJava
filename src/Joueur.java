@@ -20,7 +20,7 @@ public class Joueur{
     }
     public void joue(){
        jeu.modifierCouloirs(choisirPositionInsertionCouloir());
-       objectif = pion.deplacer(ChoisirPositionPion()); 
+       Objectif objectif = pion.deplacer(choisirPositionPion()); 
        if (objectif == objectifs.peek()) {
            objectifs.pop();
        }
