@@ -1,7 +1,7 @@
 ---
-title: Projet de C Avancé, Bataille Navale
-author: Charles Kempa & Thomas Dignoire
-date: Novembre 2020 - Décembre 2020
+title: Projet de COO, Le Labyrinthe
+author: Charles Kempa, Thomas Dignoire & Dimitri Wacquez
+date: Février 2021 - Mars 2021
 ---
 # LabyJava
 
@@ -9,7 +9,7 @@ Jeu du Labyrinthe en Java réalisé par Charles Kempa, Thomas Dignoire & Dimitri
 
 Ce jeu a été réalisé en tant que projet de COO (Conception Orienté Objet).
 
-* But du jeu : Dans un labyrinthe enchanté, les joueurs partent à la chasse aux objets et aux créatures magiques. Chacun cherche
+But du jeu : Dans un labyrinthe enchanté, les joueurs partent à la chasse aux objets et aux créatures magiques. Chacun cherche
 à se frayer un chemin jusqu’à eux en faisant coulisser astucieusement les couloirs. Le premier joueur à découvrir tous ses secrets
 et à revenir à son point de départ remporte cette passionnante chasse aux trésors.
 
