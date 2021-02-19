@@ -15,4 +15,8 @@ public class Plateau {
     public static Boolean estAtteignable(Position orig, Position dest){
         return null;
     }
+
+    public Objectif déplacer(Position pos, Pion pion){
+        return null;
+    }
 }
