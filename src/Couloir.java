@@ -1,3 +1,5 @@
-public class Couloir{
-    public Couloir(){}
+public class Couloir {
+    public Couloir(){
+        // Todo
+    }
 }

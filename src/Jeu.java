@@ -16,14 +16,15 @@ public class Jeu {
             if (joueur.getAge() < min ){
                 min = joueur.getAge();
                 joueurC = joueur;
-
+                // ...
             }
         }
-        
+
+        // ...
     }
 
     public void modifierCouloirs(PositionInsertion pos){
-        if ( pos != positionOrigine){
+        if(pos != positionOrigine){
             supplementaire = plateau.modifierCouloirs(pos,supplementaire);
             positionOrigine = pos.oppose();
             for (Pion pion : supplementaire.getPion()){
@@ -32,5 +33,7 @@ public class Jeu {
         }
     }
 
-    public void preparer(){}
+    public void preparer(){
+        // Todo
+    }
 }

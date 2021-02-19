@@ -2,10 +2,11 @@ public class Position{
     private int x;
     private int y;
 
-    public Position (int x,int y){
+    public Position (int x, int y){
         this.x = x;
         this.y =y;
     }
+<<<<<<< HEAD
     public int getX(){ return x;}
     public int getY(){ return y;}
     public void setX(int x){ 
@@ -13,5 +14,22 @@ public class Position{
     }
     public void setY(int y ){ 
         this.y=y;
+=======
+
+    public int getX(){ 
+        return x;
+    }
+
+    public int getY(){ 
+        return y;
+    }
+    
+    public void setX(int x){ 
+        this.x = x;
+    }
+    
+    public void setY(int y){ 
+        this.y = y;
+>>>>>>> 1c909aeda007caf511b849115701486e7860505f
     }
 }
