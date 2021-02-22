@@ -69,13 +69,13 @@ public class Plateau {
         if (xOrigine == xDestination) {
             // Gauche - droite, droite - gauche.
             if (yOrigine < yDestination) {
-                for (int i = yOrigine; i < yDestination; i++) {
+                for (int i = yOrigine; i <= yDestination; i++) {
                     // Vérification :
                     if (i == yOrigine && parcoursLigneADroite(matrice, xOrigine, i) == false) {
                         return false;
                     }
 
-                    if (i != yOrigine && parcoursLigneDeuxCôtés(matrice, xOrigine, i) == false) {
+                    if (i != yOrigine && i != yDestination && parcoursLigneDeuxCôtés(matrice, xOrigine, i) == false) {
                         return false;
                     }
 
@@ -84,13 +84,13 @@ public class Plateau {
                     }
                 }
             } else {
-                for (int i = yDestination; i < yOrigine; i++) {
+                for (int i = yDestination; i <= yOrigine; i++) {
                     // Vérification :
                     if (i == yDestination && parcoursLigneADroite(matrice, xOrigine, i) == false) {
                         return false;
                     }
 
-                    if (i != yDestination && parcoursLigneDeuxCôtés(matrice, xOrigine, i) == false) {
+                    if (i != yDestination && i != yOrigine && parcoursLigneDeuxCôtés(matrice, xOrigine, i) == false) {
                         return false;
                     }
 
@@ -102,36 +102,38 @@ public class Plateau {
         } else if (yOrigine == yDestination) { // Sinon, si aligné sur y alors :
             // Haut - bas, bas - haut.
             if (xOrigine < xDestination) {
-                for (int i = xOrigine; i < xDestination; i++) {
+                for (int i = xOrigine; i <= xDestination; i++) {
                     // Vérification :
-                    if (i == xOrigine && parcoursColonneEnHaut(matrice, i, yOrigine) == false) {
+                    if (i == xOrigine && parcoursColonneEnBas(matrice, i, yOrigine) == false) {
                         return false;
                     }
 
-                    if (i != xOrigine && parcoursColonneDeuxCôtés(matrice, i, yOrigine) == false) {
+                    if (i != xOrigine && i != xDestination && parcoursColonneDeuxCôtés(matrice, i, yOrigine) == false) {
                         return false;
                     }
 
-                    if (i == xDestination && parcoursColonneEnBas(matrice, i, xOrigine) == false){
+                    if (i == xDestination && parcoursColonneEnHaut(matrice, i, xOrigine) == false){
                         return false;
                     }
                 }
             } else {
-                for (int i = xDestination; i < xOrigine; i++) {
+                for (int i = xDestination; i <= xOrigine; i++) {
                     // Vérification :
-                    if (i == xDestination && parcoursColonneEnHaut(matrice, i, yOrigine) == false) {
+                    if (i == xDestination && parcoursColonneEnBas(matrice, i, yOrigine) == false) {
                         return false;
                     }
 
-                    if (i != xDestination && parcoursColonneDeuxCôtés(matrice, i, yOrigine) == false) {
+                    if (i != xDestination && i != xOrigine && parcoursColonneDeuxCôtés(matrice, i, yOrigine) == false) {
                         return false;
                     }
 
-                    if (i == xOrigine && parcoursColonneEnBas(matrice, i, xOrigine) == false){
+                    if (i == xOrigine && parcoursColonneEnHaut(matrice, i, xOrigine) == false){
                         return false;
                     }
                 }
             }
+        } else if (xOrigine != xDestination && yOrigine != yDestination) {
+            return false;
         }
 
         return true;
@@ -327,6 +329,7 @@ public class Plateau {
         System.out.println(p2 + " à " + p3 + " == " + p.estAtteignable(p2, p3) + "\n");
         System.out.println(p4 + " à " + p5 + " == " + p.estAtteignable(p4, p5) + "\n");
         System.out.println(p6 + " à " + p7 + " == " + p.estAtteignable(p6, p7) + "\n");
+        System.out.println(p1 + " à " + p2 + " == " + p.estAtteignable(p1, p2) + "\n");
         System.out.println(p1 + " à " + p6 + " == " + p.estAtteignable(p1, p6) + "\n");
 
         System.out.println();
