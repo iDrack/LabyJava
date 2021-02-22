@@ -68,4 +68,16 @@ public class JeuImpl implements Jeu {
     public ArrayList<Couloir> couloirs(){
         return null;
     }
+
+    @Override
+    public void jouer() {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public boolean aGagne(Joueur j) {
+        // TODO Auto-generated method stub
+        return false;
+    }
 }
