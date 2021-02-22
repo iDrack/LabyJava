@@ -1,5 +1,4 @@
-public class Objectif {
-    public Objectif(){
-        // Todo
-    }
+public enum Objectif {
+    ANNEAU,ARAIGNEE,ARMURE,CARTE,CHANDELIER,CHAUVE_SOURIS,CHOUETTE,CLE,COFFRE,COURONNE,CRANE,DINOSAURE,EMERAUDE,EPEE,FANTOME,FEE,GENIE,GRIMOIRE,RAT,SAC,SALAMANDRE,SCARABEE,SPHYNX,TROLL,VIDE;
+    public static final int NB = 24;
 }

@@ -4,8 +4,7 @@ public class CouloirFixe extends CouloirImpl {
     }
 
     public static Objectif définirObjectif(int x, int y){
-        Objectif objectif = new Objectif(); // retourne un des Objectif restant aléatoirement.
-
+        Objectif objectif = Objectif.VIDE; 
         return objectif;
     }
 

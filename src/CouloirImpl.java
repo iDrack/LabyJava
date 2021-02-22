@@ -39,4 +39,10 @@ public class CouloirImpl implements Couloir {
     public void décaler(Orientation orientation){
         // Todo
     }
+    
+    public String toString(){
+        String tmp;
+        tmp = this.objectif.toString().substring(0,3) +"..";
+        return "" + this.forme + "\t" + tmp + "\t" + this.orientation; 
+    }
 }
