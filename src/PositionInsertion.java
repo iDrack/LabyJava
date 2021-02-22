@@ -1,5 +1,10 @@
 public enum PositionInsertion{ 
-    N1,N2,N3,E1,E2,E3,S3,S2,S1,O3,O2,O1;
+    N1(0,1),N2(0,3),N3(0,5),E1(1,6),E2(3,6),E3(5,6),S3(6,5),S2(6,3),S1(6,1),O3(5,0),O2(3,0),O1(1,0);
+    private Position pos;
+
+    private PositionInsertion(int x,int y){
+        this.pos = new Position(x,y);
+    }
 
     public PositionInsertion oppose(){ // 12 - i - 1
         PositionInsertion[] tab = {N1,N2,N3,E1,E2,E3,O3,O2,O1,S3,S2,S1};
@@ -11,47 +16,13 @@ public enum PositionInsertion{
         return null;
     }
 
-    /** MOYEN DE CORRIGER SA MERDE */
+
     public Position getPosition(){
-        switch(this){
-            case N1 :
-                return new Position(0,1);
+        return this.pos;
+    }
 
-            case N2:
-                return new Position(0,3);
-
-            case N3:
-                return new Position(0,5);
-
-            case S1:
-                return new Position(6,1);
-
-            case S2:
-                return new Position(6,3);
-
-            case S3:
-                return new Position(6,5);
-
-            case O1:
-                return new Position(1,0);
-
-            case O2:
-                return new Position(3,0);
-
-            case O3:
-                return new Position(5,0);
-
-            case E1:
-                return new Position(1,6);
-
-            case E2:
-                return new Position(3,6);
-
-            case E3:
-                return new Position(5,6);
-
-            default:
-                return null;
-        }
+    public static void main(String[] args) {
+        PositionInsertion pos = E3;
+        System.out.println(pos.getPosition());
     }
 }

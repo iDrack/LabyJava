@@ -22,4 +22,9 @@ public class Position{
     public void setY(int y){ 
         this.y = y;
     }
+
+    /** c'est pour tester */
+    public String toString(){
+        return "x " + x +",y " + y;
+    }
 }
