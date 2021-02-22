@@ -16,7 +16,6 @@ public enum PositionInsertion{
         return null;
     }
 
-
     public Position getPosition(){
         return this.pos;
     }

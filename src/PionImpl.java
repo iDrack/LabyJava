@@ -22,10 +22,13 @@ public class PionImpl implements Pion {
     }
 
     public void poserA(Position pos){
+        // Le pion délègue son déplacement au plateau, qui a une vue globale de la situation : 
+        // Il est le seul objet à pouvoir vérifier si un chemin existe entre la position du pion et la position destination.
         if(Plateau.estAtteignable(positionCourante, pos)){
             plateau.déplacer(pos, this);
             positionCourante = pos;
         }
+        
         // Todo
     }
 }

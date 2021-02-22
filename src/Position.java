@@ -25,6 +25,6 @@ public class Position{
 
     /** c'est pour tester */
     public String toString(){
-        return "x " + x +",y " + y;
+        return "Le x : " + x +", le y : " + y;
     }
 }
