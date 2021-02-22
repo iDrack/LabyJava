@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public interface Couloir {
+public interface Couloir {    
     public Orientation getOrientation();
 
     public Forme getForme();

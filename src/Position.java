@@ -4,7 +4,7 @@ public class Position{
 
     public Position (int x, int y){
         this.x = x;
-        this.y =y;
+        this.y = y;
     }
 
     public int getX(){ 
@@ -23,8 +23,7 @@ public class Position{
         this.y = y;
     }
 
-    /** c'est pour tester */
     public String toString(){
-        return "Le x : " + x +", le y : " + y;
+        return "Le x : " + x +", le y : " + y + ".";
     }
 }

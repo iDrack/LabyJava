@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class CouloirMobile extends CouloirImpl {
     private ArrayList<Pion> pions = new ArrayList<Pion>() ;
     private boolean posee;
-    private Orientation orientation;
+    private Orientation orientation; // Via le parent .. 
 
     public CouloirMobile(){
         // Todo
