@@ -12,10 +12,10 @@ public class PionImpl implements Pion {
 
     @Override
     public Objectif deplacer(Position pos){
-        if (Plateau.estAtteignable(positionCourante, pos)){
+        if(plateau.estAtteignable(positionCourante, pos)){
             positionCourante = pos;
-        }else{
-            System.out.println("Deplacement impossible !!");
+        } else {
+            System.out.println("Deplacement impossible !!"); // Recommencer le déplacement ?!
         }
 
         return null; // Trouver l'objectif à retouner !!
@@ -24,10 +24,10 @@ public class PionImpl implements Pion {
     public void poserA(Position pos){
         // Le pion délègue son déplacement au plateau, qui a une vue globale de la situation : 
         // Il est le seul objet à pouvoir vérifier si un chemin existe entre la position du pion et la position destination.
-        if(Plateau.estAtteignable(positionCourante, pos)){
+        if(plateau.estAtteignable(positionCourante, pos)){
             plateau.déplacer(pos, this);
             positionCourante = pos;
-        }
+        } // Sinon, recommencer ?! 
         
         // Todo
     }
