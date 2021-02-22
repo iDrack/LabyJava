@@ -78,6 +78,10 @@ public class Plateau {
                     if (i != yOrigine && parcoursLigneDeuxCôtés(matrice, xOrigine, i) == false) {
                         return false;
                     }
+
+                    if (i == yDestination && parcoursLigneAGauche(matrice, xOrigine, i) == false){
+                        return false;
+                    }
                 }
             } else {
                 for (int i = yDestination; i < yOrigine; i++) {
@@ -87,6 +91,10 @@ public class Plateau {
                     }
 
                     if (i != yDestination && parcoursLigneDeuxCôtés(matrice, xOrigine, i) == false) {
+                        return false;
+                    }
+
+                    if (i == yOrigine && parcoursLigneAGauche(matrice, xOrigine, i) == false){
                         return false;
                     }
                 }
@@ -103,6 +111,10 @@ public class Plateau {
                     if (i != xOrigine && parcoursColonneDeuxCôtés(matrice, i, yOrigine) == false) {
                         return false;
                     }
+
+                    if (i == xDestination && parcoursColonneEnBas(matrice, i, xOrigine) == false){
+                        return false;
+                    }
                 }
             } else {
                 for (int i = xDestination; i < xOrigine; i++) {
@@ -114,7 +126,39 @@ public class Plateau {
                     if (i != xDestination && parcoursColonneDeuxCôtés(matrice, i, yOrigine) == false) {
                         return false;
                     }
+
+                    if (i == xOrigine && parcoursColonneEnBas(matrice, i, xOrigine) == false){
+                        return false;
+                    }
                 }
+            }
+        }
+
+        return true;
+    }
+    
+    private boolean parcoursLigneAGauche(CouloirImpl[][] matrice, int x, int y) {
+        CouloirImpl couloir = matrice[x][y];
+        Forme saForme = couloir.getForme();
+        Orientation sonOrientation = couloir.getOrientation();
+
+        System.out.println("Ligne G : ["+x+", "+y+"] ("+couloir+")");
+
+        if (saForme == Forme.COUDE) {
+            if (sonOrientation == Orientation.SUD || sonOrientation == Orientation.OUEST) {
+                return false;
+            }
+        }
+
+        if (saForme == Forme.TE) {
+            if (sonOrientation == Orientation.OUEST) {
+                return false;
+            }
+        }
+
+        if (saForme == Forme.DROIT) {
+            if (sonOrientation == Orientation.NORD || sonOrientation == Orientation.SUD) {
+                return false;
             }
         }
 
@@ -125,6 +169,8 @@ public class Plateau {
         CouloirImpl couloir = matrice[x][y];
         Forme saForme = couloir.getForme();
         Orientation sonOrientation = couloir.getOrientation();
+
+        System.out.println("Ligne D : ["+x+", "+y+"] ("+couloir+")");
 
         if (saForme == Forme.COUDE) {
             if (sonOrientation == Orientation.NORD || sonOrientation == Orientation.EST) {
@@ -152,6 +198,8 @@ public class Plateau {
         Forme saForme = couloir.getForme();
         Orientation sonOrientation = couloir.getOrientation();
 
+        System.out.println("Ligne G+D : ["+x+", "+y+"] ("+couloir+")");
+
         if (saForme == Forme.COUDE) {
             return false;
         }
@@ -171,10 +219,40 @@ public class Plateau {
         return true;
     }
 
+    private boolean parcoursColonneEnBas(CouloirImpl[][] matrice, int x, int y) {
+        CouloirImpl couloir = matrice[x][y];
+        Forme saForme = couloir.getForme();
+        Orientation sonOrientation = couloir.getOrientation();
+
+        System.out.println("Colonne B : ["+x+", "+y+"] ("+couloir+")");
+
+        if (saForme == Forme.COUDE) {
+            if (sonOrientation == Orientation.EST || sonOrientation == Orientation.SUD) {
+                return false;
+            }
+        }
+
+        if (saForme == Forme.TE) {
+            if (sonOrientation == Orientation.SUD) {
+                return false;
+            }
+        }
+
+        if (saForme == Forme.DROIT) {
+            if (sonOrientation == Orientation.EST || sonOrientation == Orientation.OUEST) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     private boolean parcoursColonneEnHaut(CouloirImpl[][] matrice, int x, int y) {
         CouloirImpl couloir = matrice[x][y];
         Forme saForme = couloir.getForme();
         Orientation sonOrientation = couloir.getOrientation();
+
+        System.out.println("Colonne H : ["+x+", "+y+"] ("+couloir+")");
 
         if (saForme == Forme.COUDE) {
             if (sonOrientation == Orientation.NORD || sonOrientation == Orientation.OUEST) {
@@ -201,6 +279,8 @@ public class Plateau {
         CouloirImpl couloir = matrice[x][y];
         Forme saForme = couloir.getForme();
         Orientation sonOrientation = couloir.getOrientation();
+
+        System.out.println("Colonne H+B : ["+x+", "+y+"] ("+couloir+")");
 
         if (saForme == Forme.COUDE) {
             return false;
@@ -229,21 +309,25 @@ public class Plateau {
         Plateau p = new Plateau();
         for (int i = 0; i < TAILLE; i++) {
             for (int j = 0; j < TAILLE; j++) {
-                System.out.println("(" + i + ", " + j + ") : " + p.matriceCouloirs[i][j] + " ");
+                System.out.println("(" + i + ", " + j + ") : \t" + p.matriceCouloirs[i][j] + " ");
             }
            System.out.println();
         }
 
-        System.out.println("Atteignable : ");
+        System.out.println("Tests estAtteignable() : ");
         Position p0 = new Position(0, 0);
         Position p1 = new Position(0, 2);
         Position p2 = new Position(2, 2);
         Position p3 = new Position(2, 4);
         Position p4 = new Position(1, 3);
         Position p5 = new Position(1, 6);
-        System.out.println(p0 + " " + p1 + " " + p.estAtteignable(p0, p1));
-        System.out.println(p2 + " " + p3 + " " + p.estAtteignable(p2, p3));
-        System.out.println(p4 + " " + p5 + " " + p.estAtteignable(p4, p5));
+        Position p6 = new Position(3, 3);
+        Position p7 = new Position(1, 3);
+        System.out.println(p0 + " à " + p1 + " == " + p.estAtteignable(p0, p1) + "\n");
+        System.out.println(p2 + " à " + p3 + " == " + p.estAtteignable(p2, p3) + "\n");
+        System.out.println(p4 + " à " + p5 + " == " + p.estAtteignable(p4, p5) + "\n");
+        System.out.println(p6 + " à " + p7 + " == " + p.estAtteignable(p6, p7) + "\n");
+        System.out.println(p1 + " à " + p6 + " == " + p.estAtteignable(p1, p6) + "\n");
 
         System.out.println();
     }
