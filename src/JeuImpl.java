@@ -40,7 +40,7 @@ public class JeuImpl implements Jeu {
         if(pos != positionOrigine){
             supplementaire = plateau.modifierCouloirs(pos,supplementaire);
             positionOrigine = pos.oppose();
-            for (Pion pion : supplementaire.getPion()){
+            for (Pion pion : supplementaire.getPions()){
                 pion.poserA(pos.getPosition());
             }
         }

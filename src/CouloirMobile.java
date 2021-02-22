@@ -3,8 +3,8 @@ import java.util.ArrayList;
 public class CouloirMobile extends CouloirImpl {
     private boolean posee;
 
-    public CouloirMobile(){
-        // Todo
+    public CouloirMobile(Orientation orientation, Forme forme, Objectif objectif){
+        super(orientation, forme, objectif);
     }
 
     public void changeOrientation(Orientation orientation){
