@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 public class CouloirMobile extends CouloirImpl {
     private boolean posee;
 
@@ -8,7 +6,7 @@ public class CouloirMobile extends CouloirImpl {
     }
 
     public void changeOrientation(Orientation orientation){
-        if(! posee)this.setOrientation(orientation);
+        if(! posee) this.setOrientation(orientation);
     }
 
     public void setOrientation(Orientation orientation){

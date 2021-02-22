@@ -1,6 +1,4 @@
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Random;
+import java.util.*;
 
 public class Plateau {
     private static final int TAILLE = 7;
@@ -11,7 +9,6 @@ public class Plateau {
     public Plateau(){
         // Plateau = 49 cases, soit : 16 couloirs fixes et 34 couloirs mobiles.
         // 12 flèches en bordures de plateau = PositionInsertion.
-      
         Objectif[] objectifs = Objectif.values();
         
         ArrayList<Objectif> objectifss = new ArrayList<Objectif>();

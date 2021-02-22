@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+import java.util.*;
 
 public class JeuImpl implements Jeu {
     private Plateau plateau;
@@ -56,7 +56,7 @@ public class JeuImpl implements Jeu {
     public void preparer(){
         // Todo
 
-        // Distribuer les objectifs aux joueurs et mettres les couloirs mobiles sur la plateau
+        // Distribuer les objectifs aux joueurs et mettres les couloirs mobiles sur la plateau.
     }
 
     public boolean aGagné(Joueur joueur){

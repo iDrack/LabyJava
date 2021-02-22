@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+import java.util.*;
 
 public class CouloirImpl implements Couloir {
     protected Orientation orientation;
@@ -13,27 +13,23 @@ public class CouloirImpl implements Couloir {
     }
 
     @Override
-    public Orientation getOrientation() {
-        // TODO Auto-generated method stub
-        return null;
+    public Orientation getOrientation(){
+        return this.orientation;
     }
 
     @Override
-    public Forme getForme() {
-        // TODO Auto-generated method stub
-        return null;
+    public Forme getForme(){
+        return this.forme;
     }
 
     @Override
-    public Objectif getObjectif() {
-        // TODO Auto-generated method stub
-        return null;
+    public Objectif getObjectif(){
+        return this.objectif;
     }
 
     @Override
-    public ArrayList<Pion> getPions() {
-        // TODO Auto-generated method stub
-        return null;
+    public ArrayList<Pion> getPions(){
+        return this.pions;
     }
     
     public void décaler(Orientation orientation){
