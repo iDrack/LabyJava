@@ -33,12 +33,14 @@ public class CouloirImpl implements Couloir {
     }
     
     public void décaler(Orientation orientation){
-        // Todo
+        this.orientation = orientation;
+        // Et il faut rendre le couloir à l'autre bout disponible : 
+        // Ce fait avec le retour de la méthode ?! 
     }
     
     public String toString(){
         String tmp;
-        tmp = this.objectif.toString().substring(0,3) +"..";
+        tmp = this.objectif.toString().substring(0,3) + "..";
         return "" + this.forme + "\t" + tmp + "\t" + this.orientation; 
     }
 }

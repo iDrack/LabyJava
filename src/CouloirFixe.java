@@ -39,7 +39,7 @@ public class CouloirFixe extends CouloirImpl {
             }
         } else if(x == 4){
             if(y == 0){
-                orientation = Orientation.NORD;
+                orientation = Orientation.OUEST;
             } else if(y == 2){
                 orientation = Orientation.SUD;
             } else { // 4 ou 6

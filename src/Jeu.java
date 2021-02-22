@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+import java.util.*;
 
 public interface Jeu {
     public void enregistrer(Joueur joueur, Couleur couleur);

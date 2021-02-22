@@ -10,7 +10,7 @@ public class JeuImpl implements Jeu {
     private ArrayList<Joueur> joueurs = new ArrayList<Joueur>();
 
     public JeuImpl(){
-        int min = 110;
+        int min = 110; // Maximum plutôt, non ?! ^^
         Joueur joueurC = joueurs.get(0);
         for (Joueur joueur : joueurs){
             if (joueur.getAge() < min ){
