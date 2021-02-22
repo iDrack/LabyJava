@@ -3,13 +3,13 @@ public class CouloirFixe extends CouloirImpl {
         super(orientation, forme, objectif);
     }
 
-    public Objectif définirObjectif(int x, int y){
-        Objectif objectif = new Objectif(); // retourn un des Objectif restant aléatoirement.
+    public static Objectif définirObjectif(int x, int y){
+        Objectif objectif = new Objectif(); // retourne un des Objectif restant aléatoirement.
 
         return objectif;
     }
 
-    public Forme définirForme(int x, int y){
+    public static Forme définirForme(int x, int y){
         Forme forme;
 
         if(x == 0 && y == 0 || x == 0 && y == 6 || x == 6 && y == 0 || x == 6 && y == 6){
@@ -21,7 +21,7 @@ public class CouloirFixe extends CouloirImpl {
         return forme;
     }
 
-    public Orientation définirOrientation(int x, int y){
+    public static Orientation définirOrientation(int x, int y){
         Orientation orientation;
 
         if(x == 0){

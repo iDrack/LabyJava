@@ -18,7 +18,7 @@ public class Plateau {
                 if(x % 2 == 0 && y % 2 == 0){
                     //orientation = CouloirFixe.this.définirOrientation(x, y);
                     // PB !!
-                    matriceCouloirs[x][y] = new CouloirFixe(orientation, forme, objectif);
+                    matriceCouloirs[x][y] = new CouloirFixe(CouloirFixe.définirOrientation(x, y), CouloirFixe.définirForme(x, y), CouloirFixe.définirObjectif(x, y));
                 }
             }
         }
