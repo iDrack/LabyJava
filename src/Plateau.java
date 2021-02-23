@@ -12,15 +12,13 @@ public class Plateau {
         Objectif[] objectifs = Objectif.values();
 
         ArrayList<Objectif> objectifss = new ArrayList<Objectif>();
-        for (int i = 0; i < objectifs.length; objectifss.add(objectifs[i++]))
-            ;
-        for (int i = 0; i < 9; i++, objectifss.add(Objectif.VIDE))
-            ;
+        for (int i = 0; i < objectifs.length; objectifss.add(objectifs[i++]));
+        for (int i = 0; i < 9; i++, objectifss.add(Objectif.VIDE));
         Collections.shuffle(objectifss);
 
         Orientation[] orientations = Orientation.values();
-
         Forme[] formes = Forme.values();
+        
         for (int x = 0; x < TAILLE; x++) {
             for (int y = 0; y < TAILLE; y++) {
                 if (x % 2 == 0 && y % 2 == 0) {

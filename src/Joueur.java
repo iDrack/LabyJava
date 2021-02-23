@@ -10,4 +10,6 @@ public interface Joueur {
     public void recevoirPion(Pion p);
 
     public Stack<Objectif> getStack();
+
+    public void setStack(Stack<Objectif> objectifs);
 }

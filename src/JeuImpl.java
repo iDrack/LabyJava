@@ -14,10 +14,10 @@ public class JeuImpl implements Jeu {
     public JeuImpl(){
         enregistrer();
 
-        joueurCourant = joueurs.get(0);
-        for (Joueur joueur : joueurs){
-            if (joueur.getAge() < joueurCourant.getAge() ){
-                joueurCourant = joueur;
+        this.joueurCourant = this.joueurs.get(0);
+        for (Joueur joueur : this.joueurs){
+            if (joueur.getAge() < this.joueurCourant.getAge() ){
+                this.joueurCourant = joueur;
                 // ...
             }
         }
@@ -34,14 +34,14 @@ public class JeuImpl implements Jeu {
 
     @Override
     public Joueur prochainJoueur(){
-        return joueurs.get((joueurs.indexOf(joueurCourant) + 1) % nbJoueur);
+        return this.joueurs.get((this.joueurs.indexOf(this.joueurCourant) + 1) % this.nbJoueur);
     }
 
     @Override
     public void modifierCouloirs(PositionInsertion pos){
-        if(pos != positionOrigine){
-            supplementaire = plateau.modifierCouloirs(pos,supplementaire);
-            positionOrigine = pos.oppose();
+        if(pos != this.positionOrigine){
+            this.supplementaire = this.plateau.modifierCouloirs(pos, this.supplementaire);
+            this.positionOrigine = pos.oppose();
             /*
             for (Pion pion : supplementaire.getPions()){
                 pion.poserA(pos.getPosition());
@@ -67,11 +67,11 @@ public class JeuImpl implements Jeu {
 
         do {
             System.out.println("Nombre de joueur a jouer : ");
-            nbJoueur = Integer.parseInt(sc.nextLine());
-        }while(nbJoueur <= 0 || nbJoueur >4);
+            this.nbJoueur = Integer.parseInt(sc.nextLine());
+        }while(this.nbJoueur <= 0 || this.nbJoueur >4);
         System.out.println();
 
-        for(int i = 0; i < nbJoueur; i++){
+        for(int i = 0; i < this.nbJoueur; i++){
             System.out.println("Joueur n°" + (i + 1) + ".");
             do {
                 System.out.println("Choisir une couleur : ");
@@ -95,8 +95,10 @@ public class JeuImpl implements Jeu {
 
             Pion pion = new PionImpl(pos, Couleur.getCouleur(expr));
             joueur = new JoueurImpl(pion, age, this);
-            joueurs.add(joueur);
+            this.joueurs.add(joueur);
         }
+
+        preparer();
 
         sc.close();
     }
@@ -106,6 +108,26 @@ public class JeuImpl implements Jeu {
         // Distribuer les objectifs aux joueurs et mettres les couloirs mobiles sur la plateau.
 
         // On a déjà mis les couloirs mobiles sur le plateau ..
+        // On va donc distrubuer les objectifs : "Mélangé et distribué le même nombre à chaque joueur."
+        Objectif[] tabObjectifs = Objectif.values();
+        ArrayList<Objectif> arrayObjectifs = new ArrayList<Objectif>();
+        for (int i = 0; i < (tabObjectifs.length - 1); arrayObjectifs.add(tabObjectifs[i++]));
+        Collections.shuffle(arrayObjectifs);
+
+        int nbObjParJoueur = arrayObjectifs.size() / nbJoueur;
+        // Pour chaque joueur :
+        for(int i = 0; i < this.nbJoueur; i++){
+            Joueur leJoueur = this.joueurs.get(i);
+            Stack<Objectif> objectifsJoueur = leJoueur.getStack();
+            // Pour chaque objectif à donner :
+            for(int j = 0; j < nbObjParJoueur; j++){
+                Random r = new Random();
+                int obj = r.nextInt(arrayObjectifs.size());
+                objectifsJoueur.add(arrayObjectifs.get(obj));
+                arrayObjectifs.remove(obj);
+            }
+            leJoueur.setStack(objectifsJoueur);
+        }
     }
 
     @Override
@@ -132,7 +154,7 @@ public class JeuImpl implements Jeu {
         String chaine = "Nb joueurs : " + this.nbJoueur + "\n" +
                         "Joueurs : \n";
         for(int i = 0; i < this.nbJoueur; i++){
-            chaine += "Joueur " + (i + 1) + " : " + joueurs.get(i) + "\n";
+            chaine += "--> Joueur " + (i + 1) + " : " + joueurs.get(i) + "\n";
         }
         
         return chaine;

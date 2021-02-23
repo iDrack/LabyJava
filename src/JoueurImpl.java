@@ -48,14 +48,21 @@ public class JoueurImpl implements Joueur {
         // Todo
     }
 
+    @Override
     public Stack<Objectif> getStack(){
         return this.objectifs;
+    }
+
+    @Override
+    public void setStack(Stack<Objectif> objectifs){
+        this.objectifs = objectifs;
     }
 
     public String toString(){
         String chaine = "Pion " + this.pion.getCouleurPion() + ", " +
                         "age : " + this.age + ", " +
-                        "objectifs : \n" + this.objectifs.toString() + ".";
+                        "objectifs (" + this.objectifs.size() + "): \n \t" + 
+                        this.objectifs.toString() + ".";
         
         return chaine;
     }
