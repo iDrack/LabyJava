@@ -8,4 +8,6 @@ public interface Joueur {
     public void fixerObjectifs(Stack<Objectif> objectifs);
 
     public void recevoirPion(Pion p);
+
+    public Stack<Objectif> getStack();
 }

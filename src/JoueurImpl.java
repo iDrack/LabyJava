@@ -47,4 +47,8 @@ public class JoueurImpl implements Joueur {
     public void recevoirPion(Pion p){
         // Todo
     }
+
+    public Stack<Objectif> getStack(){
+        return this.objectifs;
+    }
 }

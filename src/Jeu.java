@@ -1,7 +1,7 @@
 import java.util.*;
 
 public interface Jeu {
-    public void enregistrer(Joueur joueur, Couleur couleur);
+    public void enregistrer();
 
     public void modifierCouloirs(PositionInsertion pos);
 

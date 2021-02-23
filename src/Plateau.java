@@ -312,6 +312,10 @@ public class Plateau {
         return null;
     }
 
+    public Objectif getObjectifCase(Position pos){
+        return matriceCouloirs[pos.getX()][pos.getY()].getObjectif();
+    }
+
     public static void main(String[] args) {
         Plateau p = new Plateau();
         for (int i = 0; i < TAILLE; i++) {
