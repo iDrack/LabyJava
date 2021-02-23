@@ -1,5 +1,4 @@
 public class PionImpl implements Pion {
-    private Position positionActuelle;
     private Couleur couleur;
     private Position positionInitiale;
     private Position positionCourante;
@@ -7,20 +6,23 @@ public class PionImpl implements Pion {
 
     public PionImpl(Position pos, Couleur coul){
         this.positionInitiale = pos;
-        this.positionActuelle = pos;
+        this.positionCourante = pos;
         this.couleur = coul;
     }
 
+    @Override
     public Position getPositionInitiale(){
         return this.positionInitiale;
     }
 
+    @Override
     public Couleur getCouleurPion(){
         return this.couleur;
     }
 
-    public Position getPositionActuelle(){
-        return this.positionActuelle;
+    @Override
+    public Position getPositionCourante(){
+        return this.positionCourante;
     }
 
     @Override
@@ -44,5 +46,11 @@ public class PionImpl implements Pion {
         //} 
         
         // Fonction qui sert a poser le pion sur le couloir qu'on insère si le pion se fait sortir du "plateau de jeu".
+    }
+
+    public String toString(){
+        return "[Position initiale : " + this.positionInitiale + "\n" +
+                "Position courante : " + this.positionCourante +  "\n" +
+                "Couleur du pion : " + this.couleur + "]";
     }
 }

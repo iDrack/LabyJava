@@ -7,5 +7,5 @@ public interface Pion {
 
     public Couleur getCouleurPion();
 
-    public Position getPositionActuelle();
+    public Position getPositionCourante();
 }

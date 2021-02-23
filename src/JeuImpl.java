@@ -1,6 +1,5 @@
 import java.util.*;
 
-
 public class JeuImpl implements Jeu {
     private Plateau plateau;
     private ArrayList<Couloir> couloirs = new ArrayList<Couloir>();
@@ -10,7 +9,7 @@ public class JeuImpl implements Jeu {
     private PositionInsertion positionOrigine;
     private ArrayList<Joueur> joueurs = new ArrayList<Joueur>();
     private Joueur joueurCourant;
-    private int nbJoueur=0;
+    private int nbJoueur = 0;
 
     public JeuImpl(){
         enregistrer();
@@ -33,8 +32,9 @@ public class JeuImpl implements Jeu {
         // ...
     }
 
+    @Override
     public Joueur prochainJoueur(){
-        return joueurs.get((joueurs.indexOf(joueurCourant) +1) % nbJoueur);
+        return joueurs.get((joueurs.indexOf(joueurCourant) + 1) % nbJoueur);
     }
 
     @Override
@@ -42,10 +42,18 @@ public class JeuImpl implements Jeu {
         if(pos != positionOrigine){
             supplementaire = plateau.modifierCouloirs(pos,supplementaire);
             positionOrigine = pos.oppose();
+            /*
             for (Pion pion : supplementaire.getPions()){
                 pion.poserA(pos.getPosition());
             }
+            */
         }
+    }
+
+    @Override
+    public void jouer() {
+        // Demande où il souhaite aller, etc.
+        // ..
     }
 
     @Override
@@ -58,31 +66,33 @@ public class JeuImpl implements Jeu {
         Position pos = null;
 
         do {
-            System.out.println("Nombre de joueur a jouer");
+            System.out.println("Nombre de joueur a jouer : ");
             nbJoueur = Integer.parseInt(sc.nextLine());
         }while(nbJoueur <= 0 || nbJoueur >4);
+        System.out.println();
 
         for(int i = 0; i < nbJoueur; i++){
-
+            System.out.println("Joueur n°" + (i + 1) + ".");
             do {
-                System.out.println("Entrez une couleur :");
-                System.out.println("-Bleu ");
-                System.out.println("-Rouge ");
-                System.out.println("-Vert");
-                System.out.println("-Jaune ");
+                System.out.println("Choisir une couleur : ");
+                System.out.println("- Bleu \t - Rouge");
+                System.out.println("- Vert \t - Jaune");
+                System.out.print("Votre choix : ");
                 expr = sc.nextLine();
                 expr = expr.toUpperCase(); 
-            }while (!("BLEU".equals(expr)) && !("JAUNE".equals(expr)) && !("VERT".equals(expr)) && !("ROUGE".equals(expr)));
+            } while (!("BLEU".equals(expr)) && !("JAUNE".equals(expr)) && !("VERT".equals(expr)) && !("ROUGE".equals(expr)));
                 
             do {
-                System.out.println("Entrez votre age :");
+                System.out.print("Entrez votre age (mini 8) : ");
                 age = Integer.parseInt(sc.nextLine());
-            }while (age < 8);
+            } while (age < 8);
+            System.out.println();
 
             if (i == 0) {pos = new Position(0,0);}
             else if (i == 1) {pos = new Position(6,6);}
             else if (i == 2) {pos = new Position(0,6);}
             else {new Position(6,0);}
+
             Pion pion = new PionImpl(pos, Couleur.getCouleur(expr));
             joueur = new JoueurImpl(pion, age, this);
             joueurs.add(joueur);
@@ -91,32 +101,45 @@ public class JeuImpl implements Jeu {
         sc.close();
     }
 
+    @Override
     public void preparer(){
-    
         // Distribuer les objectifs aux joueurs et mettres les couloirs mobiles sur la plateau.
+
+        // On a déjà mis les couloirs mobiles sur le plateau ..
     }
 
+    @Override
     public boolean aGagné(Joueur joueur){
        return joueur.getStack().empty();
     }
 
     @Override
     public ArrayList<Couloir> couloirs(){
-        return null;
+        return this.couloirs;
     }
 
     @Override
-    public void jouer() {
-      
-
+    public ArrayList<Objectif> objectifs() {
+        return this.objectifs;
     }
 
     @Override
-    public boolean aGagne(Joueur j) {
+    public ArrayList<Pion> pions() {
+        return this.pions;
+    }
+
+    public String toString(){        
+        String chaine = "Nb joueurs : " + this.nbJoueur + "\n" +
+                        "Joueurs : \n";
+        for(int i = 0; i < this.nbJoueur; i++){
+            chaine += "Joueur " + (i + 1) + " : " + joueurs.get(i) + "\n";
+        }
         
-        return false;
+        return chaine;
     }
-    public static void main(String[] args) {
+
+    public static void main(String[] args){
         Jeu jeu = new JeuImpl();
+        System.out.println(jeu);
     }
 }

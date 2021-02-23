@@ -316,14 +316,21 @@ public class Plateau {
         return matriceCouloirs[pos.getX()][pos.getY()].getObjectif();
     }
 
-    public static void main(String[] args) {
-        Plateau p = new Plateau();
+    public String toString(){
+        CouloirImpl[][] matrice = getCouloirImpls();
+        String chaine = "";
         for (int i = 0; i < TAILLE; i++) {
             for (int j = 0; j < TAILLE; j++) {
-                System.out.println("(" + i + ", " + j + ") : \t" + p.matriceCouloirs[i][j] + " ");
+                chaine += "(" + i + ", " + j + ") : \t" + matrice[i][j] + " \n";
             }
-           System.out.println();
+           chaine += "\n";
         }
+        return chaine;
+    }
+
+    public static void main(String[] args) {
+        Plateau p = new Plateau();
+        System.out.println(p);
 
         System.out.println("Tests estAtteignable() : ");
         Position p0 = new Position(0, 0);

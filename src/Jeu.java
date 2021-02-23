@@ -11,7 +11,11 @@ public interface Jeu {
 
     public Joueur prochainJoueur();
 
-    public boolean aGagne(Joueur j);
+    public boolean aGagné(Joueur joueur);
 
     public ArrayList<Couloir> couloirs();
+
+    public ArrayList<Objectif> objectifs();
+
+    public ArrayList<Pion> pions();
 }

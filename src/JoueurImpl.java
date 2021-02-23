@@ -51,4 +51,12 @@ public class JoueurImpl implements Joueur {
     public Stack<Objectif> getStack(){
         return this.objectifs;
     }
+
+    public String toString(){
+        String chaine = "Pion " + this.pion.getCouleurPion() + ", " +
+                        "age : " + this.age + ", " +
+                        "objectifs : \n" + this.objectifs.toString() + ".";
+        
+        return chaine;
+    }
 }
