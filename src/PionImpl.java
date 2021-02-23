@@ -1,13 +1,26 @@
 public class PionImpl implements Pion {
     private Position positionActuelle;
     private Couleur couleur;
-    private Position posInitiale;
+    private Position positionInitiale;
     private Position positionCourante;
     private Plateau plateau;
 
     public PionImpl(Position pos, Couleur coul){
+        this.positionInitiale = pos;
         this.positionActuelle = pos;
         this.couleur = coul;
+    }
+
+    public Position getPositionInitiale(){
+        return this.positionInitiale;
+    }
+
+    public Couleur getCouleurPion(){
+        return this.couleur;
+    }
+
+    public Position getPositionActuelle(){
+        return this.positionActuelle;
     }
 
     @Override
@@ -19,6 +32,7 @@ public class PionImpl implements Pion {
         }
 
         return null; // Trouver l'objectif à retouner !!
+        // Si déplacement effectuer, s'il y a un objectif alors on le retourne sinon retourne "null".
     }
 
     public void poserA(Position pos){
