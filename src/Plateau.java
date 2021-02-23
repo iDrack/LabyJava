@@ -65,7 +65,12 @@ public class Plateau {
         CouloirImpl[][] matrice = getCouloirImpls();
         // Point de vue de la matrice : 'x' = lignes et 'y' = colonnes.
 
-        // Si aligné sur x alors :
+        // Si sur la même case :
+        if(xOrigine == xDestination && yOrigine == yDestination){
+            return true;
+        }
+
+        // Si aligné sur x (même ligne) alors :
         if (xOrigine == xDestination) {
             // Gauche - droite, droite - gauche.
             if (yOrigine < yDestination) {
@@ -99,7 +104,7 @@ public class Plateau {
                     }
                 }
             }
-        } else if (yOrigine == yDestination) { // Sinon, si aligné sur y alors :
+        } else if (yOrigine == yDestination) { // Sinon, si aligné sur y (même colonne) alors :
             // Haut - bas, bas - haut.
             if (xOrigine < xDestination) {
                 for (int i = xOrigine; i <= xDestination; i++) {
@@ -207,7 +212,7 @@ public class Plateau {
         }
 
         if (saForme == Forme.TE) {
-            if (sonOrientation == Orientation.EST && sonOrientation == Orientation.OUEST) {
+            if (sonOrientation == Orientation.EST || sonOrientation == Orientation.OUEST) {
                 return false;
             }
         }
@@ -289,7 +294,7 @@ public class Plateau {
         }
 
         if (saForme == Forme.TE) {
-            if (sonOrientation == Orientation.NORD && sonOrientation == Orientation.SUD) {
+            if (sonOrientation == Orientation.NORD || sonOrientation == Orientation.SUD) {
                 return false;
             }
         }
@@ -331,6 +336,7 @@ public class Plateau {
         System.out.println(p6 + " à " + p7 + " == " + p.estAtteignable(p6, p7) + "\n");
         System.out.println(p1 + " à " + p2 + " == " + p.estAtteignable(p1, p2) + "\n");
         System.out.println(p1 + " à " + p6 + " == " + p.estAtteignable(p1, p6) + "\n");
+        System.out.println(p4 + " à " + p7 + " == " + p.estAtteignable(p4, p7) + "\n");
 
         System.out.println();
     }
