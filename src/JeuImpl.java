@@ -53,16 +53,16 @@ public class JeuImpl implements Jeu {
         // Donner un pion au joueur.
         Joueur joueur;
         Scanner sc = new Scanner(System.in);
-        String expr=null;
+        String expr = null;
         int age;
-        Position pos=null;
+        Position pos = null;
 
         do {
             System.out.println("Nombre de joueur a jouer");
             nbJoueur = Integer.parseInt(sc.nextLine());
         }while(nbJoueur <= 0 || nbJoueur >4);
 
-        for(int i=0;i<nbJoueur;i++){
+        for(int i = 0; i < nbJoueur; i++){
 
             do {
                 System.out.println("Entrez une couleur :");
@@ -70,18 +70,18 @@ public class JeuImpl implements Jeu {
                 System.out.println("-Rouge ");
                 System.out.println("-Vert");
                 System.out.println("-Jaune ");
-                expr=sc.nextLine();
-                expr = expr.toUpperCase();
+                expr = sc.nextLine();
+                expr = expr.toUpperCase(); 
             }while (!("BLEU".equals(expr)) && !("JAUNE".equals(expr)) && !("VERT".equals(expr)) && !("ROUGE".equals(expr)));
                 
             do {
                 System.out.println("Entrez votre age :");
-                age= Integer.parseInt(sc.nextLine());
+                age = Integer.parseInt(sc.nextLine());
             }while (age < 8);
 
-            if (i==0) {pos = new Position(0,0);}
-            else if (i==1) {pos = new Position(6,6);}
-            else if (i==2) {pos = new Position(0,6);}
+            if (i == 0) {pos = new Position(0,0);}
+            else if (i == 1) {pos = new Position(6,6);}
+            else if (i == 2) {pos = new Position(0,6);}
             else {new Position(6,0);}
             Pion pion = new PionImpl(pos, Couleur.getCouleur(expr));
             joueur = new JoueurImpl(pion, age, this);
