@@ -323,6 +323,7 @@ public class Plateau {
             }
            chaine += "\n";
         }
+        
         return chaine;
     }
 

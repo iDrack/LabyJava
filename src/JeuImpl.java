@@ -71,16 +71,25 @@ public class JeuImpl implements Jeu {
         }while(this.nbJoueur <= 0 || this.nbJoueur >4);
         System.out.println();
 
+        Couleur[] tabCouleurs = Couleur.values();
+        ArrayList<String> arrayCouleurs = new ArrayList<String>();
+        for (int i = 0; i < tabCouleurs.length; arrayCouleurs.add(tabCouleurs[i++].toString()));
+
         for(int i = 0; i < this.nbJoueur; i++){
             System.out.println("Joueur n°" + (i + 1) + ".");
-            do {
-                System.out.println("Choisir une couleur : ");
-                System.out.println("- Bleu \t - Rouge");
-                System.out.println("- Vert \t - Jaune");
+            boolean choixCouleur = false;
+            while(choixCouleur == false){
+                System.out.println("Choisir une couleur ci-dessous : ");
+                System.out.println(arrayCouleurs.toString());
                 System.out.print("Votre choix : ");
                 expr = sc.nextLine();
                 expr = expr.toUpperCase(); 
-            } while (!("BLEU".equals(expr)) && !("JAUNE".equals(expr)) && !("VERT".equals(expr)) && !("ROUGE".equals(expr)));
+
+                if(arrayCouleurs.contains(expr)){
+                    choixCouleur = true;
+                    arrayCouleurs.remove(expr);
+                }
+            }
                 
             do {
                 System.out.print("Entrez votre age (mini 8) : ");
