@@ -35,15 +35,15 @@ public class JoueurImpl implements Joueur {
         boolean choix = false;
         while(choix == false) {
             System.out.println("Choisir une position insertion : ");
-                System.out.println(arrayStr.toString());
-                System.out.print("Votre choix : ");
-                expr = sc.nextLine();
-                expr = expr.toUpperCase(); 
-                
-                if(arrayStr.contains(expr)){
-                    choix = true;
-                    positionInsertion = arrayPI.get(arrayStr.indexOf(expr));
-                }
+            System.out.println(arrayStr.toString());
+            System.out.print("Votre choix : ");
+            expr = sc.nextLine();
+            expr = expr.toUpperCase(); 
+            
+            if(arrayStr.contains(expr)){
+                choix = true;
+                positionInsertion = arrayPI.get(arrayStr.indexOf(expr));
+            }
         }
         System.out.println();
         
@@ -100,6 +100,7 @@ public class JoueurImpl implements Joueur {
 
     public static void main(String[] args) {
         JoueurImpl j = new JoueurImpl(null, 10, null);
-        j.choisirOrientationCouloir();
+        //j.choisirOrientationCouloir();
+        j.choisirPositionInsertionCouloir();
     }
 }
