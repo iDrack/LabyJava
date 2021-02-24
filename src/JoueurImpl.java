@@ -22,6 +22,14 @@ public class JoueurImpl implements Joueur {
     }
 
     public Position choisirPositionPion(){
+        System.out.println("Position x :");
+        Scanner sc = new Scanner(System.in);
+
+        int x = Integer.parseInt(sc.nextLine());
+
+        System.out.println(x);
+
+        sc.close();
         return null;
     }
 

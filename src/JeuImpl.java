@@ -169,8 +169,14 @@ public class JeuImpl implements Jeu {
         return chaine;
     }
 
+    public Joueur getJoueur(){
+        return this.joueurCourant;
+    }
+
     public static void main(String[] args){
         Jeu jeu = new JeuImpl();
         System.out.println(jeu);
+
+        jeu.getJoueur().choisirPositionPion();
     }
 }

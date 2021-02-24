@@ -18,4 +18,6 @@ public interface Jeu {
     public ArrayList<Objectif> objectifs();
 
     public ArrayList<Pion> pions();
+
+    public Joueur getJoueur();
 }

@@ -12,4 +12,6 @@ public interface Joueur {
     public Stack<Objectif> getStack();
 
     public void setStack(Stack<Objectif> objectifs);
+
+    public Position choisirPositionPion();
 }
