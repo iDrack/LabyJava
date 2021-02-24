@@ -66,7 +66,7 @@ public class JoueurImpl implements Joueur {
 
     public Orientation choisirOrientationCouloir(){
         Scanner sc = new Scanner(System.in);
-        String expr ="";
+        String expr = "";
         while (!("NORD".equals(expr)) && !("SUD".equals(expr)) && !("EST".equals(expr)) && !("OUEST".equals(expr))){
                 System.out.println("\nChoisissez l'orientation :");
                 System.out.println("-NORD");
@@ -76,7 +76,9 @@ public class JoueurImpl implements Joueur {
                 expr= sc.nextLine();
                 expr = expr.toUpperCase();
         }
+        
         sc.close();
+
         return Orientation.getOrientation(expr);
     }
 
