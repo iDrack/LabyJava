@@ -52,15 +52,17 @@ public class JoueurImpl implements Joueur {
     }
 
     public Position choisirPositionPion(){
-        System.out.println("Position x :");
         Scanner sc = new Scanner(System.in);
-
-        int x = Integer.parseInt(sc.nextLine());
-
-        System.out.println(x);
+        int x,y;
+        System.out.println("Position x :");
+        x = sc.nextInt();
+        System.out.println("Position y :");
+        y = sc.nextInt();
 
         sc.close();
-        return null;
+        Position p = new Position(x,y);
+        System.out.println(p);
+        return p;
     }
 
     @Override
@@ -108,6 +110,9 @@ public class JoueurImpl implements Joueur {
 
     public static void main(String[] args) {
         JoueurImpl j = new JoueurImpl(null, 10, null);
+        Position p = new Position(0,0);
+        p = j.choisirPositionPion();
+        p.toString();
         j.choisirOrientationCouloir();
     }
 }

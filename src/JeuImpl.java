@@ -176,7 +176,5 @@ public class JeuImpl implements Jeu {
     public static void main(String[] args){
         Jeu jeu = new JeuImpl();
         System.out.println(jeu);
-
-        jeu.getJoueur().choisirPositionPion();
     }
 }
