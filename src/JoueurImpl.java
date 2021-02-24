@@ -35,15 +35,15 @@ public class JoueurImpl implements Joueur {
         boolean choix = false;
         while(choix == false) {
             System.out.println("Choisir une position insertion : ");
-                System.out.println(arrayStr.toString());
-                System.out.print("Votre choix : ");
-                expr = sc.nextLine();
-                expr = expr.toUpperCase(); 
-                
-                if(arrayStr.contains(expr)){
-                    choix = true;
-                    positionInsertion = arrayPI.get(arrayStr.indexOf(expr));
-                }
+            System.out.println(arrayStr.toString());
+            System.out.print("Votre choix : ");
+            expr = sc.nextLine();
+            expr = expr.toUpperCase(); 
+            
+            if(arrayStr.contains(expr)){
+                choix = true;
+                positionInsertion = arrayPI.get(arrayStr.indexOf(expr));
+            }
         }
         System.out.println();
         
@@ -76,17 +76,19 @@ public class JoueurImpl implements Joueur {
 
     public Orientation choisirOrientationCouloir(){
         Scanner sc = new Scanner(System.in);
-        String expr ="";
+        String expr = "";
         while (!("NORD".equals(expr)) && !("SUD".equals(expr)) && !("EST".equals(expr)) && !("OUEST".equals(expr))){
                 System.out.println("\nChoisissez l'orientation :");
                 System.out.println("-NORD");
                 System.out.println("-SUD");
                 System.out.println("-EST");
                 System.out.println("-OUEST");
-                expr= sc.nextLine();
+                expr = sc.nextLine();
                 expr = expr.toUpperCase();
         }
+
         sc.close();
+
         return Orientation.getOrientation(expr);
     }
 
