@@ -73,10 +73,10 @@ public class JoueurImpl implements Joueur {
                 System.out.println("-SUD");
                 System.out.println("-EST");
                 System.out.println("-OUEST");
-                expr= sc.nextLine();
+                expr = sc.nextLine();
                 expr = expr.toUpperCase();
         }
-        
+
         sc.close();
 
         return Orientation.getOrientation(expr);
@@ -104,5 +104,6 @@ public class JoueurImpl implements Joueur {
         JoueurImpl j = new JoueurImpl(null, 10, null);
         //j.choisirOrientationCouloir();
         //j.choisirPositionInsertionCouloir();
+        j.choisirPositionPion();
     }
 }
