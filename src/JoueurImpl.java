@@ -18,7 +18,37 @@ public class JoueurImpl implements Joueur {
     }
 
     public PositionInsertion choisirPositionInsertionCouloir(){
-        return null;
+        Scanner sc = new Scanner(System.in);
+        String expr = null;
+
+        PositionInsertion positionInsertion = null;
+
+        PositionInsertion[] tab = PositionInsertion.values();
+        ArrayList<String> arrayStr = new ArrayList<String>();
+        ArrayList<PositionInsertion> arrayPI = new ArrayList<PositionInsertion>();
+        for (int i = 0; i < tab.length; i++){
+            arrayStr.add(tab[i].toString());
+            arrayPI.add(tab[i]);
+        }
+
+        System.out.println("Choisir la position d'insertion du couloir :");
+        boolean choix = false;
+        while(choix == false) {
+            System.out.println("Choisir une position insertion : ");
+                System.out.println(arrayStr.toString());
+                System.out.print("Votre choix : ");
+                expr = sc.nextLine();
+                expr = expr.toUpperCase(); 
+                
+                if(arrayStr.contains(expr)){
+                    choix = true;
+                    positionInsertion = arrayPI.get(arrayStr.indexOf(expr));
+                }
+        }
+        System.out.println();
+        
+        sc.close();
+        return positionInsertion;
     }
 
     public Position choisirPositionPion(){
@@ -43,17 +73,19 @@ public class JoueurImpl implements Joueur {
     }
 
     public Orientation choisirOrientationCouloir(){
-        return null;
-    }
-
-    @Override
-    public void fixerObjectifs(Stack<Objectif> objectifs){
-        // Todo
-    }
-
-    @Override
-    public void recevoirPion(Pion p){
-        // Todo
+        Scanner sc = new Scanner(System.in);
+        String expr ="";
+        while (!("NORD".equals(expr)) && !("SUD".equals(expr)) && !("EST".equals(expr)) && !("OUEST".equals(expr))){
+                System.out.println("\nChoisissez l'orientation :");
+                System.out.println("-NORD");
+                System.out.println("-SUD");
+                System.out.println("-EST");
+                System.out.println("-OUEST");
+                expr= sc.nextLine();
+                expr = expr.toUpperCase();
+        }
+        sc.close();
+        return Orientation.getOrientation(expr);
     }
 
     @Override
@@ -61,7 +93,6 @@ public class JoueurImpl implements Joueur {
         return this.objectifs;
     }
 
-    @Override
     public void setStack(Stack<Objectif> objectifs){
         this.objectifs = objectifs;
     }
@@ -73,5 +104,10 @@ public class JoueurImpl implements Joueur {
                         this.objectifs.toString() + ".";
         
         return chaine;
+    }
+
+    public static void main(String[] args) {
+        JoueurImpl j = new JoueurImpl(null, 10, null);
+        j.choisirOrientationCouloir();
     }
 }
