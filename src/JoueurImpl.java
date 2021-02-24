@@ -39,16 +39,6 @@ public class JoueurImpl implements Joueur {
     }
 
     @Override
-    public void fixerObjectifs(Stack<Objectif> objectifs){
-        // Todo
-    }
-
-    @Override
-    public void recevoirPion(Pion p){
-        // Todo
-    }
-
-    @Override
     public Stack<Objectif> getStack(){
         return this.objectifs;
     }

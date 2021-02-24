@@ -68,7 +68,7 @@ public class JeuImpl implements Jeu {
         do {
             System.out.println("Nombre de joueur a jouer : ");
             this.nbJoueur = Integer.parseInt(sc.nextLine());
-        }while(this.nbJoueur <= 0 || this.nbJoueur >4);
+        }while(this.nbJoueur <= 0 || this.nbJoueur > 4);
         System.out.println();
 
         Couleur[] tabCouleurs = Couleur.values();
