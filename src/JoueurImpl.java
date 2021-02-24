@@ -53,11 +53,18 @@ public class JoueurImpl implements Joueur {
 
     public Position choisirPositionPion(){
         Scanner sc = new Scanner(System.in);
-        int x,y;
-        System.out.println("Position x :");
-        x = sc.nextInt();
-        System.out.println("Position y :");
-        y = sc.nextInt();
+        int x = 0;
+        int y = 0;
+
+        System.out.println("Choisir la position du pion.");
+
+        while ((x < 1 || x > 7) || (y < 1 || y > 7)){
+            System.out.println("Position x :");
+            x = sc.nextInt();
+            System.out.println("Position y :");
+            y = sc.nextInt();
+        }
+
 
         sc.close();
         Position p = new Position(x,y);
@@ -115,6 +122,6 @@ public class JoueurImpl implements Joueur {
         Position p = new Position(0,0);
         p = j.choisirPositionPion();
         p.toString();
-        j.choisirOrientationCouloir();
+        //j.choisirOrientationCouloir();
     }
 }
