@@ -50,6 +50,7 @@ public class JoueurImpl implements Joueur {
         return Orientation.getOrientation(expr);
     }
 
+    @Override
     public Stack<Objectif> getStack(){
         return this.objectifs;
     }
