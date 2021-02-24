@@ -18,7 +18,37 @@ public class JoueurImpl implements Joueur {
     }
 
     public PositionInsertion choisirPositionInsertionCouloir(){
-        return null;
+        Scanner sc = new Scanner(System.in);
+        String expr = null;
+
+        PositionInsertion positionInsertion = null;
+
+        PositionInsertion[] tab = PositionInsertion.values();
+        ArrayList<String> arrayStr = new ArrayList<String>();
+        ArrayList<PositionInsertion> arrayPI = new ArrayList<PositionInsertion>();
+        for (int i = 0; i < tab.length; i++){
+            arrayStr.add(tab[i].toString());
+            arrayPI.add(tab[i]);
+        }
+
+        System.out.println("Choisir la position d'insertion du couloir :");
+        boolean choix = false;
+        while(choix == false) {
+            System.out.println("Choisir une position insertion : ");
+                System.out.println(arrayStr.toString());
+                System.out.print("Votre choix : ");
+                expr = sc.nextLine();
+                expr = expr.toUpperCase(); 
+                
+                if(arrayStr.contains(expr)){
+                    choix = true;
+                    positionInsertion = arrayPI.get(arrayStr.indexOf(expr));
+                }
+        }
+        System.out.println();
+        
+        sc.close();
+        return positionInsertion;
     }
 
     public Position choisirPositionPion(){
