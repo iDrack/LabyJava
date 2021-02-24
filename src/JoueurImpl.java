@@ -101,6 +101,6 @@ public class JoueurImpl implements Joueur {
     public static void main(String[] args) {
         JoueurImpl j = new JoueurImpl(null, 10, null);
         //j.choisirOrientationCouloir();
-        j.choisirPositionInsertionCouloir();
+        //j.choisirPositionInsertionCouloir();
     }
 }
