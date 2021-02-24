@@ -85,13 +85,13 @@ public class JoueurImpl implements Joueur {
         Scanner sc = new Scanner(System.in);
         String expr = "";
         while (!("NORD".equals(expr)) && !("SUD".equals(expr)) && !("EST".equals(expr)) && !("OUEST".equals(expr))){
-                System.out.println("\nChoisissez l'orientation :");
-                System.out.println("-NORD");
-                System.out.println("-SUD");
-                System.out.println("-EST");
-                System.out.println("-OUEST");
-                expr = sc.nextLine();
-                expr = expr.toUpperCase();
+            System.out.println("\nChoisissez l'orientation :");
+            System.out.println("-NORD");
+            System.out.println("-SUD");
+            System.out.println("-EST");
+            System.out.println("-OUEST");
+            expr = sc.nextLine();
+            expr = expr.toUpperCase();
         }
 
         sc.close();
@@ -123,5 +123,6 @@ public class JoueurImpl implements Joueur {
         p = j.choisirPositionPion();
         p.toString();
         //j.choisirOrientationCouloir();
+        //j.choisirPositionInsertionCouloir();
     }
 }
