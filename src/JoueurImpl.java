@@ -35,25 +35,25 @@ public class JoueurImpl implements Joueur {
     }
 
     public Orientation choisirOrientationCouloir(){
-        return null;
+        Scanner sc = new Scanner(System.in);
+        String expr ="";
+        while (!("NORD".equals(expr)) && !("SUD".equals(expr)) && !("EST".equals(expr)) && !("OUEST".equals(expr))){
+                System.out.println("\nChoisissez l'orientation :");
+                System.out.println("-NORD");
+                System.out.println("-SUD");
+                System.out.println("-EST");
+                System.out.println("-OUEST");
+                expr= sc.nextLine();
+                expr = expr.toUpperCase();
+        }
+        sc.close();
+        return Orientation.getOrientation(expr);
     }
 
-    @Override
-    public void fixerObjectifs(Stack<Objectif> objectifs){
-        // Todo
-    }
-
-    @Override
-    public void recevoirPion(Pion p){
-        // Todo
-    }
-
-    @Override
     public Stack<Objectif> getStack(){
         return this.objectifs;
     }
 
-    @Override
     public void setStack(Stack<Objectif> objectifs){
         this.objectifs = objectifs;
     }
@@ -65,5 +65,10 @@ public class JoueurImpl implements Joueur {
                         this.objectifs.toString() + ".";
         
         return chaine;
+    }
+
+    public static void main(String[] args) {
+        JoueurImpl j = new JoueurImpl(null, 10, null);
+        j.choisirOrientationCouloir();
     }
 }
