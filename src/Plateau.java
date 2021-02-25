@@ -47,7 +47,34 @@ public class Plateau {
     }
 
     public CouloirMobile modifierCouloirs(PositionInsertion pos, CouloirMobile c) {
-        return c;
+        Position posOppose= pos.oppose().getPosition();
+        CouloirMobile coul = (CouloirMobile)matriceCouloirs[posOppose.getX()][posOppose.getY()];
+        int ord = pos.getPosition().getY();
+        int abs = pos.getPosition().getX();
+        if (pos == PositionInsertion.N1 || pos == PositionInsertion.N2 || pos == PositionInsertion.N3)
+        {
+            System.out.println("TES LAAAAAAAAAAAAAAAAAAAA");
+            for(int i = TAILLE -1; i > 0 ; i--){
+                    matriceCouloirs[i][ord] = matriceCouloirs[i-1][ord];
+                }
+        }
+        else if ( pos == PositionInsertion.S1 || pos == PositionInsertion.S2 || pos == PositionInsertion.S3){
+            for(int i = 0; i < TAILLE -1 ; i++){
+                matriceCouloirs[i][ord] = matriceCouloirs[i+1][ord];
+            }
+        }
+        else if (pos == PositionInsertion.O1 || pos == PositionInsertion.O2 || pos == PositionInsertion.O3){
+            for(int i = TAILLE-1; i > 0 ; i--){
+                matriceCouloirs[abs][i] = matriceCouloirs[abs][i-1];
+            }
+        }
+        else if (pos == PositionInsertion.E1 || pos == PositionInsertion.E2 || pos == PositionInsertion.E3){
+            for(int i = 0; i < TAILLE -1 ; i++){
+                matriceCouloirs[abs][i] = matriceCouloirs[abs][i+1];
+            }
+        }
+        matriceCouloirs[abs][ord] = c;
+        return coul;
     }
 
     private CouloirImpl[][] getCouloirImpls(){
@@ -55,6 +82,7 @@ public class Plateau {
     }
 
     public boolean estAtteignable(Position orig, Position dest) {
+        System.out.println("coucou");
         // Objectif : vérifier la forme et l'orientation ..
         int xOrigine = orig.getX();
         int yOrigine = orig.getY();
@@ -319,9 +347,11 @@ public class Plateau {
         String chaine = "";
         for (int i = 0; i < TAILLE; i++) {
             for (int j = 0; j < TAILLE; j++) {
-                chaine += "(" + i + ", " + j + ") : \t" + matrice[i][j] + " \n";
+                //chaine += "(" + i + ", " + j + ") : \t" + matrice[i][j] + "\n";
+                chaine += "| " + matrice[i][j] + "\t";
             }
-           chaine += "\n";
+            
+           chaine += "\n---------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n";
         }
         
         return chaine;
@@ -331,7 +361,7 @@ public class Plateau {
         Plateau p = new Plateau();
         System.out.println(p);
 
-        System.out.println("Tests estAtteignable() : ");
+        /*System.out.println("Tests estAtteignable() : ");
         Position p0 = new Position(0, 0);
         Position p1 = new Position(0, 2);
         Position p2 = new Position(2, 2);
@@ -346,8 +376,21 @@ public class Plateau {
         System.out.println(p6 + " à " + p7 + " == " + p.estAtteignable(p6, p7) + "\n");
         System.out.println(p1 + " à " + p2 + " == " + p.estAtteignable(p1, p2) + "\n");
         System.out.println(p1 + " à " + p6 + " == " + p.estAtteignable(p1, p6) + "\n");
-        System.out.println(p4 + " à " + p7 + " == " + p.estAtteignable(p4, p7) + "\n");
+        System.out.println(p4 + " à " + p7 + " == " + p.estAtteignable(p4, p7) + "\n");*/
 
+        System.out.println("Tests ModifierCouloir : ");
+        CouloirMobile test = new CouloirMobile(Orientation.NORD, Forme.TE, Objectif.VIDE);
+        p.modifierCouloirs(PositionInsertion.N1, test);
+        System.out.println(p);
+        p.modifierCouloirs(PositionInsertion.O1, test);
+        System.out.println(p);
+        p.modifierCouloirs(PositionInsertion.O2, test);
+        System.out.println(p);
+        p.modifierCouloirs(PositionInsertion.S1, test);
+        System.out.println(p);
+        p.modifierCouloirs(PositionInsertion.E1, test);
+        System.out.println(p);
+        
         System.out.println();
     }
 }

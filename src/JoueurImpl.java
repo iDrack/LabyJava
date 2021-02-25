@@ -30,7 +30,7 @@ public class JoueurImpl implements Joueur {
             arrayStr.add(tab[i].toString());
             arrayPI.add(tab[i]);
         }
-
+        
         System.out.println("Choisir la position d'insertion du couloir :");
         boolean choix = false;
         while(choix == false) {
@@ -47,38 +47,42 @@ public class JoueurImpl implements Joueur {
         }
         System.out.println();
         
-        sc.close();
+        //sc.close();
+        System.out.println("choisir position insertion couloir retourne " + positionInsertion.toString());
         return positionInsertion;
     }
 
     public Position choisirPositionPion(){
         Scanner sc = new Scanner(System.in);
-        int x = 0;
-        int y = 0;
-
+        int x = -1;
+        int y = -1;
+        System.out.println("position du pion " + this.pion.getPositionCourante().toString() );
         System.out.println("Choisir la position du pion.");
 
-        while ((x < 1 || x > 7) || (y < 1 || y > 7)){
+        while ((x < 0 || x > 6) || (y < 0 || y > 6)){
             System.out.println("Position x :");
-            x = sc.nextInt();
+            x = Integer.parseInt(sc.nextLine());
             System.out.println("Position y :");
-            y = sc.nextInt();
+            y = Integer.parseInt(sc.nextLine());
         }
 
-
-        sc.close();
+        //sc.close();
         Position p = new Position(x,y);
-        System.out.println(p);
         return p;
     }
 
     @Override
     public void joue(){
-       jeu.modifierCouloirs(choisirPositionInsertionCouloir());
-       Objectif objectif = pion.deplacer(choisirPositionPion()); 
-       if (objectif == objectifs.peek()) {
-           objectifs.pop();
-       }
+        System.out.println("Pion de couleur " + this.pion.getCouleurPion());
+        jeu.modifierCouloirs(choisirPositionInsertionCouloir());
+        Objectif objectif = pion.deplacer(choisirPositionPion()); 
+        while (objectif == null){
+            System.out.println("Pion de couleur " + this.pion.getCouleurPion());
+            objectif = pion.deplacer(choisirPositionPion());
+        }
+        if (objectif == objectifs.peek()) {
+            objectifs.pop();
+        }
     }
 
     public Orientation choisirOrientationCouloir(){
@@ -94,7 +98,7 @@ public class JoueurImpl implements Joueur {
             expr = expr.toUpperCase();
         }
 
-        sc.close();
+        //sc.close();
 
         return Orientation.getOrientation(expr);
     }
@@ -118,10 +122,10 @@ public class JoueurImpl implements Joueur {
     }
 
     public static void main(String[] args) {
-        JoueurImpl j = new JoueurImpl(null, 10, null);
-        Position p = new Position(0,0);
-        p = j.choisirPositionPion();
-        p.toString();
+        //JoueurImpl j = new JoueurImpl(null, 10, null);
+        //Position p = new Position(0,0);
+        //j.choisirPositionPion();
+        
         //j.choisirOrientationCouloir();
         //j.choisirPositionInsertionCouloir();
     }
