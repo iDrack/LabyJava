@@ -1,7 +1,7 @@
 import java.util.*;
 
 public class JeuImpl implements Jeu {
-    private Plateau plateau;
+    private Plateau plateau = new Plateau();
     private ArrayList<Couloir> couloirs = new ArrayList<Couloir>();
     private ArrayList<Objectif> objectifs = new ArrayList<Objectif>();
     private ArrayList<Pion> pions = new ArrayList<Pion>();
@@ -12,7 +12,9 @@ public class JeuImpl implements Jeu {
     private int nbJoueur = 0;
 
     public JeuImpl(){
+        
         enregistrer();
+        preparer();
 
         this.joueurCourant = this.joueurs.get(0);
         for (Joueur joueur : this.joueurs){
@@ -21,13 +23,14 @@ public class JeuImpl implements Jeu {
                 // ...
             }
         }
-        /*
-            while(! aGagner(JoueurCourant)){
-                joueurCourant.joué();
+        
+            while(! aGagné(this.joueurCourant)){
+                System.out.println(this.plateau.toString());
+                joueurCourant.joue();
                 joueurCourant = prochainJoueur();
             }
            
-        */
+        
 
         // ...
     }
@@ -52,8 +55,7 @@ public class JeuImpl implements Jeu {
 
     @Override
     public void jouer() {
-        // Demande où il souhaite aller, etc.
-        // ..
+        
     }
 
     @Override
@@ -102,14 +104,14 @@ public class JeuImpl implements Jeu {
             else if (i == 2) {pos = new Position(0,6);}
             else {new Position(6,0);}
 
-            Pion pion = new PionImpl(pos, Couleur.getCouleur(expr));
+            Pion pion = new PionImpl(pos, Couleur.getCouleur(expr),this.plateau);
             joueur = new JoueurImpl(pion, age, this);
             this.joueurs.add(joueur);
         }
 
         preparer();
 
-        sc.close();
+        //sc.close();
     }
 
     @Override
@@ -137,6 +139,15 @@ public class JeuImpl implements Jeu {
             }
             leJoueur.setStack(objectifsJoueur);
         }
+        //Initialise le plateau et donne le couloir supplementaire
+
+        Orientation[] orientations = Orientation.values();
+        Forme[] formes = Forme.values();
+        Random r = new Random();
+        int or, f;
+        or = r.nextInt(Orientation.NB);
+        f = r.nextInt(Forme.NB);
+        this.supplementaire = new CouloirMobile(orientations[or], formes[f], Objectif.VIDE);
     }
 
     @Override

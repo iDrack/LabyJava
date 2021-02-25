@@ -4,10 +4,12 @@ public class PionImpl implements Pion {
     private Position positionCourante;
     private Plateau plateau;
 
-    public PionImpl(Position pos, Couleur coul){
+    public PionImpl(Position pos, Couleur coul, Plateau plateau){
         this.positionInitiale = pos;
         this.positionCourante = pos;
         this.couleur = coul;
+        this.plateau = plateau;
+
     }
 
     @Override
@@ -29,6 +31,7 @@ public class PionImpl implements Pion {
     public Objectif deplacer(Position pos){
         // Le pion délègue son déplacement au plateau, qui a une vue globale de la situation : 
         // Il est le seul objet à pouvoir vérifier si un chemin existe entre la position du pion et la position destination.
+        System.out.println("positionCourante = " + positionCourante.toString() + "  position pos = "+ pos.toString() );
         if(plateau.estAtteignable(positionCourante, pos)){
             positionCourante = pos;
             return plateau.getObjectifCase(pos);
