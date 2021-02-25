@@ -2,19 +2,23 @@ import javax.swing.*;
 import java.util.Timer;
 import java.util.TimerTask;
 
+
 public class MainWindow extends JFrame {
     private static final long serialVersionUID = 1L;
     public static JFrame instance;
-    public final static int WIDTH=600;
+    public final static int WIDTH=908;
+    public final static int HEIGHT=633;
+
     public static MenuPrincipal menu;
 
     /**
      * Constructeur de la classe MainWindow
      */
     public MainWindow(){
+
         //Generation de la fenêtre
         setTitle("Labyrinthe");
-        setSize(WIDTH, WIDTH);
+        setSize(WIDTH, HEIGHT);
         setResizable(false);
 
         //Generation du contenu
@@ -44,5 +48,4 @@ public class MainWindow extends JFrame {
     public static void main(String[] args){
         new MainWindow();
     }
-
 }

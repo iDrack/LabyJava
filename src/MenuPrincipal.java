@@ -2,37 +2,41 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 public class MenuPrincipal extends JPanel {
 
     private static final long serialVersionUID = 1L;
     private JButton jouer;
     private JButton quitter;
-
     private final Font fontEntered = new Font(Font.DIALOG, Font.ROMAN_BASELINE, 20);
+    private Image img;
 
     /**
      * Constructeur de la classe MenuPrincipal
-     * MenuPrincipal est un JPanel contenant deux boutons ainsi qu'un texte
+     * MenuPrincipal est un JPanel contenant deux boutons ainsi qu'une image de fond
      */
     public MenuPrincipal(){
+        this.img = new ImageIcon("media/img/labyrinthe.png").getImage();
+        Dimension size = new Dimension(img.getWidth(null), img.getHeight(null));
+        setPreferredSize(size);
+        setMinimumSize(size);
+        setMaximumSize(size);
+        setSize(size);
         this.setLayout(null);
 
-        JLabel titre = new JLabel("Labyrinthe");
         jouer = new JButton("Jouer");
         quitter = new JButton("Quitter");
 
         //Positionnement des boutons
-        titre.setBounds(245,50,150,50);
-        jouer.setBounds(225,200,150,50);
-        quitter.setBounds(225,350,150,50);
+        jouer.setBounds(225,500,150,50);
+        quitter.setBounds(531,500,150,50);
 
         //Choix des polices d'écriture
-        titre.setFont(fontEntered);
         jouer.setFont(fontEntered);
         quitter.setFont(fontEntered);
 
-        //ajout des boutons / du titre
-        this.add(titre);
+        //ajout des boutons 
+
         this.add(jouer);
         this.add(quitter);
 
@@ -50,11 +54,7 @@ public class MenuPrincipal extends JPanel {
         });
     }
 
-    public JButton getJouer(){
-        return jouer;
-    }
-
-    public JButton getQuitter(){
-        return quitter;
+    public void paintComponent(Graphics g) {
+        g.drawImage(img, 0, 0, null);
     }
 }
