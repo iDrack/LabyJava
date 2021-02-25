@@ -48,7 +48,6 @@ public class JoueurImpl implements Joueur {
         System.out.println();
         
         //sc.close();
-        System.out.println("choisir position insertion couloir retourne " + positionInsertion.toString());
         return positionInsertion;
     }
 
@@ -56,7 +55,7 @@ public class JoueurImpl implements Joueur {
         Scanner sc = new Scanner(System.in);
         int x = -1;
         int y = -1;
-        System.out.println("position du pion " + this.pion.getPositionCourante().toString() );
+        System.out.println("Position du pion  : " + this.pion.getPositionCourante().toString());
         System.out.println("Choisir la position du pion.");
 
         while ((x < 0 || x > 6) || (y < 0 || y > 6)){
@@ -67,19 +66,19 @@ public class JoueurImpl implements Joueur {
         }
 
         //sc.close();
-        Position p = new Position(x,y);
-        return p;
+        return new Position(x,y);
     }
 
     @Override
     public void joue(){
-        System.out.println("Pion de couleur " + this.pion.getCouleurPion());
+        System.out.println("Pion : " + this.pion.getCouleurPion() + ".");
         jeu.modifierCouloirs(choisirPositionInsertionCouloir());
         Objectif objectif = pion.deplacer(choisirPositionPion()); 
         while (objectif == null){
-            System.out.println("Pion de couleur " + this.pion.getCouleurPion());
+            System.out.println("Pion : " + this.pion.getCouleurPion() + ".");
             objectif = pion.deplacer(choisirPositionPion());
         }
+
         if (objectif == objectifs.peek()) {
             objectifs.pop();
         }
@@ -99,7 +98,6 @@ public class JoueurImpl implements Joueur {
         }
 
         //sc.close();
-
         return Orientation.getOrientation(expr);
     }
 

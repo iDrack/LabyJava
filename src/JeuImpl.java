@@ -12,7 +12,6 @@ public class JeuImpl implements Jeu {
     private int nbJoueur = 0;
 
     public JeuImpl(){
-        
         enregistrer();
         preparer();
 
@@ -24,13 +23,11 @@ public class JeuImpl implements Jeu {
             }
         }
         
-            while(! aGagné(this.joueurCourant)){
-                System.out.println(this.plateau.toString());
-                joueurCourant.joue();
-                joueurCourant = prochainJoueur();
-            }
-           
-        
+        while(! aGagné(this.joueurCourant)){
+            System.out.println(this.plateau.toString());
+            joueurCourant.joue();
+            joueurCourant = prochainJoueur();
+        }
 
         // ...
     }
@@ -55,7 +52,7 @@ public class JeuImpl implements Jeu {
 
     @Override
     public void jouer() {
-        
+        // ..
     }
 
     @Override
@@ -110,7 +107,6 @@ public class JeuImpl implements Jeu {
         }
 
         preparer();
-
         //sc.close();
     }
 
@@ -139,12 +135,13 @@ public class JeuImpl implements Jeu {
             }
             leJoueur.setStack(objectifsJoueur);
         }
-        //Initialise le plateau et donne le couloir supplementaire
 
+        // Initialise le couloir supplementaire !
         Orientation[] orientations = Orientation.values();
         Forme[] formes = Forme.values();
         Random r = new Random();
         int or, f;
+        
         or = r.nextInt(Orientation.NB);
         f = r.nextInt(Forme.NB);
         this.supplementaire = new CouloirMobile(orientations[or], formes[f], Objectif.VIDE);

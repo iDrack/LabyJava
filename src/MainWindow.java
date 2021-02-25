@@ -2,7 +2,6 @@ import javax.swing.*;
 import java.util.Timer;
 import java.util.TimerTask;
 
-
 public class MainWindow extends JFrame {
     private static final long serialVersionUID = 1L;
     public static JFrame instance;
@@ -12,16 +11,16 @@ public class MainWindow extends JFrame {
     public static MenuPrincipal menu;
 
     /**
-     * Constructeur de la classe MainWindow
+     * Constructeur de la classe MainWindow.
      */
     public MainWindow(){
 
-        //Generation de la fenêtre
+        // Generation de la fenêtre.
         setTitle("Labyrinthe");
         setSize(WIDTH, HEIGHT);
         setResizable(false);
 
-        //Generation du contenu
+        // Generation du contenu.
         MainWindow.menu = new MenuPrincipal();
         setContentPane(menu);
 
@@ -33,7 +32,7 @@ public class MainWindow extends JFrame {
     }
 
     /**
-     * Permet de repeindre le contenu de notre fenêtre
+     * Permet de repeindre le contenu de notre fenêtre.
      */
     private void registerClock() {
         Timer clock = new Timer();
