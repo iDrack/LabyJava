@@ -10,20 +10,31 @@ public class MenuPrincipal extends JPanel {
     private JButton quitter;
     private final Font fontEntered = new Font(Font.DIALOG, Font.ROMAN_BASELINE, 20);
     private Image img;
+    private MainWindow fenetre;
+    private Dimension size;
 
     /**
      * Constructeur de la classe MenuPrincipal
      * MenuPrincipal est un JPanel contenant deux boutons ainsi qu'une image de fond
      */
-    public MenuPrincipal(){
+    public MenuPrincipal(MainWindow f){
+        this.fenetre = f;
+
+        //Accés à l'image de fond
         this.img = new ImageIcon("media/img/labyrinthe.png").getImage();
+
+        //Détection de la taille de l'image de fond
         Dimension size = new Dimension(img.getWidth(null), img.getHeight(null));
+
+        //Paramétrage de la taille de la fenêtre
         setPreferredSize(size);
         setMinimumSize(size);
         setMaximumSize(size);
         setSize(size);
+        this.size = size;
         this.setLayout(null);
 
+        //Crréation des label jouer et quitter
         jouer = new JButton("Jouer");
         quitter = new JButton("Quitter");
 
@@ -36,14 +47,13 @@ public class MenuPrincipal extends JPanel {
         quitter.setFont(fontEntered);
 
         //ajout des boutons 
-
         this.add(jouer);
         this.add(quitter);
 
         //Ajout des fonctionnalité des boutons
         jouer.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Désoler ceci est un placeholder");
+                changerMenu();
             }
         });
         quitter.addActionListener(new ActionListener(){
@@ -56,5 +66,10 @@ public class MenuPrincipal extends JPanel {
 
     public void paintComponent(Graphics g) {
         g.drawImage(img, 0, 0, null);
+    }
+
+    private void changerMenu(){
+        MenuCreation menuCreation = new MenuCreation(size);
+        this.fenetre.setContentPane(menuCreation);
     }
 }

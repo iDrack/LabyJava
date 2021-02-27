@@ -21,7 +21,7 @@ public class MainWindow extends JFrame {
         setResizable(false);
 
         // Generation du contenu.
-        MainWindow.menu = new MenuPrincipal();
+        MainWindow.menu = new MenuPrincipal(this);
         setContentPane(menu);
 
         instance = this;
