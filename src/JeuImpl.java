@@ -59,11 +59,32 @@ public class JeuImpl implements Jeu {
     public void enregistrer(){
         // Donner un pion au joueur.
         Joueur joueur;
-        Scanner sc = new Scanner(System.in);
-        String expr = null;
-        int age;
+        //Scanner sc = new Scanner(System.in);
         Position pos = null;
 
+        //Récupération des éléments afin de créer les joueurs
+        this.nbJoueur = MenuCreation.getNbJoueurs();
+        int[] listeAge = MenuCreation.listeAgeToInt();
+        String[] listeCouleur = MenuCreation.listeCouleursToString();
+        for(int i=0;i<nbJoueur;i++){
+            System.out.println(listeAge[i]);
+            System.out.println(listeCouleur[i]);
+        }
+
+        //Création des joueurs
+        for(int i=0;i<nbJoueur;i++){
+            //Génération de la position du pion du joueur
+            if (i == 0) pos = new Position(0,0);
+            else if (i == 1) pos = new Position(6,6);
+            else if (i == 2) pos = new Position(0,6);
+            else new Position(6,0);
+            //Création du pion
+            Pion pion = new PionImpl(pos, Couleur.getCouleur(listeCouleur[i]),this.plateau);
+            //Création du joueur et ajout
+            joueur = new JoueurImpl(pion, listeAge[i], this);
+            this.joueurs.add(joueur);
+        }
+/*      Je laisse l'ancien code en comm, on sait jamais si cela peut servir plus tard
         do {
             System.out.println("Nombre de joueur a jouer : ");
             this.nbJoueur = Integer.parseInt(sc.nextLine());
@@ -105,6 +126,7 @@ public class JeuImpl implements Jeu {
             joueur = new JoueurImpl(pion, age, this);
             this.joueurs.add(joueur);
         }
+        */
 
         preparer();
         //sc.close();

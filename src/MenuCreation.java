@@ -9,10 +9,11 @@ public class MenuCreation extends JPanel{
     private JLabel nbJoueurText;
     private JTextField nbJoueurField;
     private JButton valider;
-    private int nbJoueurs;
-
+    private static int nbJoueurs;
     private final Font fontEntered = new Font(Font.DIALOG, Font.ROMAN_BASELINE, 20);
     private Dimension size;
+    private static JTextField[] listeAge;
+    private static JTextField[] listeCouleurs;
 
     public MenuCreation(Dimension s){
         this.size = s;
@@ -55,23 +56,26 @@ public class MenuCreation extends JPanel{
             System.out.println("Valeur interdite");
             return;
         }
-        this.nbJoueurs = x;
+        nbJoueurs = x;
 
         JLabel[] listeTitres = new JLabel[x];
-        JTextField[] listeAge = new JTextField[x];
-        JTextField[] listeCouleurs = new JTextField[x];
+        listeAge = new JTextField[x];
+        listeCouleurs = new JTextField[x];
         JLabel couleur, instructionAge, instructionCouleur;
         JButton validerJoueurs;
 
         validerJoueurs = new JButton("Valider les joueurs");
         instructionAge = new JLabel("Vous devez avoir plus de 8 ans pour jouer.");
         instructionCouleur = new JLabel("Couleurs disponibles : Rouge, Vert, Bleu, Jaune.");
+        
         validerJoueurs.setBounds(301,175+(x+1)*(30),305,30);
         instructionAge.setBounds(150,130,1000,50);
         instructionCouleur.setBounds(150,160,1000,50);
+        
         validerJoueurs.setFont(fontEntered);
         instructionAge.setFont(fontEntered);
         instructionCouleur.setFont(fontEntered);
+        
         this.add(validerJoueurs);
         this.add(instructionAge);
         this.add(instructionCouleur);
@@ -102,6 +106,51 @@ public class MenuCreation extends JPanel{
             this.add(listeCouleurs[i]);
             this.add(couleur);
         }
+
+        validerJoueurs.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                if(verification()) chargerJeu();
+            }
+        });
+    }
+
+    private boolean verification(){
+        int[] lAge = listeAgeToInt();
+        String[] lCouleur = listeCouleursToString();
+
+        for(int i=0; i<nbJoueurs; i++){
+            if(lAge[i] < 8)return false;
+            if((! lCouleur[i].equals("JAUNE")) && (! lCouleur[i].equals("BLEU")) && (! lCouleur[i].equals("VERT")) && (! lCouleur[i].equals("ROUGE")))return false;
+            for(int j=0; j<nbJoueurs; j++){
+                if( i != j && lCouleur[i].equals(lCouleur[j]))return false;
+            }
+        }       
+        return true;
+    }
+
+    private void chargerJeu(){
+        Jeu jeu = new JeuImpl();
+        System.out.println(jeu);
+    }
+
+    public static int getNbJoueurs(){
+        return nbJoueurs;
+    }
+
+    public static int[] listeAgeToInt() {
+        int[] ret = new int[nbJoueurs];
+        for(int i=0;i<nbJoueurs;i++){
+            ret[i] = Integer.parseInt(listeAge[i].getText());
+        }
+        return ret;
+    }
+
+    public static String[] listeCouleursToString() {
+        String[] ret = new String[nbJoueurs];
+        for(int i=0;i<nbJoueurs;i++){
+            ret[i] = listeCouleurs[i].getText().toUpperCase();
+        }
+        return ret;
     }
 
 }
