@@ -15,6 +15,9 @@ public class JeuImpl implements Jeu {
         enregistrer();
         preparer();
 
+        // TODO : tu peux le faire ici.
+        // PS : Plateau fait tout en haut (directement au début : ligne 4, création et initialisation).
+
         this.joueurCourant = this.joueurs.get(0);
         for (Joueur joueur : this.joueurs){
             if (joueur.getAge() < this.joueurCourant.getAge() ){
