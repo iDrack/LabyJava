@@ -25,12 +25,6 @@ public class MenuPrincipal extends JPanel {
 
         //Détection de la taille de l'image de fond
         Dimension size = new Dimension(img.getWidth(null), img.getHeight(null));
-
-        //Paramétrage de la taille de la fenêtre
-        setPreferredSize(size);
-        setMinimumSize(size);
-        setMaximumSize(size);
-        setSize(size);
         this.size = size;
         this.setLayout(null);
 

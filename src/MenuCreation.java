@@ -133,7 +133,7 @@ public class MenuCreation extends JPanel{
     private void chargerJeu(){
         //Jeu jeu = new JeuImpl();
         //System.out.println(jeu);
-        this.page.setContentPane(new VueJeu(size,page));
+        this.page.setContentPane(new VueJeu(page));
     }
 
     public static int getNbJoueurs(){

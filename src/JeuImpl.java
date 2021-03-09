@@ -87,49 +87,6 @@ public class JeuImpl implements Jeu {
             joueur = new JoueurImpl(pion, listeAge[i], this);
             this.joueurs.add(joueur);
         }
-/*      Je laisse l'ancien code en comm, on sait jamais si cela peut servir plus tard
-        do {
-            System.out.println("Nombre de joueur a jouer : ");
-            this.nbJoueur = Integer.parseInt(sc.nextLine());
-        }while(this.nbJoueur <= 0 || this.nbJoueur > 4);
-        System.out.println();
-
-        Couleur[] tabCouleurs = Couleur.values();
-        ArrayList<String> arrayCouleurs = new ArrayList<String>();
-        for (int i = 0; i < tabCouleurs.length; arrayCouleurs.add(tabCouleurs[i++].toString()));
-
-        for(int i = 0; i < this.nbJoueur; i++){
-            System.out.println("Joueur n°" + (i + 1) + ".");
-            boolean choixCouleur = false;
-            while(choixCouleur == false){
-                System.out.println("Choisir une couleur ci-dessous : ");
-                System.out.println(arrayCouleurs.toString());
-                System.out.print("Votre choix : ");
-                expr = sc.nextLine();
-                expr = expr.toUpperCase(); 
-
-                if(arrayCouleurs.contains(expr)){
-                    choixCouleur = true;
-                    arrayCouleurs.remove(expr);
-                }
-            }
-                
-            do {
-                System.out.print("Entrez votre age (mini 8) : ");
-                age = Integer.parseInt(sc.nextLine());
-            } while (age < 8);
-            System.out.println();
-
-            if (i == 0) {pos = new Position(0,0);}
-            else if (i == 1) {pos = new Position(6,6);}
-            else if (i == 2) {pos = new Position(0,6);}
-            else {new Position(6,0);}
-
-            Pion pion = new PionImpl(pos, Couleur.getCouleur(expr),this.plateau);
-            joueur = new JoueurImpl(pion, age, this);
-            this.joueurs.add(joueur);
-        }
-        */
 
         preparer();
         //sc.close();
@@ -210,6 +167,7 @@ public class JeuImpl implements Jeu {
     public Plateau getPlateau(){
         return this.plateau;
     }
+
     public static void main(String[] args){
         Jeu jeu = new JeuImpl();
         System.out.println(jeu);

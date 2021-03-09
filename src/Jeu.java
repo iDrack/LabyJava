@@ -22,4 +22,5 @@ public interface Jeu {
     public Joueur getJoueur();
 
     public Plateau getPlateau();
+
 }

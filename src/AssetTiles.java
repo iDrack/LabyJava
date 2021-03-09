@@ -1,12 +1,16 @@
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 
-public class AssetTiles {
-    private static HashMap<String, BufferedImage> assets = new HashMap<String, BufferedImage>();//Permet de stocker les images
+public class AssetTiles{
+    
+    private static final long serialVersionUID = 1L;
 
     private static BufferedImage NO_TEXTURE = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);//Renvoie une tile noir si aucune image ne peut être charger
     static {
@@ -21,18 +25,13 @@ public class AssetTiles {
      */
     public static BufferedImage getImage(String url){
         //récupére le fichier où ce situe les tiles (chemin = url)
-        if (assets.containsKey(url)) return assets.get(url);
-
-        try(InputStream is = AssetTiles.class.getResourceAsStream("media/img/sprites/".concat(url))){
-            if (is != null){
-                BufferedImage img = ImageIO.read(is);
-                assets.putIfAbsent(url,img);
-                return img;
-            }
-        }catch (IOException e){
+        BufferedImage ret = NO_TEXTURE;
+        try {
+            ret = ImageIO.read(new File("media/img/sprites/".concat(url)));
+        } catch (IOException e) {
             e.printStackTrace();
         }
-        return NO_TEXTURE;
+        return ret;
     }
 
     /**
@@ -72,5 +71,9 @@ public class AssetTiles {
                 return getImage("formet.png");
             }
         }
+    }
+
+    public static BufferedImage getObjectifImage(Objectif obj){
+        return getImage(obj.toString().toLowerCase().concat(".png"));
     }
 }
