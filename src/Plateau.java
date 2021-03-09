@@ -1,7 +1,7 @@
 import java.util.*;
 
 public class Plateau {
-    private static final int TAILLE = 7;
+    public static final int TAILLE = 7;
     private ArrayList<CouloirFixe> couloiresFixes = new ArrayList<CouloirFixe>();
     private ArrayList<CouloirMobile> couloirsMobiles = new ArrayList<CouloirMobile>();
     private CouloirImpl[][] matriceCouloirs = new CouloirImpl[TAILLE][TAILLE];
@@ -74,7 +74,7 @@ public class Plateau {
         return coul;
     }
 
-    private CouloirImpl[][] getCouloirImpls(){
+    public CouloirImpl[][] getCouloirImpls(){
         return this.matriceCouloirs;
     }
 
@@ -352,6 +352,8 @@ public class Plateau {
         
         return chaine;
     }
+
+   
 
     public static void main(String[] args) {
         Plateau p = new Plateau();

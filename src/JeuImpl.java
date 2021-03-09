@@ -26,11 +26,11 @@ public class JeuImpl implements Jeu {
             }
         }
         
-        while(! aGagné(this.joueurCourant)){
+        /*while(! aGagné(this.joueurCourant)){
             System.out.println(this.plateau.toString());
             joueurCourant.joue();
             joueurCourant = prochainJoueur();
-        }
+        }*/
 
         // ...
     }
@@ -206,8 +206,14 @@ public class JeuImpl implements Jeu {
         return this.joueurCourant;
     }
 
+
+    public Plateau getPlateau(){
+        return this.plateau;
+    }
     public static void main(String[] args){
         Jeu jeu = new JeuImpl();
         System.out.println(jeu);
     }
+
+
 }

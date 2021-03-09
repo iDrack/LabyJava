@@ -62,6 +62,7 @@ public class MenuPrincipal extends JPanel {
                 System.exit(0);                 //Quitte le programme
             }
         });
+
     }
 
     public void paintComponent(Graphics g) {
@@ -69,7 +70,8 @@ public class MenuPrincipal extends JPanel {
     }
 
     private void changerMenu(){
-        MenuCreation menuCreation = new MenuCreation(size);
+        MenuCreation menuCreation = new MenuCreation(size,fenetre);
         this.fenetre.setContentPane(menuCreation);
     }
+    
 }

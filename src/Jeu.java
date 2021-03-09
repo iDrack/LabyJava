@@ -20,4 +20,6 @@ public interface Jeu {
     public ArrayList<Pion> pions();
 
     public Joueur getJoueur();
+
+    public Plateau getPlateau();
 }

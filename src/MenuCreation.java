@@ -14,9 +14,11 @@ public class MenuCreation extends JPanel{
     private Dimension size;
     private static JTextField[] listeAge;
     private static JTextField[] listeCouleurs;
+    private MainWindow page;
 
-    public MenuCreation(Dimension s){
+    public MenuCreation(Dimension s,MainWindow page){
         this.size = s;
+        this.page = page;
         //Paramétrage de la taille de la fenêtre
         setPreferredSize(size);
         setMinimumSize(size);
@@ -129,8 +131,9 @@ public class MenuCreation extends JPanel{
     }
 
     private void chargerJeu(){
-        Jeu jeu = new JeuImpl();
-        System.out.println(jeu);
+        //Jeu jeu = new JeuImpl();
+        //System.out.println(jeu);
+        this.page.setContentPane(new VueJeu(size,page));
     }
 
     public static int getNbJoueurs(){
