@@ -31,7 +31,9 @@ public class PionImpl implements Pion {
         // Le pion délègue son déplacement au plateau, qui a une vue globale de la situation : 
         // Il est le seul objet à pouvoir vérifier si un chemin existe entre la position du pion et la position destination.
         if(plateau.estAtteignable(positionCourante, pos)){
+            plateau.déplacer(pos,this);
             positionCourante = pos;
+            System.out.println(plateau.getCouloirImpls()[getPositionCourante().getX()][getPositionCourante().getY()].getPions().toString());
             return plateau.getObjectifCase(pos);
         } else {
             System.out.println("Deplacement impossible !!"); 
@@ -42,8 +44,9 @@ public class PionImpl implements Pion {
 
     public void poserA(Position pos){
         //if(plateau.estAtteignable(positionCourante, pos)){ // A voir mais pour Dimitri c'est logique.
-            plateau.déplacer(pos, this);
+           // plateau.déplacer(pos, this);
             positionCourante = pos;
+            System.out.println(plateau.getCouloirImpls()[getPositionCourante().getX()][getPositionCourante().getY()].getPions().toString());
         //} 
         
         // Fonction qui sert a poser le pion sur le couloir qu'on insère si le pion se fait sortir du "plateau de jeu".
