@@ -14,6 +14,17 @@ public class  VueJeu extends JPanel {
     private Jeu modele = new JeuImpl();
     private Plateau plateau = modele.getPlateau();
 
+
+    private JLabel xText;
+    private JLabel yText;
+
+    private JTextField x;
+    private JTextField y;
+
+    private JButton validerMouvement;
+    private JButton validerCouloir;
+
+
     public VueJeu(MainWindow page){
         this.page=page;
 
@@ -31,6 +42,9 @@ public class  VueJeu extends JPanel {
             e.printStackTrace();
         }      
         ajoutinfo();
+        ajoutOptions();
+
+        System.out.println("Liste de pions > "+modele.pions());
     }
 
     public void ajoutCase() throws IOException{
@@ -73,6 +87,37 @@ public class  VueJeu extends JPanel {
         info.setBounds(SIZE_OBJECTIF,offset,250,50);
         info.setFont(fontEntered);
         this.add(info);    
+    }
+
+    public void ajoutOptions(){
+        int offset = SIZE_COULOIR*7+50;
+        int offsetHorizontal = SIZE_OBJECTIF + 150;
+
+        JLabel text = new JLabel("Déplacer pion");
+        this.xText = new JLabel("X :");
+        this.x = new JTextField();
+        this.yText = new JLabel("Y :");
+        this.y = new JTextField();
+
+        text.setFont(fontEntered);
+        xText.setFont(fontEntered);
+        x.setFont(fontEntered);
+        yText.setFont(fontEntered);
+        y.setFont(fontEntered);
+        
+        text.setBounds(offsetHorizontal,offset-25,200,50);
+        xText.setBounds(offsetHorizontal,offset,30,50);
+        x.setBounds(offsetHorizontal+35,offset+10,50,30);
+        yText.setBounds(offsetHorizontal,offset+30,30,50);
+        y.setBounds(offsetHorizontal+35,offset+40,50,30);
+
+        this.add(text);
+        this.add(x);
+        this.add(xText);
+        this.add(y);
+        this.add(yText);
+        
+
     }
 
 }
