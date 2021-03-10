@@ -22,6 +22,17 @@ public class CouloirImpl implements Couloir {
         return this.forme;
     }
 
+    public void addPion(Pion p){
+        this.pions.add(p);
+    }
+
+    public void supPion(Pion p){
+        this.pions.remove(p);
+    }
+    public void suppToutPion(){
+        this.pions.clear();
+    }
+
     @Override
     public Objectif getObjectif(){
         return this.objectif;

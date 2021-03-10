@@ -53,24 +53,56 @@ public class Plateau {
         int abs = pos.getPosition().getX();
 
         if(pos == PositionInsertion.N1 || pos == PositionInsertion.N2 || pos == PositionInsertion.N3){
-            for(int i = TAILLE -1; i > 0 ; i--){
-                matriceCouloirs[i][ord] = matriceCouloirs[i-1][ord];
+            for(int i = TAILLE -1; i >= 0 ; i--){
+                if (i != TAILLE -1){
+                    for (Pion pion : matriceCouloirs[i][ord].getPions()){
+                        pion.poserA(new Position(i+1, ord));
+                    }
+                }
+                if (i != 0){
+                    matriceCouloirs[i][ord] = matriceCouloirs[i-1][ord];
+                }
+                
             }
         } else if(pos == PositionInsertion.S1 || pos == PositionInsertion.S2 || pos == PositionInsertion.S3){
-            for(int i = 0; i < TAILLE -1 ; i++){
-                matriceCouloirs[i][ord] = matriceCouloirs[i+1][ord];
+            for(int i = 0; i < TAILLE  ; i++){
+                if (i!=0){
+                    for (Pion pion : matriceCouloirs[i][ord].getPions()){
+                        System.out.println("pion couloir ordonner " + String.valueOf(i));
+                        pion.poserA(new Position(i-1, ord));
+                    }
+                }
+                if (i != TAILLE-1){
+                    matriceCouloirs[i][ord] = matriceCouloirs[i+1][ord];
+                }
+                
             }
         } else if(pos == PositionInsertion.O1 || pos == PositionInsertion.O2 || pos == PositionInsertion.O3){
-            for(int i = TAILLE-1; i > 0 ; i--){
-                matriceCouloirs[abs][i] = matriceCouloirs[abs][i-1];
+            for(int i = TAILLE-1; i >= 0 ; i--){
+                if (i != TAILLE -1){
+                    for (Pion pion : matriceCouloirs[abs][i].getPions()){
+                        pion.poserA(new Position(abs, i+1));
+                    }
+                }
+                if (i!= 0){
+                    matriceCouloirs[abs][i] = matriceCouloirs[abs][i-1];
+                }
             }
         } else if(pos == PositionInsertion.E1 || pos == PositionInsertion.E2 || pos == PositionInsertion.E3){
-            for(int i = 0; i < TAILLE -1 ; i++){
-                matriceCouloirs[abs][i] = matriceCouloirs[abs][i+1];
+            for(int i = 0; i < TAILLE ; i++){
+                if (i != 0){
+                    for (Pion pion : matriceCouloirs[abs][i].getPions()){
+                        pion.poserA(new Position(abs, i-1));
+                    }
+                }
+                if (i!= TAILLE -1){
+                    matriceCouloirs[abs][i] = matriceCouloirs[abs][i+1];
+                }
             }
         }
-
+        
         matriceCouloirs[abs][ord] = c;
+        System.out.println("FIN DE MODIFIER COULOIR");
         return coul;
     }
 
@@ -331,7 +363,10 @@ public class Plateau {
     }
 
     public Objectif déplacer(Position pos, Pion pion) {
-        return null;
+        System.out.println(this.matriceCouloirs[pion.getPositionCourante().getX()][pion.getPositionCourante().getY()].toString());
+        this.matriceCouloirs[pos.getX()][pos.getY()].addPion(pion);
+        this.matriceCouloirs[pion.getPositionCourante().getX()][pion.getPositionCourante().getY()].supPion(pion);
+        return this.matriceCouloirs[pos.getX()][pos.getX()].getObjectif();
     }
 
     public Objectif getObjectifCase(Position pos){
@@ -353,7 +388,12 @@ public class Plateau {
         return chaine;
     }
 
-   
+   public void addPionCouloir(Position pos,Pion p){
+        this.matriceCouloirs[pos.getX()][pos.getY()].addPion(p);
+   }
+   public void supPionCouloir(Position pos,Pion p){
+    this.matriceCouloirs[pos.getX()][pos.getY()].supPion(p);
+}
 
     public static void main(String[] args) {
         Plateau p = new Plateau();

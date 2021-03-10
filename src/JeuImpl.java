@@ -10,6 +10,7 @@ public class JeuImpl implements Jeu {
     private ArrayList<Joueur> joueurs = new ArrayList<Joueur>();
     private Joueur joueurCourant;
     private int nbJoueur = 0;
+    private boolean graphique = false;
 
     public JeuImpl(){
         enregistrer();
@@ -26,11 +27,7 @@ public class JeuImpl implements Jeu {
             }
         }
         
-        /*while(! aGagné(this.joueurCourant)){
-            System.out.println(this.plateau.toString());
-            joueurCourant.joue();
-            joueurCourant = prochainJoueur();
-        }*/
+        jouer();
 
         // ...
     }
@@ -42,50 +39,119 @@ public class JeuImpl implements Jeu {
 
     @Override
     public void modifierCouloirs(PositionInsertion pos){
-        if(pos != this.positionOrigine){
+       // if(pos != this.positionOrigine){
+            if(true){
+            
             this.supplementaire = this.plateau.modifierCouloirs(pos, this.supplementaire);
             this.positionOrigine = pos.oppose();
-            /*
+            System.out.println("on insere a la position " + pos.getPosition().toString());
+            System.out.println("l'oppose de l insertion est : " + pos.oppose().getPosition().toString());
+
             for (Pion pion : supplementaire.getPions()){
+                System.out.println("pion de couleur " + pion.getCouleurPion().toString());
+                
+                
+                this.plateau.addPionCouloir(pos.getPosition(), pion);
                 pion.poserA(pos.getPosition());
+                
             }
-            */
+
+            supplementaire.suppToutPion();
+            
         }
     }
 
     @Override
     public void jouer() {
-        // ..
+        while(! aGagné(this.joueurCourant)){
+            System.out.println(this.plateau.toString());
+            joueurCourant.joue();
+            joueurCourant = prochainJoueur();
+        }
     }
 
     @Override
     public void enregistrer(){
+
+        
         // Donner un pion au joueur.
         Joueur joueur;
-        //Scanner sc = new Scanner(System.in);
+        
         Position pos = null;
+        if (graphique){
+            //Récupération des éléments afin de créer les joueurs
+            this.nbJoueur = MenuCreation.getNbJoueurs();
+            int[] listeAge = MenuCreation.listeAgeToInt();
+            String[] listeCouleur = MenuCreation.listeCouleursToString();
+            for(int i=0;i<nbJoueur;i++){
+                System.out.println(listeAge[i]);
+                System.out.println(listeCouleur[i]);
+            }
 
-        //Récupération des éléments afin de créer les joueurs
-        this.nbJoueur = MenuCreation.getNbJoueurs();
-        int[] listeAge = MenuCreation.listeAgeToInt();
-        String[] listeCouleur = MenuCreation.listeCouleursToString();
-        for(int i=0;i<nbJoueur;i++){
-            System.out.println(listeAge[i]);
-            System.out.println(listeCouleur[i]);
+            //Création des joueurs
+            for(int i=0;i<nbJoueur;i++){
+                //Génération de la position du pion du joueur
+                if (i == 0) pos = new Position(0,0);
+                else if (i == 1) pos = new Position(6,6);
+                else if (i == 2) pos = new Position(0,6);
+                else new Position(6,0);
+                //Création du pion
+                Pion pion = new PionImpl(pos, Couleur.getCouleur(listeCouleur[i]),this.plateau);
+                //Création du joueur et ajout
+                joueur = new JoueurImpl(pion, listeAge[i], this);
+                this.joueurs.add(joueur);
+            }
         }
+//      Je laisse l'ancien code en comm, on sait jamais si cela peut servir plus tard
+        else{
+            Scanner sc = new Scanner(System.in);
+            int age;
+            String expr="";
+            do {
+                System.out.println("Nombre de joueur a jouer : ");
+                this.nbJoueur = Integer.parseInt(sc.nextLine());
+            }while(this.nbJoueur <= 0 || this.nbJoueur > 4);
+            System.out.println();
 
-        //Création des joueurs
-        for(int i=0;i<nbJoueur;i++){
-            //Génération de la position du pion du joueur
-            if (i == 0) pos = new Position(0,0);
-            else if (i == 1) pos = new Position(6,6);
-            else if (i == 2) pos = new Position(0,6);
-            else new Position(6,0);
-            //Création du pion
-            Pion pion = new PionImpl(pos, Couleur.getCouleur(listeCouleur[i]),this.plateau);
-            //Création du joueur et ajout
-            joueur = new JoueurImpl(pion, listeAge[i], this);
-            this.joueurs.add(joueur);
+            Couleur[] tabCouleurs = Couleur.values();
+            ArrayList<String> arrayCouleurs = new ArrayList<String>();
+            for (int i = 0; i < tabCouleurs.length; arrayCouleurs.add(tabCouleurs[i++].toString()));
+
+            for(int i = 0; i < this.nbJoueur; i++){
+                System.out.println("Joueur n°" + (i + 1) + ".");
+                boolean choixCouleur = false;
+                while(choixCouleur == false){
+                    System.out.println("Choisir une couleur ci-dessous : ");
+                    System.out.println(arrayCouleurs.toString());
+                    System.out.print("Votre choix : ");
+                    expr = sc.nextLine();
+                    expr = expr.toUpperCase(); 
+
+                    if(arrayCouleurs.contains(expr)){
+                        choixCouleur = true;
+                        arrayCouleurs.remove(expr);
+                    }
+                }
+                    
+                do {
+                    System.out.print("Entrez votre age (mini 8) : ");
+                    age = Integer.parseInt(sc.nextLine());
+                } while (age < 8);
+                System.out.println();
+
+                if (i == 0) {
+                    pos = new Position(0,0); 
+                }
+                else if (i == 1) {pos = new Position(6,6);}
+                else if (i == 2) {pos = new Position(0,6);}
+                else {new Position(6,0);}
+
+                Pion pion = new PionImpl(pos, Couleur.getCouleur(expr),this.plateau);
+                joueur = new JoueurImpl(pion, age, this);
+                pions.add(pion);
+                this.plateau.addPionCouloir(pos,pion );
+                this.joueurs.add(joueur);
+            }
         }
 
         preparer();
@@ -171,6 +237,7 @@ public class JeuImpl implements Jeu {
     public static void main(String[] args){
         Jeu jeu = new JeuImpl();
         System.out.println(jeu);
+
     }
 
 
