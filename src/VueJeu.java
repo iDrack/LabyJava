@@ -19,9 +19,15 @@ public class  VueJeu extends JPanel {
 
     private JLabel xText;
     private JLabel yText;
+    private JLabel xTextCouloir;
+    private JLabel yTextCouloir;
+    private JLabel orientationText;
 
     private JTextField x;
     private JTextField y;
+    private JTextField xCouloir;
+    private JTextField yCouloir;
+    private JTextField orientation;
 
     private JButton validerMouvement;
     private JButton validerCouloir;
@@ -105,9 +111,10 @@ public class  VueJeu extends JPanel {
 
     public void ajoutOptions(){
         int offset = SIZE_COULOIR*7+25;
-        int offsetHorizontal = SIZE_OBJECTIF + 150;
+        int offsetHorizontal = SIZE_OBJECTIF + 400;
 
         validerMouvement = new JButton("Déplacer");
+        validerCouloir = new JButton("Placer couloir");
         System.out.println(modele.getJoueur().getPion().toString());
         JLabel position = new JLabel(modele.getJoueur().getPion().getPositionCourante().toString());
         this.xText = new JLabel("X :");
@@ -115,25 +122,56 @@ public class  VueJeu extends JPanel {
         this.yText = new JLabel("Y :");
         this.y = new JTextField();
 
+        this.xTextCouloir = new JLabel("X :");
+        this.xCouloir = new JTextField();
+        this.yTextCouloir = new JLabel("Y :");
+        this.yCouloir = new JTextField();
+        this.orientationText = new JLabel("Orientation :");
+        this.orientation = new JTextField();
+
         position.setFont(fontEntered);
         validerMouvement.setFont(fontEntered);
+        validerCouloir.setFont(fontEntered);
         xText.setFont(fontEntered);
         x.setFont(fontEntered);
         yText.setFont(fontEntered);
         y.setFont(fontEntered);
         
-        position.setBounds(offsetHorizontal,offset-25,200,50);
+        xTextCouloir.setFont(fontEntered);
+        xCouloir.setFont(fontEntered);
+        yTextCouloir.setFont(fontEntered);
+        yCouloir.setFont(fontEntered);
+        orientationText.setFont(fontEntered);
+        orientation.setFont(fontEntered);
+        
+        position.setBounds(offsetHorizontal,offset-30,200,50);
         validerMouvement.setBounds(offsetHorizontal,offset+70,125,25);
         xText.setBounds(offsetHorizontal,offset,30,50);
         x.setBounds(offsetHorizontal+35,offset+10,50,30);
         yText.setBounds(offsetHorizontal,offset+30,30,50);
         y.setBounds(offsetHorizontal+35,offset+40,50,30);
 
+        orientation.setBounds((offsetHorizontal-250)+135,offset-20,50,30);
+        orientationText.setBounds((offsetHorizontal-250),offset-20,150,30);
+        validerCouloir.setBounds((offsetHorizontal-250),offset+70,200,25);
+        xTextCouloir.setBounds((offsetHorizontal-250),offset,30,50);
+        xCouloir.setBounds((offsetHorizontal-250)+35,offset+10,50,30);
+        yTextCouloir.setBounds((offsetHorizontal-250),offset+30,30,50);
+        yCouloir.setBounds((offsetHorizontal-250)+35,offset+40,50,30);
+
         this.add(position);
         this.add(validerMouvement);
         this.add(x);
         this.add(xText);
         this.add(y);
-        this.add(yText);       
+        this.add(yText);   
+        this.add(orientation);
+        this.add(orientationText);
+        this.add(xTextCouloir);    
+        this.add(xCouloir);    
+        this.add(yTextCouloir);    
+        this.add(yCouloir);    
+        this.add(validerCouloir);
+
     }
 }
