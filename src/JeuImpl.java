@@ -233,6 +233,7 @@ public class JeuImpl implements Jeu {
     public Plateau getPlateau(){
         return this.plateau;
     }
+
     public static void main(String[] args){
         Jeu jeu = new JeuImpl();
         System.out.println(jeu);

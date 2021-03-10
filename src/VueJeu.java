@@ -1,128 +1,78 @@
-
-import java.awt.GridLayout;
-import java.awt.Container;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JToolBar;
 import javax.swing.JLabel;
-import javax.swing.JFrame;
-import javax.swing.JButton;
 import javax.swing.ImageIcon;
-import javax.swing.AbstractAction;
-import javax.swing.Timer;
-import javax.swing.Action;
-
-
-/**
- * classe qui s'occupe de la vue du memory
- */
-
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 public class  VueJeu extends JPanel {
     private MainWindow page;
-    public static final int nbPaire = 8; 
-
+    private final int SIZE_COULOIR = 93;
+    private final int SIZE_OBJECTIF = 15;
+    private final Font fontEntered = new Font(Font.DIALOG, Font.ROMAN_BASELINE, 20);
     private Jeu modele = new JeuImpl();
     private Plateau plateau = modele.getPlateau();
-    
-    
-    private Action actionQuitter;
-    private Action actionRecommencer;
-    private Action actionAPropos;
-    
-    private int cpt =0;
-    private int ind =0; // prendra les valeurs de 3 pour desactiver qd les image sont differentre/ 5 pour identique et 15 pour afficher les image au debut
-    private Dimension size;
-    
-    /**
-     * contructeur
-     * @param modele : modele du memory
-     */
-    public VueJeu(Dimension s,MainWindow page){
+
+    public VueJeu(MainWindow page){
         this.page=page;
-        this.size = s;
-        
 
-        setSize(size);
-        setLayout(new GridLayout(7,7));
+        //Paramétrage de la taille de la fenêtre
+        page.setSize(SIZE_COULOIR*7,SIZE_COULOIR*8+107);
+        page.setLocationRelativeTo(null);
+        MainWindow.instance.requestFocusInWindow(); 
         
-       
-        rempli_case();
-        
-        
+        setLayout(null);
+
+        try {
+            ajoutCase();
+            ajoutObjectifActuel();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }      
+        ajoutinfo();
     }
 
-    /**
-     * Reinitialise la vue du memory
-     */
-
-    public void reinit(){
-        
-       
-    }
-
-
-    public void rempli_case(){
-        Image img;
+    public void ajoutCase() throws IOException{
+        BufferedImage img;
         CouloirImpl [][] mat = plateau.getCouloirImpls();
+        
         for(int i = 0; i < Plateau.TAILLE;i++){
             for (int j = 0 ; j < Plateau.TAILLE; j++){
-                if (mat[i][j].getForme() == Forme.COUDE) {
-                    if (mat[i][j].getOrientation() == Orientation.NORD){
-                        img= new ImageIcon("media/img/sprites/angle4.png").getImage().getScaledInstance((int)size.getWidth()/7, (int)size.getHeight()/7, java.awt.Image.SCALE_SMOOTH);
-                        add(new JButton(new ImageIcon(img)));
-                    }else if (mat[i][j].getOrientation() == Orientation.SUD) { 
-                        img= new ImageIcon("media/img/sprites/angle2.png").getImage().getScaledInstance((int)size.getWidth()/7, (int)size.getHeight()/7, java.awt.Image.SCALE_SMOOTH);
-                        add(new JButton(new ImageIcon(img)));
-                    }else if (mat[i][j].getOrientation() == Orientation.OUEST) { 
-                        img= new ImageIcon("media/img/sprites/angle3.png").getImage().getScaledInstance((int)size.getWidth()/7, (int)size.getHeight()/7, java.awt.Image.SCALE_SMOOTH);
-                        add(new JButton(new ImageIcon(img)));
-                    }else {
-                        img= new ImageIcon("media/img/sprites/angle.png").getImage().getScaledInstance((int)size.getWidth()/7, (int)size.getHeight()/7, java.awt.Image.SCALE_SMOOTH);
-                        add(new JButton(new ImageIcon(img)));
-                    }
-                }
-                else if (mat[i][j].getForme() == Forme.TE){ 
-                    if (mat[i][j].getOrientation() == Orientation.NORD){
-                        img= new ImageIcon("media/img/sprites/formet3.png").getImage().getScaledInstance((int)size.getWidth()/7, (int)size.getHeight()/7, java.awt.Image.SCALE_SMOOTH);
-                        add(new JButton(new ImageIcon(img)));
-                    }else if (mat[i][j].getOrientation() == Orientation.SUD) { 
-                        img= new ImageIcon("media/img/sprites/formet.png").getImage().getScaledInstance((int)size.getWidth()/7, (int)size.getHeight()/7, java.awt.Image.SCALE_SMOOTH);
-                        add(new JButton(new ImageIcon(img)));
-                    }else if (mat[i][j].getOrientation() == Orientation.OUEST) { 
-                        img= new ImageIcon("media/img/sprites/formet2.png").getImage().getScaledInstance((int)size.getWidth()/7, (int)size.getHeight()/7, java.awt.Image.SCALE_SMOOTH);
-                        add(new JButton(new ImageIcon(img)));
-                    }else {
-                        img= new ImageIcon("media/img/sprites/formet4.png").getImage().getScaledInstance((int)size.getWidth()/7, (int)size.getHeight()/7, java.awt.Image.SCALE_SMOOTH);
-                        add(new JButton(new ImageIcon(img)));
-                    }
-                }
-                else if (mat[i][j].getForme() == Forme.DROIT){
-                    if (mat[i][j].getOrientation() == Orientation.NORD || mat[i][j].getOrientation() == Orientation.SUD){
-                        img= new ImageIcon("media/img/sprites/ligne.png").getImage().getScaledInstance((int)size.getWidth()/7, (int)size.getHeight()/7, java.awt.Image.SCALE_SMOOTH);
-                        add(new JButton(new ImageIcon(img)));
-                    }else{
-                        img= new ImageIcon("media/img/sprites/ligne2.png").getImage().getScaledInstance((int)size.getWidth()/7, (int)size.getHeight()/7, java.awt.Image.SCALE_SMOOTH);
-                        add(new JButton(new ImageIcon(img)));
-                    }
-                }
-             
+                img = AssetTiles.getCouloirImage(mat[i][j]);
+                JLabel picLabel = new JLabel(new ImageIcon(img));
+                picLabel.setBounds(SIZE_COULOIR*i,SIZE_COULOIR*j,SIZE_COULOIR,SIZE_COULOIR);
+                add(picLabel);
             }
         }
-        
     }
 
-   
-  
-    public static void main(String[] args){
-        
+    public void ajoutObjectifActuel(){
+        int offset = SIZE_COULOIR*7+25;
+        Joueur joueur = modele.getJoueur();
+
+        //Affichage de son objectif
+        JLabel obj = new JLabel("Objectif :");
+        obj.setBounds(SIZE_OBJECTIF,offset,100,50);
+        obj.setFont(fontEntered);
+        this.add(obj);
+
+        //Image de l'objectif
+        BufferedImage imgObj = AssetTiles.getObjectifImage(joueur.getStack().peek());
+        JLabel picLabel = new JLabel(new ImageIcon(imgObj));
+        picLabel.setBounds(SIZE_OBJECTIF+105,SIZE_OBJECTIF+offset,SIZE_OBJECTIF,SIZE_OBJECTIF);
+        add(picLabel);
     }
+
+    public void ajoutinfo(){
+        int offset = SIZE_COULOIR*7;
+        Joueur joueur = modele.getJoueur();
+        String[] str1 = joueur.toString().split(",");
+
+        JLabel info = new JLabel(str1[0]);
+        info.setBounds(SIZE_OBJECTIF,offset,250,50);
+        info.setFont(fontEntered);
+        this.add(info);    
+    }
+
 }

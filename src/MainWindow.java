@@ -18,7 +18,7 @@ public class MainWindow extends JFrame {
         // Generation de la fenêtre.
         setTitle("Labyrinthe");
         setSize(WIDTH, HEIGHT);
-        setResizable(true);
+        setResizable(false);
 
         // Generation du contenu.
         MainWindow.menu = new MenuPrincipal(this);
