@@ -76,4 +76,22 @@ public class AssetTiles{
     public static BufferedImage getObjectifImage(Objectif obj){
         return getImage(obj.toString().toLowerCase().concat(".png"));
     }
+
+    public static BufferedImage getPionImage(String pion){
+        return getImage(pion.toLowerCase().concat(".png"));
+    }
+
+    public static BufferedImage combinerImage(BufferedImage image1, BufferedImage image2){ 
+        Graphics2D g2d = image1.createGraphics(); 
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, 
+                        RenderingHints.VALUE_ANTIALIAS_ON); 
+        g2d.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, 
+                        RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY); 
+      
+        g2d.drawImage(image2, 0, 0, null); 
+      
+        g2d.dispose(); 
+      
+        return image1 ; 
+    }
 }

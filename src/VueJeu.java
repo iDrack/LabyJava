@@ -5,11 +5,13 @@ import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class  VueJeu extends JPanel {
     private MainWindow page;
     private final int SIZE_COULOIR = 93;
     private final int SIZE_OBJECTIF = 15;
+    private final int SIZE_PION = 32;
     private final Font fontEntered = new Font(Font.DIALOG, Font.ROMAN_BASELINE, 20);
     private Jeu modele = new JeuImpl();
     private Plateau plateau = modele.getPlateau();
@@ -37,24 +39,36 @@ public class  VueJeu extends JPanel {
 
         try {
             ajoutCase();
-            ajoutObjectifActuel();
         } catch (IOException e) {
             e.printStackTrace();
         }      
+        
+        ajoutObjectifActuel();
         ajoutinfo();
         ajoutOptions();
-
-        System.out.println("Liste de pions > "+modele.pions());
     }
 
     public void ajoutCase() throws IOException{
+        //Position du pion du joueur
+        int posX = modele.getJoueur().getPion().getPositionCourante().getX();
+        int posY = modele.getJoueur().getPion().getPositionCourante().getY();
+
         BufferedImage img;
         CouloirImpl [][] mat = plateau.getCouloirImpls();
         
         for(int i = 0; i < Plateau.TAILLE;i++){
             for (int j = 0 ; j < Plateau.TAILLE; j++){
                 img = AssetTiles.getCouloirImage(mat[i][j]);
-                JLabel picLabel = new JLabel(new ImageIcon(img));
+                JLabel picLabel;
+                if(i == posX && j == posY){
+                    //TODO Modifier pour que l'on affiche tous les pions
+                    String[] str1 = modele.getJoueur().toString().split(",");
+                    String[] str2 = str1[0].split(" ");
+                    BufferedImage img2 = AssetTiles.getPionImage(str2[1]);
+                    picLabel = new JLabel(new ImageIcon(AssetTiles.combinerImage(img, img2)));
+                }else{
+                    picLabel = new JLabel(new ImageIcon(img));
+                }
                 picLabel.setBounds(SIZE_COULOIR*i,SIZE_COULOIR*j,SIZE_COULOIR,SIZE_COULOIR);
                 add(picLabel);
             }
@@ -90,34 +104,36 @@ public class  VueJeu extends JPanel {
     }
 
     public void ajoutOptions(){
-        int offset = SIZE_COULOIR*7+50;
+        int offset = SIZE_COULOIR*7+25;
         int offsetHorizontal = SIZE_OBJECTIF + 150;
 
-        JLabel text = new JLabel("Déplacer pion");
+        validerMouvement = new JButton("Déplacer");
+        System.out.println(modele.getJoueur().getPion().toString());
+        JLabel position = new JLabel(modele.getJoueur().getPion().getPositionCourante().toString());
         this.xText = new JLabel("X :");
         this.x = new JTextField();
         this.yText = new JLabel("Y :");
         this.y = new JTextField();
 
-        text.setFont(fontEntered);
+        position.setFont(fontEntered);
+        validerMouvement.setFont(fontEntered);
         xText.setFont(fontEntered);
         x.setFont(fontEntered);
         yText.setFont(fontEntered);
         y.setFont(fontEntered);
         
-        text.setBounds(offsetHorizontal,offset-25,200,50);
+        position.setBounds(offsetHorizontal,offset-25,200,50);
+        validerMouvement.setBounds(offsetHorizontal,offset+70,125,25);
         xText.setBounds(offsetHorizontal,offset,30,50);
         x.setBounds(offsetHorizontal+35,offset+10,50,30);
         yText.setBounds(offsetHorizontal,offset+30,30,50);
         y.setBounds(offsetHorizontal+35,offset+40,50,30);
 
-        this.add(text);
+        this.add(position);
+        this.add(validerMouvement);
         this.add(x);
         this.add(xText);
         this.add(y);
-        this.add(yText);
-        
-
+        this.add(yText);       
     }
-
 }

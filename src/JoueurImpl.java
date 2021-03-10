@@ -119,6 +119,9 @@ public class JoueurImpl implements Joueur {
         return chaine;
     }
 
+    public Pion getPion(){
+        return pion;
+    }
     public static void main(String[] args) {
         //JoueurImpl j = new JoueurImpl(null, 10, null);
         //Position p = new Position(0,0);
