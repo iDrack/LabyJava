@@ -4,11 +4,12 @@ import java.util.TimerTask;
 
 public class MainWindow extends JFrame {
     private static final long serialVersionUID = 1L;
-    public static JFrame instance;
+    public static MainWindow instance;
     public final static int WIDTH=908;
     public final static int HEIGHT=633;
 
-    public static MenuPrincipal menu;
+    public static JPanel menu;
+    public static VueJeu menuJeu;
 
     /**
      * Constructeur de la classe MainWindow.
@@ -42,6 +43,14 @@ public class MainWindow extends JFrame {
                 instance.getContentPane().repaint();                
             }
         }, 1000, 17);
+    }
+
+    public VueJeu getMenuJeu(){
+        return menuJeu;
+    }
+
+    public void setMenuJeu(VueJeu m){
+        menuJeu = m;
     }
     
     public static void main(String[] args){

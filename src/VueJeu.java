@@ -6,31 +6,29 @@ import javax.swing.ImageIcon;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class  VueJeu extends JPanel {
+public class VueJeu extends JPanel {
     private MainWindow page;
     private final int SIZE_COULOIR = 93;
     private final int SIZE_OBJECTIF = 15;
-    private final int SIZE_PION = 32;
     private final Font fontEntered = new Font(Font.DIALOG, Font.ROMAN_BASELINE, 20);
     private Jeu modele = new JeuImpl();
     private Plateau plateau = modele.getPlateau();
 
-
     private JLabel xText;
     private JLabel yText;
-    private JLabel xTextCouloir;
-    private JLabel yTextCouloir;
+    private JLabel posTextCouloir;
     private JLabel orientationText;
+    private JLabel positionDispo;
 
     private JTextField x;
     private JTextField y;
-    private JTextField xCouloir;
-    private JTextField yCouloir;
+    private JTextField posCouloir;
     private JTextField orientation;
 
     private JButton validerMouvement;
-    private JButton validerCouloir;
 
 
     public VueJeu(MainWindow page){
@@ -52,6 +50,7 @@ public class  VueJeu extends JPanel {
         ajoutObjectifActuel();
         ajoutinfo();
         ajoutOptions();
+
     }
 
     public void ajoutCase() throws IOException{
@@ -61,13 +60,35 @@ public class  VueJeu extends JPanel {
 
         BufferedImage img;
         CouloirImpl [][] mat = plateau.getCouloirImpls();
+        Objectif obj;
         
         for(int i = 0; i < Plateau.TAILLE;i++){
             for (int j = 0 ; j < Plateau.TAILLE; j++){
                 img = AssetTiles.getCouloirImage(mat[i][j]);
                 JLabel picLabel;
-                if(i == posX && j == posY){
-                    //TODO Modifier pour que l'on affiche tous les pions
+
+                obj = plateau.getObjectifCase(new Position(i, j));
+
+                if((obj != Objectif.VIDE) && i == posX && j == posY){
+                    String[] str1 = modele.getJoueur().toString().split(",");
+                    String[] str2 = str1[0].split(" ");
+
+                    BufferedImage img3 = AssetTiles.getPionImage(str2[1]);
+                    BufferedImage img2 = AssetTiles.getObjectifImage(obj);
+
+                    img2 = AssetTiles.redimensionner(img2, SIZE_OBJECTIF*3, SIZE_OBJECTIF*3);
+
+                    picLabel = new JLabel(new ImageIcon(AssetTiles.combinerImage(AssetTiles.combinerImage(img, img2), img3)));
+
+                }else if(obj != Objectif.VIDE){
+
+                    BufferedImage img2 = AssetTiles.getObjectifImage(obj);
+
+                    img2 = AssetTiles.redimensionner(img2, SIZE_OBJECTIF*3, SIZE_OBJECTIF*3);
+                    picLabel = new JLabel(new ImageIcon(AssetTiles.combinerImage(img, img2)));
+
+                }else if(i == posX && j == posY){
+
                     String[] str1 = modele.getJoueur().toString().split(",");
                     String[] str2 = str1[0].split(" ");
                     BufferedImage img2 = AssetTiles.getPionImage(str2[1]);
@@ -114,7 +135,6 @@ public class  VueJeu extends JPanel {
         int offsetHorizontal = SIZE_OBJECTIF + 400;
 
         validerMouvement = new JButton("Déplacer");
-        validerCouloir = new JButton("Placer couloir");
         System.out.println(modele.getJoueur().getPion().toString());
         JLabel position = new JLabel(modele.getJoueur().getPion().getPositionCourante().toString());
         this.xText = new JLabel("X :");
@@ -122,25 +142,21 @@ public class  VueJeu extends JPanel {
         this.yText = new JLabel("Y :");
         this.y = new JTextField();
 
-        this.xTextCouloir = new JLabel("X :");
-        this.xCouloir = new JTextField();
-        this.yTextCouloir = new JLabel("Y :");
-        this.yCouloir = new JTextField();
+        this.posTextCouloir = new JLabel("Position :");
+        this.posCouloir = new JTextField();
         this.orientationText = new JLabel("Orientation :");
         this.orientation = new JTextField();
+        this.positionDispo = new JLabel("[N1 N2 N3 E1 E2 E3 S3 S2 S1 O3 O2 O1]");
 
         position.setFont(fontEntered);
         validerMouvement.setFont(fontEntered);
-        validerCouloir.setFont(fontEntered);
         xText.setFont(fontEntered);
         x.setFont(fontEntered);
         yText.setFont(fontEntered);
         y.setFont(fontEntered);
-        
-        xTextCouloir.setFont(fontEntered);
-        xCouloir.setFont(fontEntered);
-        yTextCouloir.setFont(fontEntered);
-        yCouloir.setFont(fontEntered);
+        positionDispo.setFont(fontEntered);
+        posTextCouloir.setFont(fontEntered);
+        posCouloir.setFont(fontEntered);
         orientationText.setFont(fontEntered);
         orientation.setFont(fontEntered);
         
@@ -150,14 +166,11 @@ public class  VueJeu extends JPanel {
         x.setBounds(offsetHorizontal+35,offset+10,50,30);
         yText.setBounds(offsetHorizontal,offset+30,30,50);
         y.setBounds(offsetHorizontal+35,offset+40,50,30);
-
-        orientation.setBounds((offsetHorizontal-250)+135,offset-20,50,30);
+        orientation.setBounds((offsetHorizontal-250)+135,offset-20,60,30);
         orientationText.setBounds((offsetHorizontal-250),offset-20,150,30);
-        validerCouloir.setBounds((offsetHorizontal-250),offset+70,200,25);
-        xTextCouloir.setBounds((offsetHorizontal-250),offset,30,50);
-        xCouloir.setBounds((offsetHorizontal-250)+35,offset+10,50,30);
-        yTextCouloir.setBounds((offsetHorizontal-250),offset+30,30,50);
-        yCouloir.setBounds((offsetHorizontal-250)+35,offset+40,50,30);
+        posTextCouloir.setBounds((offsetHorizontal-250),offset,100,50);
+        posCouloir.setBounds((offsetHorizontal-250)+100,offset+10,50,30);
+        positionDispo.setBounds(0,offset+30,450,50);
 
         this.add(position);
         this.add(validerMouvement);
@@ -167,11 +180,48 @@ public class  VueJeu extends JPanel {
         this.add(yText);   
         this.add(orientation);
         this.add(orientationText);
-        this.add(xTextCouloir);    
-        this.add(xCouloir);    
-        this.add(yTextCouloir);    
-        this.add(yCouloir);    
-        this.add(validerCouloir);
+        this.add(posTextCouloir);    
+        this.add(posCouloir);
+        this.add(positionDispo);
 
+        this.validerMouvement.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e) {
+                if(getPosX() >= 0 && getPosX() <= 6 && getPosY() >= 0 && getPosY() <= 6 && verifierOrientation() && verifierPos()){
+                    if(modele.getPlateau().estAtteignable(modele.getJoueur().getPion().getPositionCourante(), new Position(getPosX(), getPosY()))){
+                        modele.getJoueur().joue();
+                    }
+                    //TODO Suite
+                }
+            }
+        });
     }
+
+    public Boolean verifierOrientation(){
+        return (getOrientation().equals("NORD") || getOrientation().equals("OUEST") || getOrientation().equals("SUD") || getOrientation().equals("EST"));
+    }
+
+    public Boolean verifierPos(){
+        PositionInsertion[] tab = PositionInsertion.values();
+        for(int i=0; i<tab.length; i++){
+            if(getPosCouloir().equals(tab[i].toString()))return true;
+        }
+        return false;
+    }
+
+    public int getPosX(){
+        return Integer.parseInt(x.getText());
+    }
+
+    public int getPosY(){
+        return Integer.parseInt(y.getText());
+    }
+
+    public String getOrientation(){
+        return orientation.getText().toUpperCase();
+    }
+
+    public String getPosCouloir(){
+        return posCouloir.getText().toUpperCase();
+    }
+
 }

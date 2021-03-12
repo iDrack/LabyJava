@@ -94,4 +94,15 @@ public class AssetTiles{
       
         return image1 ; 
     }
+
+    public static BufferedImage redimensionner(BufferedImage img, int w, int h) { 
+        Image tmp = img.getScaledInstance(w, h, Image.SCALE_SMOOTH);
+        BufferedImage dimg = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+    
+        Graphics2D g2d = dimg.createGraphics();
+        g2d.drawImage(tmp, 0, 0, null);
+        g2d.dispose();
+    
+        return dimg;
+    }  
 }

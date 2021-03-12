@@ -10,14 +10,11 @@ public class JeuImpl implements Jeu {
     private ArrayList<Joueur> joueurs = new ArrayList<Joueur>();
     private Joueur joueurCourant;
     private int nbJoueur = 0;
-    private boolean graphique = false;
+    private boolean graphique = true;
 
     public JeuImpl(){
         enregistrer();
         preparer();
-
-        // TODO : tu peux le faire ici.
-        // PS : Plateau fait tout en haut (directement au début : ligne 4, création et initialisation).
 
         this.joueurCourant = this.joueurs.get(0);
         for (Joueur joueur : this.joueurs){
@@ -27,7 +24,7 @@ public class JeuImpl implements Jeu {
             }
         }
         
-        jouer();
+        //jouer();
 
         // ...
     }

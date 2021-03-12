@@ -1,5 +1,7 @@
 import java.util.*;
 
+import javax.swing.JPanel;
+
 public class JoueurImpl implements Joueur {
     private Pion pion;
     private Stack<Objectif> objectifs = new Stack<Objectif>();
@@ -18,9 +20,9 @@ public class JoueurImpl implements Joueur {
     }
 
     public PositionInsertion choisirPositionInsertionCouloir(){
-        Scanner sc = new Scanner(System.in);
-        String expr = null;
+        System.out.println("Position couloir");
 
+        String expr = null;
         PositionInsertion positionInsertion = null;
 
         PositionInsertion[] tab = PositionInsertion.values();
@@ -30,44 +32,28 @@ public class JoueurImpl implements Joueur {
             arrayStr.add(tab[i].toString());
             arrayPI.add(tab[i]);
         }
-        System.out.println("Coordonnee du pion x :"+ pion.getPositionCourante().toString() );
-        System.out.println("Choisir la position d'insertion du couloir :");
         boolean choix = false;
         while(choix == false) {
-            System.out.println("Choisir une position insertion : ");
-            System.out.println(arrayStr.toString());
-            System.out.print("Votre choix : ");
-            expr = sc.nextLine();
-            expr = expr.toUpperCase(); 
-            
+            VueJeu vue = MainWindow.instance.getMenuJeu();
+            expr = vue.getPosCouloir();
             if(arrayStr.contains(expr)){
                 choix = true;
                 positionInsertion = arrayPI.get(arrayStr.indexOf(expr));
             }
         }
-        System.out.println();
-        
-        //sc.close();
         return positionInsertion;
     }
     public Pion getPion(){
         return this.pion;
     }
     public Position choisirPositionPion(){
-        Scanner sc = new Scanner(System.in);
-        int x = -1;
-        int y = -1;
-        System.out.println("Position du pion  : " + this.pion.getPositionCourante().toString());
-        System.out.println("Choisir la position du pion.");
+        int x = -1, y = -1;
 
         while ((x < 0 || x > 6) || (y < 0 || y > 6)){
-            System.out.println("Position x :");
-            x = Integer.parseInt(sc.nextLine());
-            System.out.println("Position y :");
-            y = Integer.parseInt(sc.nextLine());
+            VueJeu vue = MainWindow.instance.getMenuJeu();
+            x = vue.getPosX();
+            y = vue.getPosY();
         }
-
-        //sc.close();
         return new Position(x,y);
     }
 
@@ -76,9 +62,11 @@ public class JoueurImpl implements Joueur {
         System.out.println(objectifs.peek());
         Position posAv = pion.getPositionCourante();
         System.out.println("Pion : " + this.pion.getCouleurPion() + ".");
-        jeu.modifierCouloirs(choisirPositionInsertionCouloir());
-        System.out.println(this.jeu.getPlateau().toString());
-        Objectif objectif = pion.deplacer(choisirPositionPion()); 
+
+        jeu.modifierCouloirs(choisirPositionInsertionCouloir());    //Modification du couloir
+
+        Objectif objectif = pion.deplacer(choisirPositionPion());   //Déplacement du pion ?
+
         while (objectif == null){
             System.out.println("Pion : " + this.pion.getCouleurPion() + ".");
             objectif = pion.deplacer(choisirPositionPion());
@@ -123,9 +111,6 @@ public class JoueurImpl implements Joueur {
         return chaine;
     }
 
-    public Pion getPion(){
-        return pion;
-    }
     public static void main(String[] args) {
         //JoueurImpl j = new JoueurImpl(null, 10, null);
         //Position p = new Position(0,0);
