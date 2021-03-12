@@ -78,21 +78,21 @@ public class VueJeu extends JPanel {
 
                     img2 = AssetTiles.redimensionner(img2, SIZE_OBJECTIF*3, SIZE_OBJECTIF*3);
 
-                    picLabel = new JLabel(new ImageIcon(AssetTiles.combinerImage(AssetTiles.combinerImage(img, img2), img3)));
+                    picLabel = new JLabel(new ImageIcon(AssetTiles.combinerImage(AssetTiles.combinerImage(img, img2, true), img3, false)));
 
                 }else if(obj != Objectif.VIDE){
 
                     BufferedImage img2 = AssetTiles.getObjectifImage(obj);
 
                     img2 = AssetTiles.redimensionner(img2, SIZE_OBJECTIF*3, SIZE_OBJECTIF*3);
-                    picLabel = new JLabel(new ImageIcon(AssetTiles.combinerImage(img, img2)));
+                    picLabel = new JLabel(new ImageIcon(AssetTiles.combinerImage(img, img2, true)));
 
                 }else if(i == posX && j == posY){
 
                     String[] str1 = modele.getJoueur().toString().split(",");
                     String[] str2 = str1[0].split(" ");
                     BufferedImage img2 = AssetTiles.getPionImage(str2[1]);
-                    picLabel = new JLabel(new ImageIcon(AssetTiles.combinerImage(img, img2)));
+                    picLabel = new JLabel(new ImageIcon(AssetTiles.combinerImage(img, img2, false)));
                 }else{
                     picLabel = new JLabel(new ImageIcon(img));
                 }
@@ -114,8 +114,10 @@ public class VueJeu extends JPanel {
 
         //Image de l'objectif
         BufferedImage imgObj = AssetTiles.getObjectifImage(joueur.getStack().peek());
+        imgObj = AssetTiles.redimensionner(imgObj, SIZE_OBJECTIF*2, SIZE_OBJECTIF*2);
+
         JLabel picLabel = new JLabel(new ImageIcon(imgObj));
-        picLabel.setBounds(SIZE_OBJECTIF+105,SIZE_OBJECTIF+offset,SIZE_OBJECTIF,SIZE_OBJECTIF);
+        picLabel.setBounds(SIZE_OBJECTIF+100,SIZE_OBJECTIF+offset-10,SIZE_OBJECTIF*2,SIZE_OBJECTIF*2);
         add(picLabel);
     }
 
