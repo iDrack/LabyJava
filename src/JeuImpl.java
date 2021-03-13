@@ -24,7 +24,7 @@ public class JeuImpl implements Jeu {
             }
         }
         
-        //jouer();
+        //jouer(); Appeler par le bouton de VueJeu
 
         // ...
     }
@@ -35,10 +35,11 @@ public class JeuImpl implements Jeu {
     }
 
     @Override
-    public void modifierCouloirs(PositionInsertion pos){
+    public void modifierCouloirs(PositionInsertion pos, Orientation ori){
        // if(pos != this.positionOrigine){
             if(true){
             
+            this.supplementaire.setOrientation(ori);
             this.supplementaire = this.plateau.modifierCouloirs(pos, this.supplementaire);
             this.positionOrigine = pos.oppose();
             System.out.println("on insere a la position " + pos.getPosition().toString());
@@ -60,11 +61,13 @@ public class JeuImpl implements Jeu {
 
     @Override
     public void jouer() {
-        while(! aGagné(this.joueurCourant)){
+        //while(! aGagné(this.joueurCourant)){
             System.out.println(this.plateau.toString());
-            joueurCourant.joue();
+            //joueurCourant.joue(); Appeler juste avant par le bouton de VueJeu
             joueurCourant = prochainJoueur();
-        }
+            VueJeu vue = MainWindow.instance.getMenuJeu();
+            vue.reset();        //Remet à 0 les valeurs des différents champs
+        //}
     }
 
     @Override

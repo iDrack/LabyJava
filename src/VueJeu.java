@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import javax.swing.JPanel;
+import javax.swing.plaf.DimensionUIResource;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import java.awt.image.BufferedImage;
@@ -35,22 +36,20 @@ public class VueJeu extends JPanel {
         this.page=page;
 
         //Paramétrage de la taille de la fenêtre
-        page.setSize(SIZE_COULOIR*7,SIZE_COULOIR*8+107);
+        Dimension d = new Dimension(SIZE_COULOIR*8+107,SIZE_COULOIR*8+107);
+        page.setSize(d);
         page.setLocationRelativeTo(null);
         MainWindow.instance.requestFocusInWindow(); 
         
         setLayout(null);
-
         try {
             ajoutCase();
         } catch (IOException e) {
             e.printStackTrace();
-        }      
-        
+        }             
         ajoutObjectifActuel();
         ajoutinfo();
         ajoutOptions();
-
     }
 
     public void ajoutCase() throws IOException{
@@ -96,7 +95,7 @@ public class VueJeu extends JPanel {
                 }else{
                     picLabel = new JLabel(new ImageIcon(img));
                 }
-                picLabel.setBounds(SIZE_COULOIR*i,SIZE_COULOIR*j,SIZE_COULOIR,SIZE_COULOIR);
+                picLabel.setBounds(SIZE_COULOIR*j,SIZE_COULOIR*i,SIZE_COULOIR,SIZE_COULOIR);
                 add(picLabel);
             }
         }
@@ -191,8 +190,9 @@ public class VueJeu extends JPanel {
                 if(getPosX() >= 0 && getPosX() <= 6 && getPosY() >= 0 && getPosY() <= 6 && verifierOrientation() && verifierPos()){
                     if(modele.getPlateau().estAtteignable(modele.getJoueur().getPion().getPositionCourante(), new Position(getPosX(), getPosY()))){
                         modele.getJoueur().joue();
+                        System.out.println("Le joueur a joué");
+                        modele.jouer();
                     }
-                    //TODO Suite
                 }
             }
         });
@@ -211,10 +211,12 @@ public class VueJeu extends JPanel {
     }
 
     public int getPosX(){
+        if(x.getText().equals(""))return -1;
         return Integer.parseInt(x.getText());
     }
 
     public int getPosY(){
+        if(y.getText().equals(""))return -1;
         return Integer.parseInt(y.getText());
     }
 
@@ -224,6 +226,25 @@ public class VueJeu extends JPanel {
 
     public String getPosCouloir(){
         return posCouloir.getText().toUpperCase();
+    }
+
+    public void reset(){
+        this.x.setText("");
+        this.y.setText("");
+        this.posCouloir.setText("");
+        this.orientation.setText("");
+
+        this.removeAll();    //Supprimme les elements graphique
+
+
+        try {
+            ajoutCase();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }             
+        ajoutObjectifActuel();
+        ajoutinfo();
+        ajoutOptions();
     }
 
 }

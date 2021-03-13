@@ -40,7 +40,7 @@ public class MainWindow extends JFrame {
         clock.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                instance.getContentPane().repaint();                
+                instance.getContentPane().repaint();
             }
         }, 1000, 17);
     }

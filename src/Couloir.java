@@ -1,6 +1,9 @@
 import java.util.*;
 
 public interface Couloir {    
+
+    public void setOrientation(Orientation orientation);
+    
     public Orientation getOrientation();
 
     public Forme getForme();

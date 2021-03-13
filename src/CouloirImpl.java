@@ -13,6 +13,11 @@ public class CouloirImpl implements Couloir {
     }
 
     @Override
+    public void setOrientation(Orientation orientation) {
+        this.orientation = orientation;
+    }
+
+    @Override
     public Orientation getOrientation(){
         return this.orientation;
     }

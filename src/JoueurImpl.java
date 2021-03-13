@@ -62,10 +62,12 @@ public class JoueurImpl implements Joueur {
         System.out.println(objectifs.peek());
         Position posAv = pion.getPositionCourante();
         System.out.println("Pion : " + this.pion.getCouleurPion() + ".");
+        Orientation maPos = choisirOrientationCouloir();
+        System.out.println(">>> "+maPos.toString());
 
-        jeu.modifierCouloirs(choisirPositionInsertionCouloir());    //Modification du couloir
+        jeu.modifierCouloirs(choisirPositionInsertionCouloir(), choisirOrientationCouloir());    //Modification du couloir
 
-        Objectif objectif = pion.deplacer(choisirPositionPion());   //Déplacement du pion ?
+        Objectif objectif = pion.deplacer(choisirPositionPion());   //Déplacement du pion
 
         while (objectif == null){
             System.out.println("Pion : " + this.pion.getCouleurPion() + ".");
@@ -77,20 +79,8 @@ public class JoueurImpl implements Joueur {
     }
 
     public Orientation choisirOrientationCouloir(){
-        Scanner sc = new Scanner(System.in);
-        String expr = "";
-        while (!("NORD".equals(expr)) && !("SUD".equals(expr)) && !("EST".equals(expr)) && !("OUEST".equals(expr))){
-            System.out.println("\nChoisissez l'orientation :");
-            System.out.println("-NORD");
-            System.out.println("-SUD");
-            System.out.println("-EST");
-            System.out.println("-OUEST");
-            expr = sc.nextLine();
-            expr = expr.toUpperCase();
-        }
-
-        //sc.close();
-        return Orientation.getOrientation(expr);
+        VueJeu vue = MainWindow.instance.getMenuJeu();
+        return Orientation.getOrientation(vue.getOrientation());
     }
 
     @Override
@@ -109,14 +99,5 @@ public class JoueurImpl implements Joueur {
                         this.objectifs.toString() + ".";
         
         return chaine;
-    }
-
-    public static void main(String[] args) {
-        //JoueurImpl j = new JoueurImpl(null, 10, null);
-        //Position p = new Position(0,0);
-        //j.choisirPositionPion();
-        
-        //j.choisirOrientationCouloir();
-        //j.choisirPositionInsertionCouloir();
     }
 }

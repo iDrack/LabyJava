@@ -48,7 +48,7 @@ public class MenuCreation extends JPanel{
 
         valider.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
-                genererOptionJoueurs(Integer.parseInt(nbJoueurField.getText()));
+                if(! nbJoueurField.getText().equals("")) genererOptionJoueurs(Integer.parseInt(nbJoueurField.getText()));
             }
         });
 

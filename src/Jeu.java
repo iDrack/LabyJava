@@ -3,7 +3,7 @@ import java.util.*;
 public interface Jeu {
     public void enregistrer();
 
-    public void modifierCouloirs(PositionInsertion pos);
+    public void modifierCouloirs(PositionInsertion pos, Orientation ori);
 
     public void preparer();
 
