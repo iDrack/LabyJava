@@ -84,7 +84,7 @@ public class VueJeu extends JPanel {
     
                         img2 = AssetTiles.redimensionner(img2, SIZE_OBJECTIF*3, SIZE_OBJECTIF*3);
     
-                        picLabel = new JLabel(new ImageIcon(AssetTiles.combinerImage(img, AssetTiles.combinerImage(img2, img3, true), false)));
+                        picLabel = new JLabel(new ImageIcon(AssetTiles.combinerImage(AssetTiles.combinerImage(img, img2, true), img3, false)));
     
                     }else if(obj != Objectif.VIDE){
                         //Si on a objectif
