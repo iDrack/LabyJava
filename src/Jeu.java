@@ -23,4 +23,7 @@ public interface Jeu {
 
     public Plateau getPlateau();
 
+    public ArrayList<Joueur> getJoueurs();
+
+    public CouloirMobile getSupplementaire();
 }

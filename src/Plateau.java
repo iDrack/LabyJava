@@ -171,7 +171,7 @@ public class Plateau {
                         return false;
                     }
 
-                    if (i == xDestination && parcoursColonneEnHaut(matrice, i, xOrigine) == false){
+                    if (i == xDestination && parcoursColonneEnHaut(matrice, i, yOrigine) == false){
                         return false;
                     }
                 }
@@ -186,7 +186,7 @@ public class Plateau {
                         return false;
                     }
 
-                    if (i == xOrigine && parcoursColonneEnHaut(matrice, i, xOrigine) == false){
+                    if (i == xOrigine && parcoursColonneEnHaut(matrice, i, yOrigine) == false){
                         return false;
                     }
                 }
@@ -393,42 +393,5 @@ public class Plateau {
    }
    public void supPionCouloir(Position pos,Pion p){
     this.matriceCouloirs[pos.getX()][pos.getY()].supPion(p);
-}
-
-    public static void main(String[] args) {
-        Plateau p = new Plateau();
-        System.out.println(p);
-
-        /*System.out.println("Tests estAtteignable() : ");
-        Position p0 = new Position(0, 0);
-        Position p1 = new Position(0, 2);
-        Position p2 = new Position(2, 2);
-        Position p3 = new Position(2, 4);
-        Position p4 = new Position(1, 3);
-        Position p5 = new Position(1, 6);
-        Position p6 = new Position(3, 3);
-        Position p7 = new Position(1, 3);
-        System.out.println(p0 + " à " + p1 + " == " + p.estAtteignable(p0, p1) + "\n");
-        System.out.println(p2 + " à " + p3 + " == " + p.estAtteignable(p2, p3) + "\n");
-        System.out.println(p4 + " à " + p5 + " == " + p.estAtteignable(p4, p5) + "\n");
-        System.out.println(p6 + " à " + p7 + " == " + p.estAtteignable(p6, p7) + "\n");
-        System.out.println(p1 + " à " + p2 + " == " + p.estAtteignable(p1, p2) + "\n");
-        System.out.println(p1 + " à " + p6 + " == " + p.estAtteignable(p1, p6) + "\n");
-        System.out.println(p4 + " à " + p7 + " == " + p.estAtteignable(p4, p7) + "\n");*/
-
-        System.out.println("Tests ModifierCouloir : ");
-        CouloirMobile test = new CouloirMobile(Orientation.NORD, Forme.TE, Objectif.VIDE);
-        p.modifierCouloirs(PositionInsertion.N1, test);
-        System.out.println(p);
-        p.modifierCouloirs(PositionInsertion.O1, test);
-        System.out.println(p);
-        p.modifierCouloirs(PositionInsertion.O2, test);
-        System.out.println(p);
-        p.modifierCouloirs(PositionInsertion.S1, test);
-        System.out.println(p);
-        p.modifierCouloirs(PositionInsertion.E1, test);
-        System.out.println(p);
-        
-        System.out.println();
     }
 }

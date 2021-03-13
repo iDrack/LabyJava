@@ -19,9 +19,4 @@ public enum PositionInsertion{
     public Position getPosition(){
         return this.pos;
     }
-
-    public static void main(String[] args) {
-        PositionInsertion pos = E3;
-        System.out.println(pos.getPosition());
-    }
 }

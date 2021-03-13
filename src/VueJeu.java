@@ -1,7 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
 import javax.swing.JPanel;
-import javax.swing.plaf.DimensionUIResource;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import java.awt.image.BufferedImage;
@@ -22,7 +21,6 @@ public class VueJeu extends JPanel {
     private JLabel yText;
     private JLabel posTextCouloir;
     private JLabel orientationText;
-    private JLabel positionDispo;
 
     private JTextField x;
     private JTextField y;
@@ -36,11 +34,12 @@ public class VueJeu extends JPanel {
         this.page=page;
 
         //Paramétrage de la taille de la fenêtre
-        Dimension d = new Dimension(SIZE_COULOIR*8+107,SIZE_COULOIR*8+107);
+        Dimension d = new Dimension(SIZE_COULOIR*9+400,SIZE_COULOIR*9);
         page.setSize(d);
         page.setLocationRelativeTo(null);
         MainWindow.instance.requestFocusInWindow(); 
         
+        ajoutFleche();
         setLayout(null);
         try {
             ajoutCase();
@@ -50,16 +49,19 @@ public class VueJeu extends JPanel {
         ajoutObjectifActuel();
         ajoutinfo();
         ajoutOptions();
+        ajoutCouloir();
+        ajoutGuide();
+
     }
 
     public void ajoutCase() throws IOException{
         //Position du pion du joueur
-        int posX = modele.getJoueur().getPion().getPositionCourante().getX();
-        int posY = modele.getJoueur().getPion().getPositionCourante().getY();
 
         BufferedImage img;
         CouloirImpl [][] mat = plateau.getCouloirImpls();
         Objectif obj;
+
+        ArrayList<Joueur> listeJoueurs = modele.getJoueurs();
         
         for(int i = 0; i < Plateau.TAILLE;i++){
             for (int j = 0 ; j < Plateau.TAILLE; j++){
@@ -68,46 +70,55 @@ public class VueJeu extends JPanel {
 
                 obj = plateau.getObjectifCase(new Position(i, j));
 
-                if((obj != Objectif.VIDE) && i == posX && j == posY){
-                    String[] str1 = modele.getJoueur().toString().split(",");
-                    String[] str2 = str1[0].split(" ");
+                for(int k=0; k< listeJoueurs.size();k++){
+                    int posX = listeJoueurs.get(k).getPion().getPositionCourante().getX();
+                    int posY = listeJoueurs.get(k).getPion().getPositionCourante().getY();
 
-                    BufferedImage img3 = AssetTiles.getPionImage(str2[1]);
-                    BufferedImage img2 = AssetTiles.getObjectifImage(obj);
-
-                    img2 = AssetTiles.redimensionner(img2, SIZE_OBJECTIF*3, SIZE_OBJECTIF*3);
-
-                    picLabel = new JLabel(new ImageIcon(AssetTiles.combinerImage(AssetTiles.combinerImage(img, img2, true), img3, false)));
-
-                }else if(obj != Objectif.VIDE){
-
-                    BufferedImage img2 = AssetTiles.getObjectifImage(obj);
-
-                    img2 = AssetTiles.redimensionner(img2, SIZE_OBJECTIF*3, SIZE_OBJECTIF*3);
-                    picLabel = new JLabel(new ImageIcon(AssetTiles.combinerImage(img, img2, true)));
-
-                }else if(i == posX && j == posY){
-
-                    String[] str1 = modele.getJoueur().toString().split(",");
-                    String[] str2 = str1[0].split(" ");
-                    BufferedImage img2 = AssetTiles.getPionImage(str2[1]);
-                    picLabel = new JLabel(new ImageIcon(AssetTiles.combinerImage(img, img2, false)));
-                }else{
-                    picLabel = new JLabel(new ImageIcon(img));
+                    if((obj != Objectif.VIDE) && i == posX && j == posY){
+                        //Si on a objectif et joueur
+                        String[] str1 = listeJoueurs.get(k).toString().split(",");
+                        String[] str2 = str1[0].split(" ");
+    
+                        BufferedImage img3 = AssetTiles.getPionImage(str2[1]);
+                        BufferedImage img2 = AssetTiles.getObjectifImage(obj);
+    
+                        img2 = AssetTiles.redimensionner(img2, SIZE_OBJECTIF*3, SIZE_OBJECTIF*3);
+    
+                        picLabel = new JLabel(new ImageIcon(AssetTiles.combinerImage(img, AssetTiles.combinerImage(img2, img3, true), false)));
+    
+                    }else if(obj != Objectif.VIDE){
+                        //Si on a objectif
+                        BufferedImage img2 = AssetTiles.getObjectifImage(obj);
+    
+                        img2 = AssetTiles.redimensionner(img2, SIZE_OBJECTIF*3, SIZE_OBJECTIF*3);
+                        picLabel = new JLabel(new ImageIcon(AssetTiles.combinerImage(img, img2, true)));
+    
+                    }else if(i == posX && j == posY){
+                        //Si on a joueur
+                        String[] str1 = listeJoueurs.get(k).toString().split(",");
+                        String[] str2 = str1[0].split(" ");
+                        BufferedImage img2 = AssetTiles.getPionImage(str2[1]);
+                        picLabel = new JLabel(new ImageIcon(AssetTiles.combinerImage(img, img2, false)));
+                    }else{
+                        picLabel = new JLabel(new ImageIcon(img));
+                    }
+                    //hORIZONTAL PUI VERTICAL
+                    picLabel.setBounds(SIZE_COULOIR*(j+1),SIZE_COULOIR*(i+1),SIZE_COULOIR,SIZE_COULOIR);
+                    add(picLabel);
                 }
-                picLabel.setBounds(SIZE_COULOIR*j,SIZE_COULOIR*i,SIZE_COULOIR,SIZE_COULOIR);
-                add(picLabel);
+
+                
             }
         }
     }
 
     public void ajoutObjectifActuel(){
-        int offset = SIZE_COULOIR*7+25;
+        int offset = SIZE_COULOIR*9;
         Joueur joueur = modele.getJoueur();
 
         //Affichage de son objectif
         JLabel obj = new JLabel("Objectif :");
-        obj.setBounds(SIZE_OBJECTIF,offset,100,50);
+        obj.setBounds(offset,SIZE_COULOIR+275,100,50);
         obj.setFont(fontEntered);
         this.add(obj);
 
@@ -116,74 +127,52 @@ public class VueJeu extends JPanel {
         imgObj = AssetTiles.redimensionner(imgObj, SIZE_OBJECTIF*2, SIZE_OBJECTIF*2);
 
         JLabel picLabel = new JLabel(new ImageIcon(imgObj));
-        picLabel.setBounds(SIZE_OBJECTIF+100,SIZE_OBJECTIF+offset-10,SIZE_OBJECTIF*2,SIZE_OBJECTIF*2);
+        picLabel.setBounds(offset+100,SIZE_COULOIR+285,SIZE_OBJECTIF*2,SIZE_OBJECTIF*2);
         add(picLabel);
     }
 
     public void ajoutinfo(){
-        int offset = SIZE_COULOIR*7;
+        int offset = SIZE_COULOIR*9;
         Joueur joueur = modele.getJoueur();
         String[] str1 = joueur.toString().split(",");
 
-        JLabel info = new JLabel(str1[0]);
-        info.setBounds(SIZE_OBJECTIF,offset,250,50);
+        JLabel info = new JLabel(str1[0]+"      "+modele.getJoueur().getPion().getPositionCourante().toString());
+
+        info.setBounds(offset,SIZE_COULOIR+250,400,50);
+
         info.setFont(fontEntered);
-        this.add(info);    
+
+        this.add(info);
     }
 
     public void ajoutOptions(){
-        int offset = SIZE_COULOIR*7+25;
-        int offsetHorizontal = SIZE_OBJECTIF + 400;
+        int offset = SIZE_COULOIR*9;
+        int offset2 = SIZE_COULOIR+475;        
 
         validerMouvement = new JButton("Déplacer");
         System.out.println(modele.getJoueur().getPion().toString());
-        JLabel position = new JLabel(modele.getJoueur().getPion().getPositionCourante().toString());
         this.xText = new JLabel("X :");
         this.x = new JTextField();
         this.yText = new JLabel("Y :");
-        this.y = new JTextField();
+        this.y = new JTextField();       
 
-        this.posTextCouloir = new JLabel("Position :");
-        this.posCouloir = new JTextField();
-        this.orientationText = new JLabel("Orientation :");
-        this.orientation = new JTextField();
-        this.positionDispo = new JLabel("[N1 N2 N3 E1 E2 E3 S3 S2 S1 O3 O2 O1]");
-
-        position.setFont(fontEntered);
         validerMouvement.setFont(fontEntered);
         xText.setFont(fontEntered);
         x.setFont(fontEntered);
         yText.setFont(fontEntered);
         y.setFont(fontEntered);
-        positionDispo.setFont(fontEntered);
-        posTextCouloir.setFont(fontEntered);
-        posCouloir.setFont(fontEntered);
-        orientationText.setFont(fontEntered);
-        orientation.setFont(fontEntered);
         
-        position.setBounds(offsetHorizontal,offset-30,200,50);
-        validerMouvement.setBounds(offsetHorizontal,offset+70,125,25);
-        xText.setBounds(offsetHorizontal,offset,30,50);
-        x.setBounds(offsetHorizontal+35,offset+10,50,30);
-        yText.setBounds(offsetHorizontal,offset+30,30,50);
-        y.setBounds(offsetHorizontal+35,offset+40,50,30);
-        orientation.setBounds((offsetHorizontal-250)+135,offset-20,60,30);
-        orientationText.setBounds((offsetHorizontal-250),offset-20,150,30);
-        posTextCouloir.setBounds((offsetHorizontal-250),offset,100,50);
-        posCouloir.setBounds((offsetHorizontal-250)+100,offset+10,50,30);
-        positionDispo.setBounds(0,offset+30,450,50);
-
-        this.add(position);
+        validerMouvement.setBounds(offset+145,offset2+10,125,29);
+        xText.setBounds(offset,offset2,30,50);
+        x.setBounds(offset+30,offset2+10,30,30);
+        yText.setBounds(offset+70,offset2,30,50);
+        y.setBounds(offset+100,offset2+10,30,30);
+       
         this.add(validerMouvement);
         this.add(x);
         this.add(xText);
         this.add(y);
         this.add(yText);   
-        this.add(orientation);
-        this.add(orientationText);
-        this.add(posTextCouloir);    
-        this.add(posCouloir);
-        this.add(positionDispo);
 
         this.validerMouvement.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
@@ -196,6 +185,120 @@ public class VueJeu extends JPanel {
                 }
             }
         });
+    }
+
+    private void ajoutFleche(){
+        //Ajout du Nord
+        JLabel Nord1 = new JLabel("N1");
+        JLabel Nord2 = new JLabel("N2");
+        JLabel Nord3 = new JLabel("N3");
+
+        Nord1.setFont(fontEntered);
+        Nord2.setFont(fontEntered);
+        Nord3.setFont(fontEntered);
+
+        Nord1.setBounds(SIZE_COULOIR*2+30,SIZE_COULOIR/4,SIZE_COULOIR,SIZE_COULOIR);
+        Nord2.setBounds(SIZE_COULOIR*4+30,SIZE_COULOIR/4,SIZE_COULOIR,SIZE_COULOIR);
+        Nord3.setBounds(SIZE_COULOIR*6+30,SIZE_COULOIR/4,SIZE_COULOIR,SIZE_COULOIR);
+
+        this.add(Nord1);
+        this.add(Nord2);
+        this.add(Nord3);
+
+        //Ajout de l'Ouest
+        JLabel Ouest1 = new JLabel("O1");
+        JLabel Ouest2 = new JLabel("O2");
+        JLabel Ouest3 = new JLabel("O3");
+
+        Ouest1.setFont(fontEntered);
+        Ouest2.setFont(fontEntered);
+        Ouest3.setFont(fontEntered);
+
+        Ouest1.setBounds(SIZE_COULOIR-(30+SIZE_COULOIR/4),SIZE_COULOIR*2,SIZE_COULOIR,SIZE_COULOIR);
+        Ouest2.setBounds(SIZE_COULOIR-(30+SIZE_COULOIR/4),SIZE_COULOIR*4,SIZE_COULOIR,SIZE_COULOIR);
+        Ouest3.setBounds(SIZE_COULOIR-(30+SIZE_COULOIR/4),SIZE_COULOIR*6,SIZE_COULOIR,SIZE_COULOIR);
+
+        this.add(Ouest1);
+        this.add(Ouest2);
+        this.add(Ouest3);
+
+        //Ajout du Sud 
+        JLabel Sud1 = new JLabel("S1");
+        JLabel Sud2 = new JLabel("S2");
+        JLabel Sud3 = new JLabel("S3");
+
+        Sud1.setFont(fontEntered);
+        Sud2.setFont(fontEntered);
+        Sud3.setFont(fontEntered);
+
+        Sud1.setBounds(SIZE_COULOIR*2+30,SIZE_COULOIR*7+SIZE_COULOIR/4+SIZE_COULOIR/2,SIZE_COULOIR,SIZE_COULOIR);
+        Sud2.setBounds(SIZE_COULOIR*4+30,SIZE_COULOIR*7+SIZE_COULOIR/4+SIZE_COULOIR/2,SIZE_COULOIR,SIZE_COULOIR);
+        Sud3.setBounds(SIZE_COULOIR*6+30,SIZE_COULOIR*7+SIZE_COULOIR/4+SIZE_COULOIR/2,SIZE_COULOIR,SIZE_COULOIR);
+
+        this.add(Sud1);
+        this.add(Sud2);
+        this.add(Sud3);
+
+        //Ajout de l'Est
+        JLabel Est1 = new JLabel("E1");
+        JLabel Est2 = new JLabel("E2");
+        JLabel Est3 = new JLabel("E3");
+
+        Est1.setFont(fontEntered);
+        Est2.setFont(fontEntered);
+        Est3.setFont(fontEntered);
+
+        Est1.setBounds(SIZE_COULOIR*7+SIZE_COULOIR/4+SIZE_COULOIR/2+SIZE_COULOIR-(30+SIZE_COULOIR/4),SIZE_COULOIR*2,SIZE_COULOIR,SIZE_COULOIR);
+        Est2.setBounds(SIZE_COULOIR*7+SIZE_COULOIR/4+SIZE_COULOIR/2+SIZE_COULOIR-(30+SIZE_COULOIR/4),SIZE_COULOIR*4,SIZE_COULOIR,SIZE_COULOIR);
+        Est3.setBounds(SIZE_COULOIR*7+SIZE_COULOIR/4+SIZE_COULOIR/2+SIZE_COULOIR-(30+SIZE_COULOIR/4),SIZE_COULOIR*6,SIZE_COULOIR,SIZE_COULOIR);
+
+        this.add(Est1);
+        this.add(Est2);
+        this.add(Est3);
+    }
+
+    private void ajoutCouloir(){
+        int offset = SIZE_COULOIR*9;
+        int offset2 = SIZE_COULOIR+350;
+
+        this.posTextCouloir = new JLabel("Position :");
+        this.posCouloir = new JTextField();
+        this.orientationText = new JLabel("Orientation :");
+        this.orientation = new JTextField();
+        JLabel exemple = new JLabel("Exemple : N1");
+
+        posTextCouloir.setFont(fontEntered);
+        posCouloir.setFont(fontEntered);
+        orientationText.setFont(fontEntered);
+        orientation.setFont(fontEntered);
+        exemple.setFont(new Font(Font.DIALOG, Font.ROMAN_BASELINE, 12));
+
+        orientationText.setBounds(offset+117,offset2+50,150,50);
+        posTextCouloir.setBounds(offset+117,offset2-10,150,50);
+
+        exemple.setBounds(offset+117,offset2+10,150,50);
+
+        orientation.setBounds(offset+252,offset2+60,60,30);
+        posCouloir.setBounds(offset+217,offset2,50,30);
+
+        Couloir couloir = modele.getSupplementaire();
+        BufferedImage img = AssetTiles.getCouloirImage(couloir);
+        JLabel picLabel = new JLabel(new ImageIcon(img));
+        picLabel.setBounds(offset,offset2,SIZE_COULOIR,SIZE_COULOIR);
+
+        this.add(picLabel);
+        this.add(orientation);
+        this.add(orientationText);
+        this.add(posTextCouloir);    
+        this.add(posCouloir);
+        this.add(exemple);
+    }
+
+    private void ajoutGuide(){
+        BufferedImage img = AssetTiles.getImage("guide.png");
+        JLabel picLabel = new JLabel(new ImageIcon(img));
+        picLabel.setBounds(SIZE_COULOIR*9,SIZE_COULOIR,345,248);
+        add(picLabel);
     }
 
     public Boolean verifierOrientation(){
@@ -235,8 +338,7 @@ public class VueJeu extends JPanel {
         this.orientation.setText("");
 
         this.removeAll();    //Supprimme les elements graphique
-
-
+        ajoutFleche();
         try {
             ajoutCase();
         } catch (IOException e) {
@@ -245,6 +347,8 @@ public class VueJeu extends JPanel {
         ajoutObjectifActuel();
         ajoutinfo();
         ajoutOptions();
+        ajoutCouloir();
+        ajoutGuide();
     }
 
 }

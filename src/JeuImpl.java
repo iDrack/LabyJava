@@ -94,7 +94,7 @@ public class JeuImpl implements Jeu {
                 if (i == 0) pos = new Position(0,0);
                 else if (i == 1) pos = new Position(6,6);
                 else if (i == 2) pos = new Position(0,6);
-                else new Position(6,0);
+                else pos = new Position(6,0);
                 //Création du pion
                 Pion pion = new PionImpl(pos, Couleur.getCouleur(listeCouleur[i]),this.plateau);
                 //Création du joueur et ajout
@@ -139,12 +139,10 @@ public class JeuImpl implements Jeu {
                 } while (age < 8);
                 System.out.println();
 
-                if (i == 0) {
-                    pos = new Position(0,0); 
-                }
-                else if (i == 1) {pos = new Position(6,6);}
-                else if (i == 2) {pos = new Position(0,6);}
-                else {new Position(6,0);}
+                if (i == 0) pos = new Position(0,0);
+                else if (i == 1) pos = new Position(6,6);
+                else if (i == 2) pos = new Position(0,6);
+                else pos = new Position(6,0);
 
                 Pion pion = new PionImpl(pos, Couleur.getCouleur(expr),this.plateau);
                 joueur = new JoueurImpl(pion, age, this);
@@ -229,16 +227,15 @@ public class JeuImpl implements Jeu {
         return this.joueurCourant;
     }
 
+    public ArrayList<Joueur> getJoueurs(){
+        return this.joueurs;
+    }
 
     public Plateau getPlateau(){
         return this.plateau;
     }
 
-    public static void main(String[] args){
-        Jeu jeu = new JeuImpl();
-        System.out.println(jeu);
-
+    public CouloirMobile getSupplementaire(){
+        return supplementaire;
     }
-
-
 }
