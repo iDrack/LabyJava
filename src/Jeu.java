@@ -26,4 +26,5 @@ public interface Jeu {
     public ArrayList<Joueur> getJoueurs();
 
     public CouloirMobile getSupplementaire();
+
 }

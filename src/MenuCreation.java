@@ -132,8 +132,6 @@ public class MenuCreation extends JPanel{
     }
 
     private void chargerJeu(){
-        //Jeu jeu = new JeuImpl();
-        //System.out.println(jeu);
         this.menu = new VueJeu(page);
         this.page.setMenuJeu(menu);
         this.page.setContentPane(menu);

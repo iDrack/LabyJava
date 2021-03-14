@@ -23,10 +23,6 @@ public class JeuImpl implements Jeu {
                 // ...
             }
         }
-        
-        //jouer(); Appeler par le bouton de VueJeu
-
-        // ...
     }
 
     @Override
@@ -61,19 +57,21 @@ public class JeuImpl implements Jeu {
 
     @Override
     public void jouer() {
-        //while(! aGagné(this.joueurCourant)){
+        if(aGagné(this.joueurCourant)){
+            //Lancement de l'écran de victoire
+            VueJeu vue = MainWindow.instance.getMenuJeu();
+            vue.getPage().setContentPane(new EcranFin(vue.getPage()));
+            
+        }else{
             System.out.println(this.plateau.toString());
-            //joueurCourant.joue(); Appeler juste avant par le bouton de VueJeu
             joueurCourant = prochainJoueur();
             VueJeu vue = MainWindow.instance.getMenuJeu();
-            vue.reset();        //Remet à 0 les valeurs des différents champs
-        //}
+            vue.reset(false);
+        }
     }
 
     @Override
     public void enregistrer(){
-
-        
         // Donner un pion au joueur.
         Joueur joueur;
         
@@ -195,7 +193,8 @@ public class JeuImpl implements Jeu {
 
     @Override
     public boolean aGagné(Joueur joueur){
-       return joueur.getStack().empty();
+        
+        return joueur.getStack().empty();
     }
 
     @Override

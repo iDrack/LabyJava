@@ -61,11 +61,8 @@ public class JoueurImpl implements Joueur {
     public void joue(){
         System.out.println(objectifs.peek());
         Position posAv = pion.getPositionCourante();
-        System.out.println("Pion : " + this.pion.getCouleurPion() + ".");
-        Orientation maPos = choisirOrientationCouloir();
-        System.out.println(">>> "+maPos.toString());
 
-        jeu.modifierCouloirs(choisirPositionInsertionCouloir(), choisirOrientationCouloir());    //Modification du couloir
+        //jeu.modifierCouloirs(choisirPositionInsertionCouloir(), choisirOrientationCouloir());    //Modification du couloir
 
         Objectif objectif = pion.deplacer(choisirPositionPion());   //Déplacement du pion
 
