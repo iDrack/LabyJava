@@ -1,7 +1,5 @@
 import java.util.*;
 
-import javax.swing.JPanel;
-
 public class JoueurImpl implements Joueur {
     private Pion pion;
     private Stack<Objectif> objectifs = new Stack<Objectif>();
@@ -60,7 +58,7 @@ public class JoueurImpl implements Joueur {
     @Override
     public void joue(){
         System.out.println(objectifs.peek());
-        Position posAv = pion.getPositionCourante();
+        //Position posAv = pion.getPositionCourante();
         System.out.println("Pion : " + this.pion.getCouleurPion() + ".");
         Orientation maPos = choisirOrientationCouloir();
         System.out.println(">>> "+maPos.toString());
