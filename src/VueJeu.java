@@ -29,6 +29,7 @@ public class VueJeu extends JPanel {
 
     private JButton validerMouvement;
 
+    private Boolean dejaInserer;
 
     public VueJeu(MainWindow page){
         this.page=page;
@@ -48,9 +49,9 @@ public class VueJeu extends JPanel {
         }             
         ajoutObjectifActuel();
         ajoutinfo();
-        ajoutOptions();
         ajoutCouloir();
         ajoutGuide();
+        this.dejaInserer = false;
 
     }
 
@@ -102,7 +103,7 @@ public class VueJeu extends JPanel {
                     }else{
                         picLabel = new JLabel(new ImageIcon(img));
                     }
-                    //hORIZONTAL PUI VERTICAL
+                    
                     picLabel.setBounds(SIZE_COULOIR*(j+1),SIZE_COULOIR*(i+1),SIZE_COULOIR,SIZE_COULOIR);
                     add(picLabel);
                 }
@@ -176,10 +177,9 @@ public class VueJeu extends JPanel {
 
         this.validerMouvement.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
-                if(getPosX() >= 0 && getPosX() <= 6 && getPosY() >= 0 && getPosY() <= 6 && verifierOrientation() && verifierPos()){
+                if(getPosX() >= 0 && getPosX() <= 6 && getPosY() >= 0 && getPosY() <= 6){
                     if(modele.getPlateau().estAtteignable(modele.getJoueur().getPion().getPositionCourante(), new Position(getPosX(), getPosY()))){
                         modele.getJoueur().joue();
-                        System.out.println("Le joueur a joué");
                         modele.jouer();
                     }
                 }
@@ -266,20 +266,36 @@ public class VueJeu extends JPanel {
         this.orientationText = new JLabel("Orientation :");
         this.orientation = new JTextField();
         JLabel exemple = new JLabel("Exemple : N1");
+        JButton moveCouloirs = new JButton("Insérer");
 
         posTextCouloir.setFont(fontEntered);
         posCouloir.setFont(fontEntered);
         orientationText.setFont(fontEntered);
         orientation.setFont(fontEntered);
         exemple.setFont(new Font(Font.DIALOG, Font.ROMAN_BASELINE, 12));
+        moveCouloirs.setFont(fontEntered);
 
-        orientationText.setBounds(offset+117,offset2+50,150,50);
-        posTextCouloir.setBounds(offset+117,offset2-10,150,50);
+        posTextCouloir.setBounds(offset+117,offset2-15,150,50);
+        orientationText.setBounds(offset+117,offset2+25,150,50);
 
-        exemple.setBounds(offset+117,offset2+10,150,50);
+        exemple.setBounds(offset+117,offset2+5,150,50);
 
-        orientation.setBounds(offset+252,offset2+60,60,30);
-        posCouloir.setBounds(offset+217,offset2,50,30);
+        posCouloir.setBounds(offset+217,offset2-5,50,30);
+        orientation.setBounds(offset+252,offset2+35,60,30);
+
+        moveCouloirs.setBounds(offset+117,offset2+70,195,29);
+
+        moveCouloirs.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e) {
+                if(!dejaInserer && verifierOrientation() && verifierPos()){
+                    modele.modifierCouloirs(modele.getJoueur().choisirPositionInsertionCouloir(), modele.getJoueur().choisirOrientationCouloir());    //Modification du couloir
+                    removeAll();
+
+                    reset(true);
+                    ajoutOptions();
+                }
+            }
+        });
 
         Couloir couloir = modele.getSupplementaire();
         BufferedImage img = AssetTiles.getCouloirImage(couloir);
@@ -292,6 +308,8 @@ public class VueJeu extends JPanel {
         this.add(posTextCouloir);    
         this.add(posCouloir);
         this.add(exemple);
+        this.add(moveCouloirs);
+
     }
 
     private void ajoutGuide(){
@@ -331,11 +349,19 @@ public class VueJeu extends JPanel {
         return posCouloir.getText().toUpperCase();
     }
 
-    public void reset(){
-        this.x.setText("");
-        this.y.setText("");
-        this.posCouloir.setText("");
-        this.orientation.setText("");
+    public void reset(Boolean deja){
+        String p = "";
+        String o = "";
+        if(! deja){
+            this.x.setText("");
+            this.y.setText("");
+            this.posCouloir.setText("");
+            this.orientation.setText("");
+        }else{
+            p = this.posCouloir.getText();
+            o = this.orientation.getText();
+        }
+        this.dejaInserer = deja;
 
         this.removeAll();    //Supprimme les elements graphique
         ajoutFleche();
@@ -346,9 +372,14 @@ public class VueJeu extends JPanel {
         }             
         ajoutObjectifActuel();
         ajoutinfo();
-        ajoutOptions();
         ajoutCouloir();
         ajoutGuide();
+
+        this.posCouloir.setText(p);
+        this.orientation.setText(o);
     }
 
+    public MainWindow getPage(){
+        return page;
+    }
 }

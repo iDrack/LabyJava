@@ -12,4 +12,8 @@ public interface Joueur {
     public Position choisirPositionPion();
 
     public Pion getPion();
+    
+    public Orientation choisirOrientationCouloir();
+
+    public PositionInsertion choisirPositionInsertionCouloir();
 }
