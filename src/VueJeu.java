@@ -13,32 +13,84 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class VueJeu extends JPanel {
+
+    /**
+     * JFrame actuel définissant la fenêtre de l'application
+     */
     private MainWindow page;
+
+    /**
+     * Taille des images des couloirs
+     */
     private final int SIZE_COULOIR = 93;
+
+    /**
+     * Taille des images des objectifs
+     */
     private final int SIZE_OBJECTIF = 15;
+
+    /**
+     * Police d'écriture utilisé par la classe VueJeu
+     */
     private final Font fontEntered = new Font(Font.DIALOG, Font.ROMAN_BASELINE, 20);
+
+    /**
+     * Instance du Jeu. C'est ici que l'on créer le jeu.
+     */
     private Jeu modele = new JeuImpl();
+
+    /**
+     * Instance du plateau du jeu définit ar JeuImpl.
+     */
     private Plateau plateau = modele.getPlateau();
 
-    private JLabel xText;
-    private JLabel yText;
-    private JLabel posTextCouloir;
-    private JLabel orientationText;
-
+    /**
+     * Champs de saisie des nouvelles coordonnées du joueur (x)
+     */
     private JFormattedTextField x;
+
+    /**
+     * Champs de saisie des nouvelles coordonnées du joueur (y)
+     */
     private JFormattedTextField y;
+
+    /**
+     * Champs de saisie de la nouvelle position du couloir a insérer
+     */
     private JTextField posCouloir;
+
+    /**
+     * Champs de saisie de l'orientation du couloir a insérer
+     */
     private JTextField orientation;
 
-    private JButton validerMouvement;
-
+    /**
+     * Boolean permet de savoir si le joueur a insérer ou non le couloir.
+     * Il permet aussi de savoir où nousnous trouvons dans le tou du joueur
+     */
     private Boolean dejaInserer;
 
-    //Permet de gérer les champs de texte formatés
+    /**
+     * Format n'acceptant que les entiers
+     */
     private NumberFormat format = NumberFormat.getInstance();
+    
+    /**
+     * Formateur de nombre
+     */
     private NumberFormatter nff = new NumberFormatter(format);
+    
+    /**
+     * Factory de formatteur de nombre
+     */
     private DefaultFormatterFactory factory = new DefaultFormatterFactory(nff);
 
+    /**
+     * VueJeu correspond au GUI du jeu, affichant le plateau, les coordonnées du joueur actuel, 
+     * le couloirs a insérer, un guide d'insertion ainsi que les champs de saisie du joueur.
+     * 
+     * @param page MainWindow définissant la fenêtre du jeu.
+     */
     public VueJeu(MainWindow page){
         this.page=page;
         this.dejaInserer = false;
@@ -63,6 +115,13 @@ public class VueJeu extends JPanel {
 
     }
 
+    /**
+     * Méthode affichant le plateau du jeu (couloirs, joueurs et objectifs), selon les coordonnés des joueurs ainsi que les coordonnées des objectifs,
+     * cette méthode pourra les combiner en appelant la méthode combinerImage de AssetTiles.
+     * Les Joueur se trouvant au dessus des objectifs qui se trouve au dessus des couloirs.
+     * 
+     * @throws IOException
+     */
     public void ajoutCase() throws IOException{
         //Position du pion du joueur
 
@@ -121,6 +180,9 @@ public class VueJeu extends JPanel {
         }
     }
 
+    /**
+     * Méthode affichant l'image de l'objectif du joueur actuel.
+     */
     public void ajoutObjectifActuel(){
         int offset = SIZE_COULOIR*9;
         Joueur joueur = modele.getJoueur();
@@ -140,6 +202,9 @@ public class VueJeu extends JPanel {
         add(picLabel);
     }
 
+    /**
+     * Méthode affichant les informations du jouuer (Coordonnées, couleur).
+     */
     public void ajoutinfo(){
         int offset = SIZE_COULOIR*9;
         Joueur joueur = modele.getJoueur();
@@ -154,16 +219,21 @@ public class VueJeu extends JPanel {
         this.add(info);
     }
 
+    /**
+     * Permet d'ajouter les champs demandant les nouvelles coordonnées du joueur.
+     * Cette méthode est appelé après que le joueurs ait insérer un couloir sur le plateau.
+     * Le bouton validerMouvement vérifie les valeurs des champs x et y avant de finir le tour du joueur actuel.
+     */
     public void ajoutOptions(){
         int offset = SIZE_COULOIR*9;
         int offset2 = SIZE_COULOIR+475;        
 
-        validerMouvement = new JButton("Déplacer");
+        JButton validerMouvement = new JButton("Déplacer");
         System.out.println(modele.getJoueur().getPion().toString());
-        this.xText = new JLabel("X :");
+        JLabel xText = new JLabel("X :");
         this.x = new JFormattedTextField();
         this.x.setFormatterFactory(factory);
-        this.yText = new JLabel("Y :");
+        JLabel yText = new JLabel("Y :");
         this.y = new JFormattedTextField();
         this.y.setFormatterFactory(factory);
 
@@ -185,7 +255,7 @@ public class VueJeu extends JPanel {
         this.add(y);
         this.add(yText);   
 
-        this.validerMouvement.addActionListener(new ActionListener(){
+        validerMouvement.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
                 if(getPosX() >= 0 && getPosX() <= 6 && getPosY() >= 0 && getPosY() <= 6){
                     if(modele.getPlateau().estAtteignable(modele.getJoueur().getPion().getPositionCourante(), new Position(getPosX(), getPosY()))){
@@ -197,6 +267,9 @@ public class VueJeu extends JPanel {
         });
     }
 
+    /**
+     * Affoche les nom des colonnes et lignes de couloirs mobiles sur le plateau.
+     */
     private void ajoutFleche(){
         //Ajout du Nord
         JLabel Nord1 = new JLabel("N1");
@@ -267,13 +340,18 @@ public class VueJeu extends JPanel {
         this.add(Est3);
     }
 
+    /**
+     * Permet d'afficher les information relatives au couloir a insérer.
+     * Le bouton moveCouloir vérifie la valeurs des champs position et orientation avant de mettre à jour le plateau.
+     * Afin de mettre à jour le plateau, il est nécessaire de faire appel à removeAll() ainsi que reset() et les fonctions d'ajout de JLabel.
+     */
     private void ajoutCouloir(){
         int offset = SIZE_COULOIR*9;
         int offset2 = SIZE_COULOIR+350;
 
-        this.posTextCouloir = new JLabel("Position :");
+        JLabel posTextCouloir = new JLabel("Position :");
         this.posCouloir = new JTextField();
-        this.orientationText = new JLabel("Orientation :");
+        JLabel orientationText = new JLabel("Orientation :");
         this.orientation = new JTextField();
         JLabel exemple = new JLabel("Exemple : N1");
         JButton moveCouloirs = new JButton("Insérer");
@@ -300,7 +378,6 @@ public class VueJeu extends JPanel {
                 if(!dejaInserer && verifierOrientation() && verifierPos()){
                     modele.modifierCouloirs(modele.getJoueur().choisirPositionInsertionCouloir(), modele.getJoueur().choisirOrientationCouloir());    //Modification du couloir
                     removeAll();
-
                     reset(true);
                     ajoutOptions();
                 }
@@ -334,6 +411,9 @@ public class VueJeu extends JPanel {
 
     }
 
+    /**
+     * Affiche l'image guide d'insertion.
+     */
     private void ajoutGuide(){
         BufferedImage img = AssetTiles.getImage("guide.png");
         JLabel picLabel = new JLabel(new ImageIcon(img));
@@ -341,6 +421,10 @@ public class VueJeu extends JPanel {
         add(picLabel);
     }
 
+    /**
+     * Vérifie la valeur du champs de saisie de l'orientation.
+     * @return Booelan vérifiant que la valeur du champs orientation est légal.
+     */
     public Boolean verifierOrientation(){
         if(getOrientation().toUpperCase().equals("N")){
             this.orientation.setText("NORD");
@@ -354,6 +438,10 @@ public class VueJeu extends JPanel {
         return (getOrientation().equals("NORD") || getOrientation().equals("OUEST") || getOrientation().equals("SUD") || getOrientation().equals("EST"));
     }
 
+    /**
+     * Vérifie la valeur du champs position.
+     * @return Boolean vérifiant que la valeur du champs position est légal.
+     */
     public Boolean verifierPos(){
         PositionInsertion[] tab = PositionInsertion.values();
         for(int i=0; i<tab.length; i++){
@@ -362,28 +450,10 @@ public class VueJeu extends JPanel {
         return false;
     }
 
-    public int getPosX(){
-        if(x.getText().equals(""))return -1;
-        return Integer.parseInt(x.getText());
-    }
-
-    public int getPosY(){
-        if(y.getText().equals(""))return -1;
-        return Integer.parseInt(y.getText());
-    }
-
-    public String getOrientation(){
-        return orientation.getText().toUpperCase();
-    }
-
-    public String getPosCouloir(){
-        return posCouloir.getText().toUpperCase();
-    }
-
-    public MainWindow getPage(){
-        return page;
-    }
-
+    /**
+     * Permet de remettre à zéro les élèments de VueJeu et ainsi de réinitialiser l'affichage du plateau.
+     * @param deja Boolean permettant de vérifier si nous somme à la fin du tour, si oui alors toutes les valeur des JLabel de VueJeu sont remisent à = sinon, nous gardons les valeurs de la position et lòrientation du couloir à insérer.
+     */
     public void reset(Boolean deja){
         String p = "";
         String o = "";
@@ -409,9 +479,49 @@ public class VueJeu extends JPanel {
         ajoutinfo();
         ajoutCouloir();
         ajoutGuide();
-
         this.posCouloir.setText(p);
         this.orientation.setText(o);
     }
 
+    /**
+     * Permet d'accéder à la valeur du champs x de VueJeu.
+     * @return int, -1 si le champs x est vide.
+     */
+    public int getPosX(){
+        if(x.getText().equals(""))return -1;
+        return Integer.parseInt(x.getText());
+    }
+
+    /**
+     * Permet d'accéder à la valeur du champs y de VueJeu.
+     * @return int, -1 si le champs y est vide.
+     */
+    public int getPosY(){
+        if(y.getText().equals(""))return -1;
+        return Integer.parseInt(y.getText());
+    }
+
+    /**
+     * Permet d'accéder à la valeur du champs orientation.
+     * @return String.
+     */
+    public String getOrientation(){
+        return orientation.getText().toUpperCase();
+    }
+
+    /**
+     * Permet d'accéder à la valeur du champs position.
+     * @return String.
+     */
+    public String getPosCouloir(){
+        return posCouloir.getText().toUpperCase();
+    }
+
+    /**
+     * Permet d'accéder à la valeur de page.
+     * @return MainWindo.
+     */
+    public MainWindow getPage(){
+        return page;
+    }
 }

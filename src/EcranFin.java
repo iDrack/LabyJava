@@ -5,16 +5,23 @@ import java.awt.event.ActionListener;
 
 public class EcranFin extends JPanel {
 
-    private static final long serialVersionUID = 1L;
-    private JButton quitter;
+    /**
+     * Police d'écriture utilisé par EcranFin
+     */
     private final Font fontEntered = new Font(Font.DIALOG, Font.ROMAN_BASELINE, 20);
-    private Image img;
-    private MainWindow fenetre;
-    private Dimension size;
 
     /**
-     * Constructeur de la classeEcranFin
-     * EcranFin est un JPanel contenant un bouton ainsi qu'une image de fond
+     * Image de fond de EcranFin
+     */
+    private Image img;
+
+    /**
+     * Fenêtre actuel de l'application, de type MainWindow
+     */
+    private MainWindow fenetre;
+    
+    /**
+     * EcranFin est un JPanel affichant un message de félicitation
      */
     public EcranFin(MainWindow f){
         fenetre=f;
@@ -24,7 +31,6 @@ public class EcranFin extends JPanel {
 
         //Détection de la taille de l'image de fond
         Dimension size = new Dimension(img.getWidth(null), img.getHeight(null));
-        this.size = size;
         this.setLayout(null);
 
         //Paramétrage de la taille de la fenêtre
@@ -32,7 +38,7 @@ public class EcranFin extends JPanel {
         fenetre.setLocationRelativeTo(null);
         MainWindow.instance.requestFocusInWindow(); 
 
-        quitter = new JButton("Quitter");
+        JButton quitter = new JButton("Quitter");
 
         quitter.setBounds(454-75,500,150,50);
 
@@ -47,7 +53,12 @@ public class EcranFin extends JPanel {
             }
         });
     }
-
+    
+    /**
+     * Méthode affichant les composant graphique de MenuPrincipal
+     * 
+     * @param g Composant graphique de type Graphics
+     */
     public void paintComponent(Graphics g) {
         g.drawImage(img, 0, 0, null);
     }    

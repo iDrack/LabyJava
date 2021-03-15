@@ -5,20 +5,33 @@ import java.awt.event.ActionListener;
 
 public class MenuPrincipal extends JPanel {
 
-    private static final long serialVersionUID = 1L;
-    private JButton jouer;
-    private JButton quitter;
+    /**
+     * Police d'écriture utilisé par le MenuPrincipal
+     */
     private final Font fontEntered = new Font(Font.DIALOG, Font.ROMAN_BASELINE, 20);
+
+    /**
+     * Image de fond de MenuPrincipal
+     */
     private Image img;
+
+    /**
+     * Fenêtre actuel de l'application, de type MainWindow
+     */
     private MainWindow fenetre;
+
+    /**
+     * Taille de menuPrincipal
+     */
     private Dimension size;
 
     /**
-     * Constructeur de la classe MenuPrincipal
-     * MenuPrincipal est un JPanel contenant deux boutons ainsi qu'une image de fond
+     * MenuPrincipal est un JPanel contenant deux boutons ainsi qu'une image de fond.
+     * 
+     * @param fenetre Fenêtre actuel de l'application, de type MainWindow
      */
-    public MenuPrincipal(MainWindow f){
-        this.fenetre = f;
+    public MenuPrincipal(MainWindow fenetre){
+        this.fenetre = fenetre;
 
         //Accés à l'image de fond
         this.img = new ImageIcon("media/img/labyrinthe.png").getImage();
@@ -29,8 +42,8 @@ public class MenuPrincipal extends JPanel {
         this.setLayout(null);
 
         //Crréation des label jouer et quitter
-        jouer = new JButton("Jouer");
-        quitter = new JButton("Quitter");
+        JButton jouer = new JButton("Jouer");
+        JButton quitter = new JButton("Quitter");
 
         //Positionnement des boutons
         jouer.setBounds(225,500,150,50);
@@ -59,10 +72,18 @@ public class MenuPrincipal extends JPanel {
 
     }
 
+    /**
+     * Méthode affichant les composant graphique de MenuPrincipal
+     * 
+     * @param g Composant graphique de type Graphics
+     */
     public void paintComponent(Graphics g) {
         g.drawImage(img, 0, 0, null);
     }
 
+    /**
+     * Méthode permettant de changer le JPanel de MainWindow (De MenuPrinciapl à MenuCreation)
+     */
     private void changerMenu(){
         MenuCreation menuCreation = new MenuCreation(size,fenetre);
         this.fenetre.setContentPane(menuCreation);

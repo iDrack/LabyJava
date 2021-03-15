@@ -6,21 +6,20 @@ import java.io.IOException;
 
 public class AssetTiles{
     
-    private static final long serialVersionUID = 1L;
-
-    private static BufferedImage NO_TEXTURE = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);//Renvoie une tile noir si aucune image ne peut être charger
+    /**
+     * Renvoie une tile noir si aucune image ne peut être charger.
+     */
+    private static BufferedImage NO_TEXTURE = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
     static {
         NO_TEXTURE.setRGB(0, 0, new Color(0, 0, 0).getRGB());
     }
 
     /**
-     * Méthode permettant de récupérer une image selon son nom
-     * 
-     * @param url
+     * Méthode permettant de récupérer une image selon son nom (url).
+     * @param url String du nom de l'image à retourner
      * @return BufferedImage
      */
     public static BufferedImage getImage(String url){
-        //récupére le fichier où ce situe les tiles (chemin = url)
         BufferedImage ret = NO_TEXTURE;
         try {
             ret = ImageIO.read(new File("media/img/sprites/".concat(url)));
@@ -31,8 +30,7 @@ public class AssetTiles{
     }
 
     /**
-     * Méthode permettant de récupérer la tuile d'un couloir
-     * 
+     * Méthode permettant de récupérer l'image d'un couloir.
      * @param couloir
      * @return BufferedImage
      */
@@ -69,14 +67,31 @@ public class AssetTiles{
         }
     }
 
+    /**
+     * Méthode permettant de récupérer l'image d'un objectif.
+     * @param obj
+     * @return BufferedImage
+     */
     public static BufferedImage getObjectifImage(Objectif obj){
         return getImage(obj.toString().toLowerCase().concat(".png"));
     }
 
+    /**
+     * Méthode permettant de récupérer l'image d'un pion selon sa couleur.
+     * @param pion
+     * @return BufferedImage
+     */
     public static BufferedImage getPionImage(String pion){
         return getImage(pion.toLowerCase().concat(".png"));
     }
 
+    /**
+     * Combine image2 à image1 au premier plan.
+     * @param image1 Image utilisé au dernier plan.
+     * @param image2 Image utilisé au premier plan.
+     * @param centrer Boolean déterminant si il faut centrer image2.
+     * @return Image combinant les deux images passées en paramètre.
+     */
     public static BufferedImage combinerImage(BufferedImage image1, BufferedImage image2, Boolean centrer){ 
         Graphics2D g2d = image1.createGraphics(); 
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, 
@@ -94,6 +109,13 @@ public class AssetTiles{
         return image1 ; 
     }
 
+    /**
+     * Redimensionne img avec les valeurs de w et h.
+     * @param img Image original.
+     * @param w Nouvelle largeur de img.
+     * @param h Nouvelle Hauteur de img.
+     * @return Image redimensionnée.
+     */
     public static BufferedImage redimensionner(BufferedImage img, int w, int h) { 
         Image tmp = img.getScaledInstance(w, h, Image.SCALE_SMOOTH);
         BufferedImage dimg = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
