@@ -280,10 +280,10 @@ public class VueJeu extends JPanel {
 
         exemple.setBounds(offset+117,offset2+5,150,50);
 
-        posCouloir.setBounds(offset+217,offset2-5,55,30);
-        orientation.setBounds(offset+252,offset2+35,65,30);
+        posCouloir.setBounds(offset+252,offset2-5,70,30);
+        orientation.setBounds(offset+252,offset2+35,70,30);
 
-        moveCouloirs.setBounds(offset+117,offset2+70,200,29);
+        moveCouloirs.setBounds(offset+117,offset2+70,205,29);
 
         moveCouloirs.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
