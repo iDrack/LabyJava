@@ -1,21 +1,30 @@
 import javax.swing.*;
+import javax.swing.text.DefaultFormatterFactory;
+import javax.swing.text.NumberFormatter;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.NumberFormat;
 
 public class MenuCreation extends JPanel{
     private static final long serialVersionUID = 1L;
     private JLabel titre;
     private JLabel nbJoueurText;
-    private JTextField nbJoueurField;
+    private JFormattedTextField nbJoueurField;
     private JButton valider;
     private static int nbJoueurs;
     private final Font fontEntered = new Font(Font.DIALOG, Font.ROMAN_BASELINE, 20);
     private Dimension size;
-    private static JTextField[] listeAge;
+    private static JFormattedTextField[] listeAge;
     private static JTextField[] listeCouleurs;
     private MainWindow page;
     private VueJeu menu;
+    
+    //Permet de gérer les champs de texte formatés
+    private NumberFormat format = NumberFormat.getInstance();
+    private NumberFormatter nff = new NumberFormatter(format);
+    private DefaultFormatterFactory factory = new DefaultFormatterFactory(nff);
 
     public MenuCreation(Dimension s,MainWindow page){
         this.size = s;
@@ -28,7 +37,8 @@ public class MenuCreation extends JPanel{
         this.setLayout(null);
         titre = new JLabel("Création de la partie");
         nbJoueurText = new JLabel("Nombre de joueurs :");
-        nbJoueurField = new JTextField();
+        nbJoueurField = new JFormattedTextField();
+        nbJoueurField.setFormatterFactory(factory);
         valider = new JButton("Valider");
 
         titre.setBounds(351,50,205,50);
@@ -62,7 +72,7 @@ public class MenuCreation extends JPanel{
         nbJoueurs = x;
 
         JLabel[] listeTitres = new JLabel[x];
-        listeAge = new JTextField[x];
+        listeAge = new JFormattedTextField[x];
         listeCouleurs = new JTextField[x];
         JLabel couleur, instructionAge, instructionCouleur;
         JButton validerJoueurs;
@@ -88,7 +98,8 @@ public class MenuCreation extends JPanel{
             couleur = new JLabel("Couleur :");
             String tmpString = "Joueur n°"+(i+1)+"    Âge :";
             listeTitres[i] = new JLabel(tmpString);
-            listeAge[i] = new JTextField();
+            listeAge[i] = new JFormattedTextField();
+            listeAge[i].setFormatterFactory(factory);
             listeCouleurs[i] = new JTextField();
 
             //Positionnement
@@ -148,7 +159,7 @@ public class MenuCreation extends JPanel{
     public static int[] listeAgeToInt() {
         int[] ret = new int[nbJoueurs];
         for(int i=0;i<nbJoueurs;i++){
-            ret[i] = Integer.parseInt(listeAge[i].getText());
+            if(! listeAge[i].getText().equals(""))  ret[i] = Integer.parseInt(listeAge[i].getText());
         }
         return ret;
     }

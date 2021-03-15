@@ -1,10 +1,13 @@
 import javax.swing.*;
 import java.awt.*;
 import javax.swing.JPanel;
+import javax.swing.text.DefaultFormatterFactory;
+import javax.swing.text.NumberFormatter;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,14 +25,19 @@ public class VueJeu extends JPanel {
     private JLabel posTextCouloir;
     private JLabel orientationText;
 
-    private JTextField x;
-    private JTextField y;
+    private JFormattedTextField x;
+    private JFormattedTextField y;
     private JTextField posCouloir;
     private JTextField orientation;
 
     private JButton validerMouvement;
 
     private Boolean dejaInserer;
+
+    //Permet de gérer les champs de texte formatés
+    private NumberFormat format = NumberFormat.getInstance();
+    private NumberFormatter nff = new NumberFormatter(format);
+    private DefaultFormatterFactory factory = new DefaultFormatterFactory(nff);
 
     public VueJeu(MainWindow page){
         this.page=page;
@@ -153,9 +161,11 @@ public class VueJeu extends JPanel {
         validerMouvement = new JButton("Déplacer");
         System.out.println(modele.getJoueur().getPion().toString());
         this.xText = new JLabel("X :");
-        this.x = new JTextField();
+        this.x = new JFormattedTextField();
+        this.x.setFormatterFactory(factory);
         this.yText = new JLabel("Y :");
-        this.y = new JTextField();       
+        this.y = new JFormattedTextField();
+        this.y.setFormatterFactory(factory);
 
         validerMouvement.setFont(fontEntered);
         xText.setFont(fontEntered);
