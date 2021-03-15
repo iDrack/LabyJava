@@ -1,7 +1,5 @@
 import java.util.*;
 
-import javax.swing.JPanel;
-
 public class JoueurImpl implements Joueur {
     private Pion pion;
     private Stack<Objectif> objectifs = new Stack<Objectif>();
