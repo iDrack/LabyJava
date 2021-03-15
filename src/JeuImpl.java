@@ -193,7 +193,6 @@ public class JeuImpl implements Jeu {
 
     @Override
     public boolean aGagné(Joueur joueur){
-        
         return joueur.getStack().empty();
     }
 

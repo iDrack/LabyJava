@@ -33,6 +33,7 @@ public class VueJeu extends JPanel {
 
     public VueJeu(MainWindow page){
         this.page=page;
+        this.dejaInserer = false;
 
         //Paramétrage de la taille de la fenêtre
         Dimension d = new Dimension(SIZE_COULOIR*9+400,SIZE_COULOIR*9);
@@ -51,7 +52,6 @@ public class VueJeu extends JPanel {
         ajoutinfo();
         ajoutCouloir();
         ajoutGuide();
-        this.dejaInserer = false;
 
     }
 
@@ -297,12 +297,24 @@ public class VueJeu extends JPanel {
             }
         });
 
-        Couloir couloir = modele.getSupplementaire();
-        BufferedImage img = AssetTiles.getCouloirImage(couloir);
-        JLabel picLabel = new JLabel(new ImageIcon(img));
-        picLabel.setBounds(offset,offset2,SIZE_COULOIR,SIZE_COULOIR);
+        if(! this.dejaInserer){
+            Couloir couloir = modele.getSupplementaire();
+            BufferedImage img;
+    
+            if(couloir.getObjectif() != Objectif.VIDE){
+                img = AssetTiles.getCouloirImage(couloir);
+                BufferedImage img2 = AssetTiles.getObjectifImage(couloir.getObjectif());
+                img = AssetTiles.combinerImage(img, AssetTiles.redimensionner(img2, SIZE_OBJECTIF*3, SIZE_OBJECTIF*3), true);
+            }else{
+                img = AssetTiles.getCouloirImage(couloir);
+            }
+    
+            JLabel picLabel = new JLabel(new ImageIcon(img));
+            picLabel.setBounds(offset,offset2,SIZE_COULOIR,SIZE_COULOIR);
+            this.add(picLabel);
 
-        this.add(picLabel);
+        }
+
         this.add(orientation);
         this.add(orientationText);
         this.add(posTextCouloir);    
