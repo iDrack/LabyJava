@@ -280,10 +280,10 @@ public class VueJeu extends JPanel {
 
         exemple.setBounds(offset+117,offset2+5,150,50);
 
-        posCouloir.setBounds(offset+217,offset2-5,50,30);
-        orientation.setBounds(offset+252,offset2+35,60,30);
+        posCouloir.setBounds(offset+217,offset2-5,55,30);
+        orientation.setBounds(offset+252,offset2+35,65,30);
 
-        moveCouloirs.setBounds(offset+117,offset2+70,195,29);
+        moveCouloirs.setBounds(offset+117,offset2+70,200,29);
 
         moveCouloirs.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
@@ -320,6 +320,15 @@ public class VueJeu extends JPanel {
     }
 
     public Boolean verifierOrientation(){
+        if(getOrientation().toUpperCase().equals("N")){
+            this.orientation.setText("NORD");
+        }else if(getOrientation().toUpperCase().equals("S")){
+            this.orientation.setText("SUD");
+        }else if(getOrientation().toUpperCase().equals("E")){
+            this.orientation.setText("EST");
+        }else if(getOrientation().toUpperCase().equals("O")){
+            this.orientation.setText("OUEST");
+        }
         return (getOrientation().equals("NORD") || getOrientation().equals("OUEST") || getOrientation().equals("SUD") || getOrientation().equals("EST"));
     }
 
@@ -347,6 +356,10 @@ public class VueJeu extends JPanel {
 
     public String getPosCouloir(){
         return posCouloir.getText().toUpperCase();
+    }
+
+    public MainWindow getPage(){
+        return page;
     }
 
     public void reset(Boolean deja){
@@ -379,7 +392,4 @@ public class VueJeu extends JPanel {
         this.orientation.setText(o);
     }
 
-    public MainWindow getPage(){
-        return page;
-    }
 }
