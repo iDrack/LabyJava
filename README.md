@@ -21,7 +21,7 @@ et à revenir à son point de départ remporte cette passionnante chasse aux tr�
 
 ## Contenus Java
 
-* [A faire]
+* [A faire : UML, cc classes et + !]
 
 ### Règles du jeu
 
