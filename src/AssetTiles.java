@@ -4,8 +4,13 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * [Description - TODO]
+ * 
+ * @author Charles Kempa, Thomas Dignoire & Dimitri Wacquez
+ * @version Février 2021 - Mars 2021.
+ */
 public class AssetTiles{
-    
     /**
      * Renvoie une tile noir si aucune image ne peut être charger.
      */
@@ -16,7 +21,7 @@ public class AssetTiles{
 
     /**
      * Méthode permettant de récupérer une image selon son nom (url).
-     * @param url String du nom de l'image à retourner
+     * @param url String du nom de l'image à retourner.
      * @return BufferedImage
      */
     public static BufferedImage getImage(String url){
@@ -31,19 +36,19 @@ public class AssetTiles{
 
     /**
      * Méthode permettant de récupérer l'image d'un couloir.
-     * @param couloir
+     * @param couloir Le couloir dont on souhaite récupérer l'image.
      * @return BufferedImage
      */
     public static BufferedImage getCouloirImage(Couloir couloir){
         if(couloir.getForme() == Forme.DROIT) {
-            //Si le couloir voulue est un couloir droit, 2 cas (nord,sud) ou (ouest,est)
+            // Si le couloir voulue est un couloir droit, 2 cas (nord,sud) ou (ouest,est)
             if(couloir.getOrientation() == Orientation.EST || couloir.getOrientation() == Orientation.OUEST){
                 return getImage("ligne2.png");
             }else{
                 return getImage("ligne.png");
             }
         }else if(couloir.getForme() == Forme.COUDE) {
-            //Si le couloir voulue est un coude droit, 4 cas nord, sud, ouest, est
+            // Si le couloir voulue est un coude droit, 4 cas nord, sud, ouest, est
             if(couloir.getOrientation() == Orientation.EST){
                 return getImage("angle.png");
             }else if(couloir.getOrientation() == Orientation.OUEST){
@@ -54,7 +59,7 @@ public class AssetTiles{
                 return getImage("angle2.png");
             }
         }else {
-            //Si le couloir voulue est un formet droit, 4 cas nord, sud, ouest, est
+            // Si le couloir voulue est un formet droit, 4 cas nord, sud, ouest, est
             if(couloir.getOrientation() == Orientation.EST){
                 return getImage("formet4.png");
             }else if(couloir.getOrientation() == Orientation.OUEST){
@@ -69,7 +74,7 @@ public class AssetTiles{
 
     /**
      * Méthode permettant de récupérer l'image d'un objectif.
-     * @param obj
+     * @param obj L'objectif dont on souhaite avoir l'image.
      * @return BufferedImage
      */
     public static BufferedImage getObjectifImage(Objectif obj){
@@ -78,7 +83,7 @@ public class AssetTiles{
 
     /**
      * Méthode permettant de récupérer l'image d'un pion selon sa couleur.
-     * @param pion
+     * @param pion Le pion dont on veut récupérer l'image.
      * @return BufferedImage
      */
     public static BufferedImage getPionImage(String pion){
@@ -86,7 +91,7 @@ public class AssetTiles{
     }
 
     /**
-     * Combine image2 à image1 au premier plan.
+     * Combine l'image2 à l'image1 au premier plan.
      * @param image1 Image utilisé au dernier plan.
      * @param image2 Image utilisé au premier plan.
      * @param centrer Boolean déterminant si il faut centrer image2.

@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class EcranFin extends JPanel {
-
     /**
      * Police d'écriture utilisé par EcranFin
      */

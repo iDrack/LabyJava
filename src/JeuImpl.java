@@ -1,17 +1,53 @@
 import java.util.*;
 
+/**
+ * La classe JeuImpl représente le jeu du labyrinthe. 
+ * Cette classe implémente l'interface Jeu.
+ * 
+ * @author Charles Kempa, Thomas Dignoire & Dimitri Wacquez
+ * @version Février 2021 - Mars 2021.
+ */
 public class JeuImpl implements Jeu {
+    /**
+     * Plateau du jeu.
+     */
     private Plateau plateau = new Plateau();
+    /**
+     * Liste de couloirs (ArrayList).
+     */
     private ArrayList<Couloir> couloirs = new ArrayList<Couloir>();
+    /**
+     * Liste d'objectifs (ArrayList).
+     */
     private ArrayList<Objectif> objectifs = new ArrayList<Objectif>();
+    /**
+     * Liste de pions (ArrayList).
+     */
     private ArrayList<Pion> pions = new ArrayList<Pion>();
+    /**
+     * Couloir mobile d'insertion.
+     */
     private CouloirMobile supplementaire;
+    /**
+     * Position de l'insertion réalisé au tour d'avant.
+     */
     private PositionInsertion positionOrigine;
+    /**
+     * Liste de joueurs (ArrayList).
+     */
     private ArrayList<Joueur> joueurs = new ArrayList<Joueur>();
+    /**
+     * Le joueur courant.
+     */
     private Joueur joueurCourant;
+    /**
+     * Nombre total de joueurs.
+     */
     private int nbJoueur = 0;
-    private boolean graphique = true;
 
+    /**
+     * Constructeur, prépare et enregistre le jeu.
+     */
     public JeuImpl(){
         enregistrer();
         preparer();
@@ -20,144 +56,63 @@ public class JeuImpl implements Jeu {
         for (Joueur joueur : this.joueurs){
             if (joueur.getAge() < this.joueurCourant.getAge() ){
                 this.joueurCourant = joueur;
-                // ...
             }
-        }
-    }
-
-    @Override
-    public Joueur prochainJoueur(){
-        return this.joueurs.get((this.joueurs.indexOf(this.joueurCourant) + 1) % this.nbJoueur);
-    }
-
-    @Override
-    public void modifierCouloirs(PositionInsertion pos, Orientation ori){
-       // if(pos != this.positionOrigine){
-            if(true){
-            
-            this.supplementaire.setOrientation(ori);
-            this.supplementaire = this.plateau.modifierCouloirs(pos, this.supplementaire);
-            this.positionOrigine = pos.oppose();
-            System.out.println("on insere a la position " + pos.getPosition().toString());
-            System.out.println("l'oppose de l insertion est : " + pos.oppose().getPosition().toString());
-
-            for (Pion pion : supplementaire.getPions()){
-                System.out.println("pion de couleur " + pion.getCouleurPion().toString());
-                
-                
-                this.plateau.addPionCouloir(pos.getPosition(), pion);
-                pion.poserA(pos.getPosition());
-                
-            }
-
-            supplementaire.suppToutPion();
-            
-        }
-    }
-
-    @Override
-    public void jouer() {
-        if(aGagné(this.joueurCourant)){
-            //Lancement de l'écran de victoire
-            VueJeu vue = MainWindow.instance.getMenuJeu();
-            vue.getPage().setContentPane(new EcranFin(vue.getPage()));
-            
-        }else{
-            System.out.println(this.plateau.toString());
-            joueurCourant = prochainJoueur();
-            VueJeu vue = MainWindow.instance.getMenuJeu();
-            vue.reset(false);
         }
     }
 
     @Override
     public void enregistrer(){
-        // Donner un pion au joueur.
         Joueur joueur;
-        
         Position pos = null;
-        if (graphique){
-            //Récupération des éléments afin de créer les joueurs
-            this.nbJoueur = MenuCreation.getNbJoueurs();
-            int[] listeAge = MenuCreation.listeAgeToInt();
-            String[] listeCouleur = MenuCreation.listeCouleursToString();
-            for(int i=0;i<nbJoueur;i++){
-                System.out.println(listeAge[i]);
-                System.out.println(listeCouleur[i]);
-            }
-
-            //Création des joueurs
-            for(int i=0;i<nbJoueur;i++){
-                //Génération de la position du pion du joueur
-                if (i == 0) pos = new Position(0,0);
-                else if (i == 1) pos = new Position(6,6);
-                else if (i == 2) pos = new Position(0,6);
-                else pos = new Position(6,0);
-                //Création du pion
-                Pion pion = new PionImpl(pos, Couleur.getCouleur(listeCouleur[i]),this.plateau);
-                //Création du joueur et ajout
-                joueur = new JoueurImpl(pion, listeAge[i], this);
-                this.joueurs.add(joueur);
-            }
+            
+        // Récupération des éléments afin de créer les joueurs.
+        this.nbJoueur = MenuCreation.getNbJoueurs();
+        int[] listeAge = MenuCreation.listeAgeToInt();
+        String[] listeCouleur = MenuCreation.listeCouleursToString();
+        for(int i = 0;i < nbJoueur; i++){
+            System.out.println(listeAge[i]);
+            System.out.println(listeCouleur[i]);
         }
-//      Je laisse l'ancien code en comm, on sait jamais si cela peut servir plus tard
-        else{
-            Scanner sc = new Scanner(System.in);
-            int age;
-            String expr="";
-            do {
-                System.out.println("Nombre de joueur a jouer : ");
-                this.nbJoueur = Integer.parseInt(sc.nextLine());
-            }while(this.nbJoueur <= 0 || this.nbJoueur > 4);
-            System.out.println();
 
-            Couleur[] tabCouleurs = Couleur.values();
-            ArrayList<String> arrayCouleurs = new ArrayList<String>();
-            for (int i = 0; i < tabCouleurs.length; arrayCouleurs.add(tabCouleurs[i++].toString()));
-
-            for(int i = 0; i < this.nbJoueur; i++){
-                System.out.println("Joueur n°" + (i + 1) + ".");
-                boolean choixCouleur = false;
-                while(choixCouleur == false){
-                    System.out.println("Choisir une couleur ci-dessous : ");
-                    System.out.println(arrayCouleurs.toString());
-                    System.out.print("Votre choix : ");
-                    expr = sc.nextLine();
-                    expr = expr.toUpperCase(); 
-
-                    if(arrayCouleurs.contains(expr)){
-                        choixCouleur = true;
-                        arrayCouleurs.remove(expr);
-                    }
-                }
-                    
-                do {
-                    System.out.print("Entrez votre age (mini 8) : ");
-                    age = Integer.parseInt(sc.nextLine());
-                } while (age < 8);
-                System.out.println();
-
-                if (i == 0) pos = new Position(0,0);
-                else if (i == 1) pos = new Position(6,6);
-                else if (i == 2) pos = new Position(0,6);
-                else pos = new Position(6,0);
-
-                Pion pion = new PionImpl(pos, Couleur.getCouleur(expr),this.plateau);
-                joueur = new JoueurImpl(pion, age, this);
-                pions.add(pion);
-                this.plateau.addPionCouloir(pos,pion );
-                this.joueurs.add(joueur);
-            }
+        // Création des joueurs.
+        for(int i = 0; i < nbJoueur; i++){
+            // Génération de la position du pion du joueur.
+            if (i == 0) pos = new Position(0,0);
+            else if (i == 1) pos = new Position(6,6);
+            else if (i == 2) pos = new Position(0,6);
+            else pos = new Position(6,0);
+            // Création du pion.
+            Pion pion = new PionImpl(pos, Couleur.getCouleur(listeCouleur[i]),this.plateau);
+            // Création du joueur et ajout.
+            joueur = new JoueurImpl(pion, listeAge[i], this);
+            this.joueurs.add(joueur);
         }
 
         preparer();
-        //sc.close();
+    }
+
+    @Override
+    public void modifierCouloirs(PositionInsertion pos, Orientation ori){
+        if(true){
+            this.supplementaire.setOrientation(ori);
+            this.supplementaire = this.plateau.modifierCouloirs(pos, this.supplementaire);
+            this.positionOrigine = pos.oppose();
+            System.out.println("Insertion en " + pos.getPosition().toString());
+            System.out.println("Opposé : " + this.positionOrigine.getPosition().toString());
+
+            for (Pion pion : supplementaire.getPions()){
+                System.out.println("Pion : " + pion.getCouleurPion().toString());
+                
+                this.plateau.addPionCouloir(pos.getPosition(), pion);
+                pion.poserA(pos.getPosition());
+            }
+
+            supplementaire.suppToutPion();
+        }
     }
 
     @Override
     public void preparer(){
-        // Distribuer les objectifs aux joueurs et mettres les couloirs mobiles sur la plateau.
-
         // On a déjà mis les couloirs mobiles sur le plateau ..
         // On va donc distrubuer les objectifs : "Mélangé et distribué le même nombre à chaque joueur."
         Objectif[] tabObjectifs = Objectif.values();
@@ -192,6 +147,25 @@ public class JeuImpl implements Jeu {
     }
 
     @Override
+    public void jouer() {
+        if(aGagné(this.joueurCourant)){
+            // Lancement de l'écran de victoire !
+            VueJeu vue = MainWindow.instance.getMenuJeu();
+            vue.getPage().setContentPane(new EcranFin(vue.getPage()));
+        } else {
+            System.out.println(this.plateau.toString());
+            joueurCourant = prochainJoueur();
+            VueJeu vue = MainWindow.instance.getMenuJeu();
+            vue.reset(false);
+        }
+    }
+
+    @Override
+    public Joueur prochainJoueur(){
+        return this.joueurs.get((this.joueurs.indexOf(this.joueurCourant) + 1) % this.nbJoueur);
+    }
+
+    @Override
     public boolean aGagné(Joueur joueur){
         return joueur.getStack().empty();
     }
@@ -211,6 +185,29 @@ public class JeuImpl implements Jeu {
         return this.pions;
     }
 
+    @Override
+    public Joueur getJoueur(){
+        return this.joueurCourant;
+    }
+
+    @Override
+    public Plateau getPlateau(){
+        return this.plateau;
+    }
+
+    @Override
+    public ArrayList<Joueur> getJoueurs(){
+        return this.joueurs;
+    }
+
+    @Override
+    public CouloirMobile getSupplementaire(){
+        return supplementaire;
+    }
+
+    /**
+     * Affiche les données du jeu (nombre de joueurs, les joueurs).
+     */
     public String toString(){        
         String chaine = "Nb joueurs : " + this.nbJoueur + "\n" +
                         "Joueurs : \n";
@@ -219,21 +216,5 @@ public class JeuImpl implements Jeu {
         }
         
         return chaine;
-    }
-
-    public Joueur getJoueur(){
-        return this.joueurCourant;
-    }
-
-    public ArrayList<Joueur> getJoueurs(){
-        return this.joueurs;
-    }
-
-    public Plateau getPlateau(){
-        return this.plateau;
-    }
-
-    public CouloirMobile getSupplementaire(){
-        return supplementaire;
     }
 }

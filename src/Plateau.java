@@ -1,11 +1,32 @@
 import java.util.*;
 
+/**
+ * La classe Plateau représente le plateau de notre jeu du Labyrinthe.
+ * 
+ * @author Charles Kempa, Thomas Dignoire & Dimitri Wacquez
+ * @version Février 2021 - Mars 2021.
+ */
 public class Plateau {
+    /**
+     * Taille du plateau de 7x7.
+     */
     public static final int TAILLE = 7;
+    /**
+     * Liste des couloirs fixes (ArrayList).
+     */
     private ArrayList<CouloirFixe> couloiresFixes = new ArrayList<CouloirFixe>();
+    /**
+     * Liste des couloirs mobiles (ArrayList).
+     */
     private ArrayList<CouloirMobile> couloirsMobiles = new ArrayList<CouloirMobile>();
+    /**
+     * Matrice qui représente notre plateau de jeu : CouloirImpl[TAILLE][TAILLE].
+     */
     private CouloirImpl[][] matriceCouloirs = new CouloirImpl[TAILLE][TAILLE];
 
+    /**
+     * Constructeur, initialise notre plateau : place les couloirs fixes et mobiles.
+     */
     public Plateau() {
         // Plateau = 49 cases, soit : 16 couloirs fixes et 34 couloirs mobiles.
         // 12 flèches en bordures de plateau = PositionInsertion.
@@ -25,7 +46,7 @@ public class Plateau {
                     matriceCouloirs[x][y] = new CouloirFixe(
                                             CouloirFixe.définirOrientation(x, y),
                                             CouloirFixe.définirForme(x, y), 
-                                            CouloirFixe.définirObjectif(x, y));
+                                            CouloirFixe.définirObjectif());
                     couloiresFixes.add((CouloirFixe) matriceCouloirs[x][y]);
                 } else {
                     Random r = new Random();
@@ -46,6 +67,12 @@ public class Plateau {
         // Une fois posée, l'orientation ne peut plus être modifiée.
     }
 
+    /**
+     * Permet de modifier le couloir (en ligne ou colonne) du plateau.
+     * @param pos Position d'insertion (PositionInsertion) 'pos'.
+     * @param c Couloir mobile 'c' (CouloirMobile).
+     * @return Retourne le couloir sortie (CouloirMobile).
+     */
     public CouloirMobile modifierCouloirs(PositionInsertion pos, CouloirMobile c) {
         Position posOppose= pos.oppose().getPosition();
         CouloirMobile coul = (CouloirMobile)matriceCouloirs[posOppose.getX()][posOppose.getY()];
@@ -62,20 +89,17 @@ public class Plateau {
                 if (i != 0){
                     matriceCouloirs[i][ord] = matriceCouloirs[i-1][ord];
                 }
-                
             }
         } else if(pos == PositionInsertion.S1 || pos == PositionInsertion.S2 || pos == PositionInsertion.S3){
             for(int i = 0; i < TAILLE  ; i++){
                 if (i!=0){
                     for (Pion pion : matriceCouloirs[i][ord].getPions()){
-                        System.out.println("pion couloir ordonner " + String.valueOf(i));
                         pion.poserA(new Position(i-1, ord));
                     }
                 }
                 if (i != TAILLE-1){
                     matriceCouloirs[i][ord] = matriceCouloirs[i+1][ord];
                 }
-                
             }
         } else if(pos == PositionInsertion.O1 || pos == PositionInsertion.O2 || pos == PositionInsertion.O3){
             for(int i = TAILLE-1; i >= 0 ; i--){
@@ -102,14 +126,24 @@ public class Plateau {
         }
         
         matriceCouloirs[abs][ord] = c;
-        System.out.println("FIN DE MODIFIER COULOIR");
         return coul;
     }
 
+    /**
+     * Permet d'obtenir la matrice du plateau.
+     * @return La matrice : CouloirImpl[0..6][0..6].
+     */
     public CouloirImpl[][] getCouloirImpls(){
         return this.matriceCouloirs;
     }
 
+    /**
+     * Permet de vérifier si un déplacement est possible/atteignable par le joueur.
+     * Déplacement en ligne ou colonne, de 0 à n tant que c'est possible.
+     * @param orig Position d'origine (Position).
+     * @param dest Position de destination (Position).
+     * @return Un boolean : vrai (true) si c'est possible de se déplacer, non (false) sinon.
+     */
     public boolean estAtteignable(Position orig, Position dest) {
         // Objectif : vérifier la forme et l'orientation ..
         int xOrigine = orig.getX();
@@ -198,6 +232,13 @@ public class Plateau {
         return true;
     }
     
+    /**
+     * Vérifie le parcours en ligne vers la gauche.
+     * @param matrice La matrice (CouloirImpl[0..6][0..6]).
+     * @param x Position x (int).
+     * @param y Position y (int).
+     * @return Un boolean : vrai (true) si c'est possible de se déplacer, non (false) sinon.
+     */
     private boolean parcoursLigneAGauche(CouloirImpl[][] matrice, int x, int y) {
         CouloirImpl couloir = matrice[x][y];
         Forme saForme = couloir.getForme();
@@ -226,6 +267,13 @@ public class Plateau {
         return true;
     }
 
+    /**
+     * Vérifie le parcours en ligne vers la droite.
+     * @param matrice La matrice (CouloirImpl[0..6][0..6]).
+     * @param x Position x (int).
+     * @param y Position y (int).
+     * @return Un boolean : vrai (true) si c'est possible de se déplacer, non (false) sinon.
+     */
     private boolean parcoursLigneADroite(CouloirImpl[][] matrice, int x, int y) {
         CouloirImpl couloir = matrice[x][y];
         Forme saForme = couloir.getForme();
@@ -254,6 +302,13 @@ public class Plateau {
         return true;
     }
 
+    /**
+     * Vérifie le parcours en ligne vers la gauche et la droite.
+     * @param matrice La matrice (CouloirImpl[0..6][0..6]).
+     * @param x Position x (int).
+     * @param y Position y (int).
+     * @return Un boolean : vrai (true) si c'est possible de se déplacer, non (false) sinon.
+     */
     private boolean parcoursLigneDeuxCôtés(CouloirImpl[][] matrice, int x, int y) {
         CouloirImpl couloir = matrice[x][y];
         Forme saForme = couloir.getForme();
@@ -280,6 +335,13 @@ public class Plateau {
         return true;
     }
 
+    /**
+     * Vérifie le parcours en colonne vers le bas.
+     * @param matrice La matrice (CouloirImpl[0..6][0..6]).
+     * @param x Position x (int).
+     * @param y Position y (int).
+     * @return Un boolean : vrai (true) si c'est possible de se déplacer, non (false) sinon.
+     */
     private boolean parcoursColonneEnBas(CouloirImpl[][] matrice, int x, int y) {
         CouloirImpl couloir = matrice[x][y];
         Forme saForme = couloir.getForme();
@@ -308,6 +370,13 @@ public class Plateau {
         return true;
     }
 
+    /**
+     * Vérifie le parcours en colonne vers le haut.
+     * @param matrice La matrice (CouloirImpl[0..6][0..6]).
+     * @param x Position x (int).
+     * @param y Position y (int).
+     * @return Un boolean : vrai (true) si c'est possible de se déplacer, non (false) sinon.
+     */
     private boolean parcoursColonneEnHaut(CouloirImpl[][] matrice, int x, int y) {
         CouloirImpl couloir = matrice[x][y];
         Forme saForme = couloir.getForme();
@@ -336,6 +405,13 @@ public class Plateau {
         return true;
     }
 
+    /**
+     * Vérifie le parcours en colonne vers le bas et le haut.
+     * @param matrice La matrice (CouloirImpl[0..6][0..6]).
+     * @param x Position x (int).
+     * @param y Position y (int).
+     * @return Un boolean : vrai (true) si c'est possible de se déplacer, non (false) sinon.
+     */
     private boolean parcoursColonneDeuxCôtés(CouloirImpl[][] matrice, int x, int y) {
         CouloirImpl couloir = matrice[x][y];
         Forme saForme = couloir.getForme();
@@ -362,6 +438,12 @@ public class Plateau {
         return true;
     }
 
+    /**
+     * Permet de placer un pion à une position sur le plateau.
+     * @param pos Position 'pos' (Position).
+     * @param pion Pion 'pion' (Pion).
+     * @return L'objectif sur le couloir où l'on a déplacé le pion (Objectif).
+     */
     public Objectif déplacer(Position pos, Pion pion) {
         System.out.println(this.matriceCouloirs[pion.getPositionCourante().getX()][pion.getPositionCourante().getY()].toString());
         this.matriceCouloirs[pos.getX()][pos.getY()].addPion(pion);
@@ -369,10 +451,36 @@ public class Plateau {
         return this.matriceCouloirs[pos.getX()][pos.getX()].getObjectif();
     }
 
+    /**
+     * Permet d'obtenir l'objectif sur le couloir à la position passé en paramètre.
+     * @param pos Position 'pos' (Position).
+     * @return L'objectif sur le couloir (Objectif).
+     */
     public Objectif getObjectifCase(Position pos){
         return matriceCouloirs[pos.getX()][pos.getY()].getObjectif();
     }
 
+    /**
+     * Permet d'ajouter un pion à une position sur le plateau.
+     * @param pos Position 'pos' (Position).
+     * @param p Pion 'p' (Pion).
+     */
+    public void addPionCouloir(Position pos, Pion p){
+        this.matriceCouloirs[pos.getX()][pos.getY()].addPion(p);
+    }
+
+    /**
+     * Permet de supprimer un pion à une position sur le plateau.
+     * @param pos Position 'pos' (Position).
+     * @param p Pion 'p' (Pion).
+     */
+    public void supPionCouloir(Position pos, Pion p){
+        this.matriceCouloirs[pos.getX()][pos.getY()].supPion(p);
+    }
+
+    /** 
+     * Affiche notre plateau en terminal.
+     */
     public String toString(){
         CouloirImpl[][] matrice = getCouloirImpls();
         String chaine = "";
@@ -386,12 +494,5 @@ public class Plateau {
         }
         
         return chaine;
-    }
-
-   public void addPionCouloir(Position pos,Pion p){
-        this.matriceCouloirs[pos.getX()][pos.getY()].addPion(p);
-   }
-   public void supPionCouloir(Position pos,Pion p){
-    this.matriceCouloirs[pos.getX()][pos.getY()].supPion(p);
     }
 }
