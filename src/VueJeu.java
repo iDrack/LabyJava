@@ -236,24 +236,28 @@ public class VueJeu extends JPanel {
         JLabel yText = new JLabel("Y :");
         this.y = new JFormattedTextField();
         this.y.setFormatterFactory(factory);
+        JLabel guideCoor = new JLabel("Ligne : x (0~6), Colonne : y (0~6).");
 
         validerMouvement.setFont(fontEntered);
         xText.setFont(fontEntered);
         x.setFont(fontEntered);
         yText.setFont(fontEntered);
         y.setFont(fontEntered);
+        guideCoor.setFont(new Font(Font.DIALOG, Font.ROMAN_BASELINE, 12));
         
         validerMouvement.setBounds(offset+145,offset2+10,125,29);
         xText.setBounds(offset,offset2,30,50);
         x.setBounds(offset+30,offset2+10,30,30);
         yText.setBounds(offset+70,offset2,30,50);
         y.setBounds(offset+100,offset2+10,30,30);
+        guideCoor.setBounds(offset,offset2+25,250,50);
        
         this.add(validerMouvement);
         this.add(x);
         this.add(xText);
         this.add(y);
         this.add(yText);   
+        this.add(guideCoor);
 
         validerMouvement.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
