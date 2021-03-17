@@ -4,6 +4,11 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Classe gérant les images utilisé dans le GUI.
+ * Elle contient des méthode permettant de retrouver une image selon son nom, selon le Couloir, le Pion ou l'Objectif.
+ * Elle contient aussi des méthode permettant la combinaison d'image ainsi que la redimension.
+ */
 public class AssetTiles{
     
     /**
@@ -16,8 +21,8 @@ public class AssetTiles{
 
     /**
      * Méthode permettant de récupérer une image selon son nom (url).
-     * @param url String du nom de l'image à retourner
-     * @return BufferedImage
+     * @param url String du nom de l'image à retourner.
+     * @return BufferedImage correspond à l'image dans le fichier 'media/img/sprites/'.
      */
     public static BufferedImage getImage(String url){
         BufferedImage ret = NO_TEXTURE;
@@ -31,8 +36,8 @@ public class AssetTiles{
 
     /**
      * Méthode permettant de récupérer l'image d'un couloir.
-     * @param couloir
-     * @return BufferedImage
+     * @param couloir Couloir que l'on veut afficher.
+     * @return Image du couloir à afficher.
      */
     public static BufferedImage getCouloirImage(Couloir couloir){
         if(couloir.getForme() == Forme.DROIT) {
@@ -69,8 +74,8 @@ public class AssetTiles{
 
     /**
      * Méthode permettant de récupérer l'image d'un objectif.
-     * @param obj
-     * @return BufferedImage
+     * @param obj Objectif que l'on veut afficher.
+     * @return BufferedImage correspondant à l'Objectif voulu dans le fichier 'media/img/sprites/'.
      */
     public static BufferedImage getObjectifImage(Objectif obj){
         return getImage(obj.toString().toLowerCase().concat(".png"));
@@ -78,8 +83,8 @@ public class AssetTiles{
 
     /**
      * Méthode permettant de récupérer l'image d'un pion selon sa couleur.
-     * @param pion
-     * @return BufferedImage
+     * @param pion Pion que l'on veut afficher.
+     * @return BufferedImage correspondant au Pion voulu dans le fichier 'media/img/sprites/'.
      */
     public static BufferedImage getPionImage(String pion){
         return getImage(pion.toLowerCase().concat(".png"));

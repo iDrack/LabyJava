@@ -3,32 +3,40 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Classe affichant le menu principal du jeu, laisse le choix au joueur entre jouer ou quitter le jeu.
+ */
 public class MenuPrincipal extends JPanel {
 
     /**
-     * Police d'écriture utilisé par le MenuPrincipal
+     *serialVersionUI par défaut.
+     */
+    private static final long serialVersionUID = 1L;
+
+    /**
+     * Police d'écriture utilisé par le MenuPrincipal.
      */
     private final Font fontEntered = new Font(Font.DIALOG, Font.ROMAN_BASELINE, 20);
 
     /**
-     * Image de fond de MenuPrincipal
+     * Image de fond de MenuPrincipal.
      */
     private Image img;
 
     /**
-     * Fenêtre actuel de l'application, de type MainWindow
+     * Fenêtre actuel de l'application, de type MainWindow.
      */
     private MainWindow fenetre;
 
     /**
-     * Taille de menuPrincipal
+     * Taille de menuPrincipal.
      */
     private Dimension size;
 
     /**
      * MenuPrincipal est un JPanel contenant deux boutons ainsi qu'une image de fond.
      * 
-     * @param fenetre Fenêtre actuel de l'application, de type MainWindow
+     * @param fenetre Fenêtre actuel de l'application, de type MainWindow.
      */
     public MenuPrincipal(MainWindow fenetre){
         this.fenetre = fenetre;
