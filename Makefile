@@ -11,3 +11,5 @@
 
 # Lancement de l'application : 
 #       $ java -jar ./myapp.jar
+
+# Se mettre d'accord sur ce que l'on fait. ^^
