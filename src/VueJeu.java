@@ -18,10 +18,6 @@ import java.awt.event.ActionListener;
  * Permet au joueur en train de jouer de choisir où insérer le-dit couloir ainsi que choisir où se déplacer.
  */
 public class VueJeu extends JPanel {
-
-    /**
-     *serialVersionUID par défaut.
-     */
     private static final long serialVersionUID = 1L;
 
     /**

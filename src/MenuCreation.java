@@ -11,10 +11,6 @@ import java.text.NumberFormat;
  * Permet à l'utilisateur de choisir entre 1 et 4 joueurs et d'atribuer à chacun un pion et un âge.
  */
 public class MenuCreation extends JPanel{
-
-    /**
-     *serialVersionUI par défaut.
-     */
     private static final long serialVersionUID = 1L;
 
     /**

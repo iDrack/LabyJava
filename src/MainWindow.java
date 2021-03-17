@@ -7,9 +7,6 @@ import java.util.TimerTask;
  * Elle hérite de la classe JFrame.
  */
 public class MainWindow extends JFrame {
-    /**
-     *serialVersionUI par défaut.
-     */
     private static final long serialVersionUID = 1L;
 
     /**

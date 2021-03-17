@@ -1,7 +1,7 @@
 # En cours .. 
 
-# D'abord ..
-# javadoc -encoding UTF-8 -d ./src *.java
+# D'abord .. dans une fonction/méthode spé. :
+# javadoc -encoding UTF-8 -d ./Javadoc ./src/*.java
 
 # Ensuite ..
 # Compiler pour avoir les .class ..

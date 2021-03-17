@@ -7,10 +7,6 @@ import java.awt.event.ActionListener;
  * Classe affichant le menu principal du jeu, laisse le choix au joueur entre jouer ou quitter le jeu.
  */
 public class MenuPrincipal extends JPanel {
-
-    /**
-     *serialVersionUI par défaut.
-     */
     private static final long serialVersionUID = 1L;
 
     /**

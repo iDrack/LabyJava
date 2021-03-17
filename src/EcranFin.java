@@ -7,9 +7,6 @@ import java.awt.event.ActionListener;
  * Classe affichant l'écran de victoire du jeu.
  */
 public class EcranFin extends JPanel {
-    /**
-     *serialVersionUID par défaut.
-     */
     private static final long serialVersionUID = 1L;
 
     /**
