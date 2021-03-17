@@ -12,25 +12,35 @@ import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Classe servant à l'affichage du plateau lors du tour d'un joueur.
+ * Affiche les information sur le plateau, les pions des joueurs, l'objectif du joueur, le couloir à insérer.
+ * Permet au joueur en train de jouer de choisir où insérer le-dit couloir ainsi que choisir où se déplacer.
+ */
 public class VueJeu extends JPanel {
 
     /**
-     * JFrame actuel définissant la fenêtre de l'application
+     *serialVersionUID par défaut.
+     */
+    private static final long serialVersionUID = 1L;
+
+    /**
+     * JFrame actuel définissant la fenêtre de l'application.
      */
     private MainWindow page;
 
     /**
-     * Taille des images des couloirs
+     * Taille des images des couloirs.
      */
     private final int SIZE_COULOIR = 93;
 
     /**
-     * Taille des images des objectifs
+     * Taille des images des objectifs.
      */
     private final int SIZE_OBJECTIF = 15;
 
     /**
-     * Police d'écriture utilisé par la classe VueJeu
+     * Police d'écriture utilisé par la classe VueJeu.
      */
     private final Font fontEntered = new Font(Font.DIALOG, Font.ROMAN_BASELINE, 20);
 
@@ -45,43 +55,43 @@ public class VueJeu extends JPanel {
     private Plateau plateau = modele.getPlateau();
 
     /**
-     * Champs de saisie des nouvelles coordonnées du joueur (x)
+     * Champs de saisie des nouvelles coordonnées du joueur (x).
      */
     private JFormattedTextField x;
 
     /**
-     * Champs de saisie des nouvelles coordonnées du joueur (y)
+     * Champs de saisie des nouvelles coordonnées du joueur (y).
      */
     private JFormattedTextField y;
 
     /**
-     * Champs de saisie de la nouvelle position du couloir a insérer
+     * Champs de saisie de la nouvelle position du couloir a insérer.
      */
     private JTextField posCouloir;
 
     /**
-     * Champs de saisie de l'orientation du couloir a insérer
+     * Champs de saisie de l'orientation du couloir a insérer.
      */
     private JTextField orientation;
 
     /**
      * Boolean permet de savoir si le joueur a insérer ou non le couloir.
-     * Il permet aussi de savoir où nousnous trouvons dans le tou du joueur
+     * Il permet aussi de savoir où nousnous trouvons dans le tou du joueur.
      */
     private Boolean dejaInserer;
 
     /**
-     * Format n'acceptant que les entiers
+     * Format n'acceptant que les entiers.
      */
     private NumberFormat format = NumberFormat.getInstance();
     
     /**
-     * Formateur de nombre
+     * Formateur de nombre.
      */
     private NumberFormatter nff = new NumberFormatter(format);
     
     /**
-     * Factory de formatteur de nombre
+     * Factory de formatteur de nombre.
      */
     private DefaultFormatterFactory factory = new DefaultFormatterFactory(nff);
 
@@ -120,7 +130,7 @@ public class VueJeu extends JPanel {
      * cette méthode pourra les combiner en appelant la méthode combinerImage de AssetTiles.
      * Les Joueur se trouvant au dessus des objectifs qui se trouve au dessus des couloirs.
      * 
-     * @throws IOException
+     * @throws IOException.
      */
     public void ajoutCase() throws IOException{
         //Position du pion du joueur
@@ -236,24 +246,28 @@ public class VueJeu extends JPanel {
         JLabel yText = new JLabel("Y :");
         this.y = new JFormattedTextField();
         this.y.setFormatterFactory(factory);
+        JLabel guideCoor = new JLabel("Ligne : x (0~6), Colonne : y (0~6).");
 
         validerMouvement.setFont(fontEntered);
         xText.setFont(fontEntered);
         x.setFont(fontEntered);
         yText.setFont(fontEntered);
         y.setFont(fontEntered);
+        guideCoor.setFont(new Font(Font.DIALOG, Font.ROMAN_BASELINE, 12));
         
         validerMouvement.setBounds(offset+145,offset2+10,125,29);
         xText.setBounds(offset,offset2,30,50);
         x.setBounds(offset+30,offset2+10,30,30);
         yText.setBounds(offset+70,offset2,30,50);
         y.setBounds(offset+100,offset2+10,30,30);
+        guideCoor.setBounds(offset,offset2+25,250,50);
        
         this.add(validerMouvement);
         this.add(x);
         this.add(xText);
         this.add(y);
         this.add(yText);   
+        this.add(guideCoor);
 
         validerMouvement.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
@@ -503,7 +517,7 @@ public class VueJeu extends JPanel {
 
     /**
      * Permet d'accéder à la valeur du champs orientation.
-     * @return String.
+     * @return String corespondant au texte dans le champs orientation.
      */
     public String getOrientation(){
         return orientation.getText().toUpperCase();
@@ -511,7 +525,7 @@ public class VueJeu extends JPanel {
 
     /**
      * Permet d'accéder à la valeur du champs position.
-     * @return String.
+     * @return String correspondant au texte dans le champs position.
      */
     public String getPosCouloir(){
         return posCouloir.getText().toUpperCase();
@@ -519,7 +533,7 @@ public class VueJeu extends JPanel {
 
     /**
      * Permet d'accéder à la valeur de page.
-     * @return MainWindo.
+     * @return MainWindow correspondant à la fenêtre actuel du jeu.
      */
     public MainWindow getPage(){
         return page;

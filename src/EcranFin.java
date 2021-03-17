@@ -3,24 +3,34 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Classe affichant l'écran de victoire du jeu.
+ */
 public class EcranFin extends JPanel {
     /**
-     * Police d'écriture utilisé par EcranFin
+     *serialVersionUID par défaut.
+     */
+    private static final long serialVersionUID = 1L;
+
+    /**
+     * Police d'écriture utilisé par EcranFin.
      */
     private final Font fontEntered = new Font(Font.DIALOG, Font.ROMAN_BASELINE, 20);
 
     /**
-     * Image de fond de EcranFin
+     * Image de fond de EcranFin.
      */
     private Image img;
 
     /**
-     * Fenêtre actuel de l'application, de type MainWindow
+     * Fenêtre actuel de l'application, de type MainWindow.
      */
     private MainWindow fenetre;
     
     /**
-     * EcranFin est un JPanel affichant un message de félicitation
+     * EcranFin est un JPanel affichant un message de félicitation.
+     * 
+     * @param MainWindow correspondant à la fenêtre actuel du jeu.
      */
     public EcranFin(MainWindow f){
         fenetre=f;
@@ -54,9 +64,9 @@ public class EcranFin extends JPanel {
     }
     
     /**
-     * Méthode affichant les composant graphique de MenuPrincipal
+     * Méthode affichant les composant graphique de MenuPrincipal.
      * 
-     * @param g Composant graphique de type Graphics
+     * @param g Composant graphique de type Graphics.
      */
     public void paintComponent(Graphics g) {
         g.drawImage(img, 0, 0, null);

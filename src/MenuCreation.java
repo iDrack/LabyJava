@@ -6,63 +6,72 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.NumberFormat;
 
+/**
+ * Menu gérant la création des joueurs.
+ * Permet à l'utilisateur de choisir entre 1 et 4 joueurs et d'atribuer à chacun un pion et un âge.
+ */
 public class MenuCreation extends JPanel{
 
     /**
-     * Nombre de joueurs jouant au jeu, permet de savoir combien de joueurs sont a créer
+     *serialVersionUI par défaut.
+     */
+    private static final long serialVersionUID = 1L;
+
+    /**
+     * Nombre de joueurs jouant au jeu, permet de savoir combien de joueurs sont a créer.
      */
     private static int nbJoueurs;
 
     /**
-     * Police d'écriture utilisé par le MenuCreation
+     * Police d'écriture utilisé par le MenuCreation.
      */
     private final Font fontEntered = new Font(Font.DIALOG, Font.ROMAN_BASELINE, 20);
 
     /**
-     * Champs de saisie pour le nombre de joueurs
+     * Champs de saisie pour le nombre de joueurs.
      */
     private JFormattedTextField nbJoueurField;
 
     /**
-     * Liste de champs de saisie pour l'âge des joueurs
+     * Liste de champs de saisie pour l'âge des joueurs.
      */
     private static JFormattedTextField[] listeAge;
 
     /**
-     * Liste de champs de saisie pour la couleur de chaque joueurs
+     * Liste de champs de saisie pour la couleur de chaque joueurs.
      */
     private static JTextField[] listeCouleurs;
 
     /**
-     * Instance de la fenêtre actuel
+     * Instance de la fenêtre actuel.
      */
     private MainWindow page;
 
     /**
-     * Instance du menu VueJeu
+     * Instance du menu VueJeu.
      */
     private VueJeu menu;
     
     /**
-     * Format n'acceptant que les entiers
+     * Format n'acceptant que les entiers.
      */
     private NumberFormat format = NumberFormat.getInstance();
     
     /**
-     * Formateur de nombre
+     * Formateur de nombre.
      */
     private NumberFormatter nff = new NumberFormatter(format);
     
     /**
-     * Factory de formatteur de nombre
+     * Factory de formatteur de nombre.
      */
     private DefaultFormatterFactory factory = new DefaultFormatterFactory(nff);
 
     /**
-     * MenuCreation est un JPanel permettant de créer les joueurs
+     * MenuCreation est un JPanel permettant de créer les joueurs.
      * 
-     * @param size Taille du JPanel ainsi que la taille de la fenêtre
-     * @param page Jframe contenant MenuCreation
+     * @param size Taille du JPanel ainsi que la taille de la fenêtre.
+     * @param page Jframe contenant MenuCreation.
      */
     public MenuCreation(Dimension size, MainWindow page){
         this.page = page;
@@ -103,8 +112,8 @@ public class MenuCreation extends JPanel{
 
     /**
      * Génére les champs de saisie pour l'age et la couleur des joueurs.
-     * La méthode ne fait rien si x est inférieur ou égal à 0 ou est supérieur ou égal à 4 ou bien si nbJoueur est supérieur à 0
-     * @param x Nombre de joueurs choisit par l'utilisateur, passer par le champs nbJoueurField
+     * La méthode ne fait rien si x est inférieur ou égal à 0 ou est supérieur ou égal à 4 ou bien si nbJoueur est supérieur à 0.
+     * @param x Nombre de joueurs choisit par l'utilisateur, passer par le champs nbJoueurField.
      */
     private void genererOptionJoueurs(int x){
         if(nbJoueurs > 0 || x <= 0 || x > 4){
@@ -172,7 +181,7 @@ public class MenuCreation extends JPanel{
 
     /**
      * Vérifie si les valeurs entrées dans les champs pour les âges et les couleurs des joueurs sont correct.
-     * @return Boolean indiquant si les valeurs entrées sont légal ou non
+     * @return Boolean indiquant si les valeurs entrées sont légal ou non.
      */
     private boolean verification(){
         int[] lAge = listeAgeToInt();
