@@ -11,6 +11,7 @@ cd ../bin
 touch myapp.mf
 
 echo "Manifest-Version: 1.0" > myapp.mf
+echo "Class-Path: bin/" >> myapp.mf
 echo "Main-Class: MainWindow" >> myapp.mf
 
 echo -e "\nCréation du .jar Java : "
