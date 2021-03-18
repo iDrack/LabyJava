@@ -33,7 +33,7 @@ public class VueJeu extends JPanel {
     /**
      * Taille des images des objectifs.
      */
-    private final int SIZE_OBJECTIF = 15;
+    private final int SIZE_OBJECTIF = 32;
 
     /**
      * Police d'écriture utilisé par la classe VueJeu.
@@ -156,15 +156,12 @@ public class VueJeu extends JPanel {
                         BufferedImage img3 = AssetTiles.getPionImage(str2[1]);
                         BufferedImage img2 = AssetTiles.getObjectifImage(obj);
     
-                        img2 = AssetTiles.redimensionner(img2, SIZE_OBJECTIF*3, SIZE_OBJECTIF*3);
-    
                         picLabel = new JLabel(new ImageIcon(AssetTiles.combinerImage(AssetTiles.combinerImage(img, img2, true), img3, false)));
     
                     }else if(obj != Objectif.VIDE){
                         //Si on a objectif
                         BufferedImage img2 = AssetTiles.getObjectifImage(obj);
     
-                        img2 = AssetTiles.redimensionner(img2, SIZE_OBJECTIF*3, SIZE_OBJECTIF*3);
                         picLabel = new JLabel(new ImageIcon(AssetTiles.combinerImage(img, img2, true)));
     
                     }else if(i == posX && j == posY){
@@ -201,10 +198,9 @@ public class VueJeu extends JPanel {
 
         //Image de l'objectif
         BufferedImage imgObj = AssetTiles.getObjectifImage(joueur.getStack().peek());
-        imgObj = AssetTiles.redimensionner(imgObj, SIZE_OBJECTIF*2, SIZE_OBJECTIF*2);
 
         JLabel picLabel = new JLabel(new ImageIcon(imgObj));
-        picLabel.setBounds(offset+100,SIZE_COULOIR+285,SIZE_OBJECTIF*2,SIZE_OBJECTIF*2);
+        picLabel.setBounds(offset+100,SIZE_COULOIR+285,SIZE_OBJECTIF,SIZE_OBJECTIF);
         add(picLabel);
     }
 
@@ -401,7 +397,7 @@ public class VueJeu extends JPanel {
             if(couloir.getObjectif() != Objectif.VIDE){
                 img = AssetTiles.getCouloirImage(couloir);
                 BufferedImage img2 = AssetTiles.getObjectifImage(couloir.getObjectif());
-                img = AssetTiles.combinerImage(img, AssetTiles.redimensionner(img2, SIZE_OBJECTIF*3, SIZE_OBJECTIF*3), true);
+                img = AssetTiles.combinerImage(img, img2, true);
             }else{
                 img = AssetTiles.getCouloirImage(couloir);
             }
