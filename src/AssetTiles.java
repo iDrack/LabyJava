@@ -103,7 +103,7 @@ public class AssetTiles{
         g2d.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, 
                         RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY); 
         if(centrer){
-            g2d.drawImage(image2, 32, 32, null); 
+            g2d.drawImage(image2, 35, 35, null); 
         }else{
             g2d.drawImage(image2, 0, 0, null); 
         }
