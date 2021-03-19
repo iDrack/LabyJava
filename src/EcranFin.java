@@ -29,7 +29,7 @@ public class EcranFin extends JPanel {
      * 
      * @param MainWindow correspondant à la fenêtre actuel du jeu.
      */
-    public EcranFin(MainWindow f){
+    public EcranFin(MainWindow f, Joueur j){
         fenetre=f;
         
         //Accés à l'image de fond
@@ -45,12 +45,18 @@ public class EcranFin extends JPanel {
         MainWindow.instance.requestFocusInWindow(); 
 
         JButton quitter = new JButton("Quitter");
+        JLabel gagnant = new JLabel("Joueur "+j.getPion().getCouleurPion().toString());
 
         quitter.setBounds(454-75,500,150,50);
+        gagnant.setBounds(535,225,250,50);
 
         quitter.setFont(fontEntered);
+        gagnant.setFont(new Font(Font.DIALOG, Font.ROMAN_BASELINE, 35));
+
+        gagnant.setForeground(Color.BLACK);
 
         this.add(quitter);
+        this.add(gagnant);
 
         quitter.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {

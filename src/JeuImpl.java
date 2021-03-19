@@ -151,7 +151,7 @@ public class JeuImpl implements Jeu {
         if(aGagné(this.joueurCourant)){
             // Lancement de l'écran de victoire !
             VueJeu vue = MainWindow.instance.getMenuJeu();
-            vue.getPage().setContentPane(new EcranFin(vue.getPage()));
+            vue.getPage().setContentPane(new EcranFin(vue.getPage(), joueurCourant));
         } else {
             System.out.println(this.plateau.toString());
             joueurCourant = prochainJoueur();
