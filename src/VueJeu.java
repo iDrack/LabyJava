@@ -77,21 +77,6 @@ public class VueJeu extends JPanel {
     private Boolean dejaInserer;
 
     /**
-     * Format n'acceptant que les entiers.
-     */
-    private NumberFormat format = NumberFormat.getInstance();
-    
-    /**
-     * Formateur de nombre.
-     */
-    private NumberFormatter nff = new NumberFormatter(format);
-    
-    /**
-     * Factory de formatteur de nombre.
-     */
-    private DefaultFormatterFactory factory = new DefaultFormatterFactory(nff);
-
-    /**
      * VueJeu correspond au GUI du jeu, affichant le plateau, les coordonnées du joueur actuel, 
      * le couloirs a insérer, un guide d'insertion ainsi que les champs de saisie du joueur.
      * 
