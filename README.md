@@ -144,8 +144,12 @@ Jeu du Labyrinthe : [https://www.regledujeu.fr/labyrinthe/](https://www.regleduj
 
 ## Screenshot du jeu
 
-Vous pouvez voir différentes screenshot de notre jeu ci après : 
+Vous pouvez voir différentes screenshot de notre jeu ci après ..
+
+Les inputs sont en liste déroulante dans la plus part des cas.
 
 ![Ecran de fin du jeu.](./media/read/Finish.png "Fin de la partie")
+
+![Ecran de la partie au début du jeu.](./media/read/Start.png "Ecran du début de la partie ..")
 
 ![Ecran de la partie du jeu en cours.](./media/read/Partie.png "Ecran de la partie en cours ..")
