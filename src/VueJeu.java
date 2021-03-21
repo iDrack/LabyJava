@@ -51,14 +51,14 @@ public class VueJeu extends JPanel {
     private Plateau plateau = modele.getPlateau();
 
     /**
-     * Champs de saisie des nouvelles coordonnées du joueur (x).
+     * Liste déroulante des nouvelles coordonnées du joueur (x).
      */
-    private JFormattedTextField x;
+    private JComboBox x;
 
     /**
-     * Champs de saisie des nouvelles coordonnées du joueur (y).
+     * Liste déroulante des nouvelles coordonnées du joueur (y).
      */
-    private JFormattedTextField y;
+    private JComboBox y;
 
     /**
      * Liste déroulante de la nouvelle position du couloir a insérer.
@@ -232,12 +232,19 @@ public class VueJeu extends JPanel {
 
         JButton validerMouvement = new JButton("Déplacer");
         System.out.println(modele.getJoueur().getPion().toString());
+
+        String[] valeursXY = {"0","1","2","3","4","5","6"};
+
         JLabel xText = new JLabel("X :");
-        this.x = new JFormattedTextField();
-        this.x.setFormatterFactory(factory);
+        this.x = new JComboBox(valeursXY);
+
+        x.setSelectedIndex(modele.getJoueur().getPion().getPositionCourante().getX());
+
         JLabel yText = new JLabel("Y :");
-        this.y = new JFormattedTextField();
-        this.y.setFormatterFactory(factory);
+        this.y = new JComboBox(valeursXY);
+        
+        y.setSelectedIndex(modele.getJoueur().getPion().getPositionCourante().getY());
+
         JLabel guideCoor = new JLabel("Ligne : x (0~6), Colonne : y (0~6).");
 
         validerMouvement.setFont(fontEntered);
@@ -455,12 +462,7 @@ public class VueJeu extends JPanel {
     public void reset(Boolean deja){
         int p = 0;
         int o = 0;
-        if(! deja){
-            this.x.setText("");
-            this.y.setText("");
-            //this.posCouloir.setText("");
-            //this.orientation.setText("");
-        }else{
+        if( deja){
             p = this.posCouloir.getSelectedIndex();
             o = this.orientation.getSelectedIndex();
         }
@@ -486,8 +488,8 @@ public class VueJeu extends JPanel {
      * @return int, -1 si le champs x est vide.
      */
     public int getPosX(){
-        if(x.getText().equals(""))return -1;
-        return Integer.parseInt(x.getText());
+        if(x.getSelectedItem().toString().equals(""))return -1;
+        return Integer.parseInt(x.getSelectedItem().toString());
     }
 
     /**
@@ -495,8 +497,8 @@ public class VueJeu extends JPanel {
      * @return int, -1 si le champs y est vide.
      */
     public int getPosY(){
-        if(y.getText().equals(""))return -1;
-        return Integer.parseInt(y.getText());
+        if(y.getSelectedItem().toString().equals(""))return -1;
+        return Integer.parseInt(y.getSelectedItem().toString());
     }
 
     /**
