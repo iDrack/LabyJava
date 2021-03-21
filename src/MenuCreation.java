@@ -24,9 +24,9 @@ public class MenuCreation extends JPanel{
     private final Font fontEntered = new Font(Font.DIALOG, Font.ROMAN_BASELINE, 20);
 
     /**
-     * Champs de saisie pour le nombre de joueurs.
+     * Liste déroulante pour le nombre de joueurs.
      */
-    private JFormattedTextField nbJoueurField;
+    private JComboBox nbJoueurField;
 
     /**
      * Liste de champs de saisie pour l'âge des joueurs.
@@ -34,9 +34,9 @@ public class MenuCreation extends JPanel{
     private static JFormattedTextField[] listeAge;
 
     /**
-     * Liste de champs de saisie pour la couleur de chaque joueurs.
+     * Liste de liste déroulante pour la couleur de chaque joueurs.
      */
-    private static JTextField[] listeCouleurs;
+    private static JComboBox[] listeCouleurs;
 
     /**
      * Instance de la fenêtre actuel.
@@ -79,8 +79,10 @@ public class MenuCreation extends JPanel{
         this.setLayout(null);
         JLabel titre = new JLabel("Création de la partie");
         JLabel nbJoueurText = new JLabel("Nombre de joueurs :");
-        nbJoueurField = new JFormattedTextField();
-        nbJoueurField.setFormatterFactory(factory);
+        String[] valeursJoueur = {"1","2","3","4"};
+        nbJoueurField = new JComboBox(valeursJoueur);
+        nbJoueurField.setSelectedIndex(0);
+        //nbJoueurField.setFormatterFactory(factory);
         JButton valider = new JButton("Valider");
 
         titre.setBounds(351,50,205,50);
@@ -100,7 +102,7 @@ public class MenuCreation extends JPanel{
 
         valider.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
-                if(! nbJoueurField.getText().equals("")) genererOptionJoueurs(Integer.parseInt(nbJoueurField.getText()));
+                if(! nbJoueurField.getSelectedItem().equals("")) genererOptionJoueurs(Integer.parseInt((String)nbJoueurField.getSelectedItem()));
             }
         });
 
@@ -120,7 +122,7 @@ public class MenuCreation extends JPanel{
 
         JLabel[] listeTitres = new JLabel[x];
         listeAge = new JFormattedTextField[x];
-        listeCouleurs = new JTextField[x];
+        listeCouleurs = new JComboBox[x];
         JLabel couleur, instructionAge, instructionCouleur;
         JButton validerJoueurs;
 
@@ -147,7 +149,11 @@ public class MenuCreation extends JPanel{
             listeTitres[i] = new JLabel(tmpString);
             listeAge[i] = new JFormattedTextField();
             listeAge[i].setFormatterFactory(factory);
-            listeCouleurs[i] = new JTextField();
+
+            String[] valeursCouleur = {"Rouge","Vert","Bleu","Jaune"};
+
+            listeCouleurs[i] = new JComboBox(valeursCouleur);
+            listeCouleurs[i].setSelectedIndex(i);
 
             //Positionnement
             listeTitres[i].setBounds(150,160+((i+1)*30),225,50);
@@ -238,7 +244,7 @@ public class MenuCreation extends JPanel{
     public static String[] listeCouleursToString() {
         String[] ret = new String[nbJoueurs];
         for(int i=0;i<nbJoueurs;i++){
-            ret[i] = listeCouleurs[i].getText().toUpperCase();
+            ret[i] = listeCouleurs[i].getSelectedItem().toString().toUpperCase();
         }
         return ret;
     }

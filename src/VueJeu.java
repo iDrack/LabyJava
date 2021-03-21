@@ -61,14 +61,14 @@ public class VueJeu extends JPanel {
     private JFormattedTextField y;
 
     /**
-     * Champs de saisie de la nouvelle position du couloir a insérer.
+     * Liste déroulante de la nouvelle position du couloir a insérer.
      */
-    private JTextField posCouloir;
+    private JComboBox posCouloir;
 
     /**
-     * Champs de saisie de l'orientation du couloir a insérer.
+     * Liste déroulante de l'orientation du couloir a insérer.
      */
-    private JTextField orientation;
+    private JComboBox orientation;
 
     /**
      * Boolean permet de savoir si le joueur a insérer ou non le couloir.
@@ -356,28 +356,30 @@ public class VueJeu extends JPanel {
         int offset2 = SIZE_COULOIR+350;
 
         JLabel posTextCouloir = new JLabel("Position :");
-        this.posCouloir = new JTextField();
+        String[] valeursPosition = {"N1","N2","N3","S1","S2","S3","O1","O2","O3","E1","E2","E3"};
+        this.posCouloir = new JComboBox(valeursPosition);
+        this.posCouloir.setSelectedIndex(0);
+
         JLabel orientationText = new JLabel("Orientation :");
-        this.orientation = new JTextField();
-        JLabel exemple = new JLabel("Exemple : N1");
+        String[] valeursOrientation = {"Nord","Sud","Ouest","Est"};
+        this.orientation = new JComboBox(valeursOrientation);
+        this.orientation.setSelectedIndex(0);
+
         JButton moveCouloirs = new JButton("Insérer");
 
         posTextCouloir.setFont(fontEntered);
         posCouloir.setFont(fontEntered);
         orientationText.setFont(fontEntered);
         orientation.setFont(fontEntered);
-        exemple.setFont(new Font(Font.DIALOG, Font.ROMAN_BASELINE, 12));
         moveCouloirs.setFont(fontEntered);
 
         posTextCouloir.setBounds(offset+117,offset2-15,150,50);
         orientationText.setBounds(offset+117,offset2+25,150,50);
 
-        exemple.setBounds(offset+117,offset2+5,150,50);
+        posCouloir.setBounds(offset+252,offset2-5,80,30);
+        orientation.setBounds(offset+252,offset2+35,80,30);
 
-        posCouloir.setBounds(offset+252,offset2-5,70,30);
-        orientation.setBounds(offset+252,offset2+35,70,30);
-
-        moveCouloirs.setBounds(offset+117,offset2+70,205,29);
+        moveCouloirs.setBounds(offset+117,offset2+70,215,29);
 
         moveCouloirs.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
@@ -412,7 +414,6 @@ public class VueJeu extends JPanel {
         this.add(orientationText);
         this.add(posTextCouloir);    
         this.add(posCouloir);
-        this.add(exemple);
         this.add(moveCouloirs);
 
     }
@@ -432,15 +433,6 @@ public class VueJeu extends JPanel {
      * @return Booelan vérifiant que la valeur du champs orientation est légal.
      */
     public Boolean verifierOrientation(){
-        if(getOrientation().toUpperCase().equals("N")){
-            this.orientation.setText("NORD");
-        }else if(getOrientation().toUpperCase().equals("S")){
-            this.orientation.setText("SUD");
-        }else if(getOrientation().toUpperCase().equals("E")){
-            this.orientation.setText("EST");
-        }else if(getOrientation().toUpperCase().equals("O")){
-            this.orientation.setText("OUEST");
-        }
         return (getOrientation().equals("NORD") || getOrientation().equals("OUEST") || getOrientation().equals("SUD") || getOrientation().equals("EST"));
     }
 
@@ -461,16 +453,16 @@ public class VueJeu extends JPanel {
      * @param deja Boolean permettant de vérifier si nous somme à la fin du tour, si oui alors toutes les valeur des JLabel de VueJeu sont remisent à = sinon, nous gardons les valeurs de la position et lòrientation du couloir à insérer.
      */
     public void reset(Boolean deja){
-        String p = "";
-        String o = "";
+        int p = 0;
+        int o = 0;
         if(! deja){
             this.x.setText("");
             this.y.setText("");
-            this.posCouloir.setText("");
-            this.orientation.setText("");
+            //this.posCouloir.setText("");
+            //this.orientation.setText("");
         }else{
-            p = this.posCouloir.getText();
-            o = this.orientation.getText();
+            p = this.posCouloir.getSelectedIndex();
+            o = this.orientation.getSelectedIndex();
         }
         this.dejaInserer = deja;
 
@@ -485,8 +477,8 @@ public class VueJeu extends JPanel {
         ajoutinfo();
         ajoutCouloir();
         ajoutGuide();
-        this.posCouloir.setText(p);
-        this.orientation.setText(o);
+        this.posCouloir.setSelectedIndex(p);
+        this.orientation.setSelectedIndex(o);
     }
 
     /**
@@ -512,7 +504,7 @@ public class VueJeu extends JPanel {
      * @return String corespondant au texte dans le champs orientation.
      */
     public String getOrientation(){
-        return orientation.getText().toUpperCase();
+        return orientation.getSelectedItem().toString().toUpperCase();
     }
 
     /**
@@ -520,7 +512,7 @@ public class VueJeu extends JPanel {
      * @return String correspondant au texte dans le champs position.
      */
     public String getPosCouloir(){
-        return posCouloir.getText().toUpperCase();
+        return posCouloir.getSelectedItem().toString().toUpperCase();
     }
 
     /**
