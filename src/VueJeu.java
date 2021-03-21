@@ -1,13 +1,10 @@
 import javax.swing.*;
 import java.awt.*;
 import javax.swing.JPanel;
-import javax.swing.text.DefaultFormatterFactory;
-import javax.swing.text.NumberFormatter;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -353,7 +350,7 @@ public class VueJeu extends JPanel {
         this.posCouloir.setSelectedIndex(0);
 
         JLabel orientationText = new JLabel("Orientation :");
-        String[] valeursOrientation = {"Nord","Sud","Ouest","Est"};
+        String[] valeursOrientation = {"Nord","Est","Sud","Ouest"};
         this.orientation = new JComboBox(valeursOrientation);
         this.orientation.setSelectedIndex(0);
 
