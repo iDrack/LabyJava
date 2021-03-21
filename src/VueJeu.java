@@ -50,22 +50,22 @@ public class VueJeu extends JPanel {
     /**
      * Liste déroulante des nouvelles coordonnées du joueur (x).
      */
-    private JComboBox x;
+    private JComboBox<String> x;
 
     /**
      * Liste déroulante des nouvelles coordonnées du joueur (y).
      */
-    private JComboBox y;
+    private JComboBox<String> y;
 
     /**
      * Liste déroulante de la nouvelle position du couloir a insérer.
      */
-    private JComboBox posCouloir;
+    private JComboBox<String> posCouloir;
 
     /**
      * Liste déroulante de l'orientation du couloir a insérer.
      */
-    private JComboBox orientation;
+    private JComboBox<String> orientation;
 
     /**
      * Boolean permet de savoir si le joueur a insérer ou non le couloir.
@@ -218,12 +218,12 @@ public class VueJeu extends JPanel {
         String[] valeursXY = {"0","1","2","3","4","5","6"};
 
         JLabel xText = new JLabel("X :");
-        this.x = new JComboBox(valeursXY);
+        this.x = new JComboBox<String>(valeursXY);
 
         x.setSelectedIndex(modele.getJoueur().getPion().getPositionCourante().getX());
 
         JLabel yText = new JLabel("Y :");
-        this.y = new JComboBox(valeursXY);
+        this.y = new JComboBox<String>(valeursXY);
         
         y.setSelectedIndex(modele.getJoueur().getPion().getPositionCourante().getY());
 
@@ -346,12 +346,12 @@ public class VueJeu extends JPanel {
 
         JLabel posTextCouloir = new JLabel("Position :");
         String[] valeursPosition = {"N1","N2","N3","S1","S2","S3","O1","O2","O3","E1","E2","E3"};
-        this.posCouloir = new JComboBox(valeursPosition);
+        this.posCouloir = new JComboBox<>(valeursPosition);
         this.posCouloir.setSelectedIndex(0);
 
         JLabel orientationText = new JLabel("Orientation :");
         String[] valeursOrientation = {"Nord","Est","Sud","Ouest"};
-        this.orientation = new JComboBox(valeursOrientation);
+        this.orientation = new JComboBox<>(valeursOrientation);
         this.orientation.setSelectedIndex(0);
 
         JButton moveCouloirs = new JButton("Insérer");

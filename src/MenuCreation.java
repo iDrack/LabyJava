@@ -26,7 +26,7 @@ public class MenuCreation extends JPanel{
     /**
      * Liste déroulante pour le nombre de joueurs.
      */
-    private JComboBox nbJoueurField;
+    private JComboBox<String> nbJoueurField;
 
     /**
      * Liste de champs de saisie pour l'âge des joueurs.
@@ -36,7 +36,7 @@ public class MenuCreation extends JPanel{
     /**
      * Liste de liste déroulante pour la couleur de chaque joueurs.
      */
-    private static JComboBox[] listeCouleurs;
+    private static JComboBox<String>[] listeCouleurs;
 
     /**
      * Instance de la fenêtre actuel.
@@ -80,7 +80,7 @@ public class MenuCreation extends JPanel{
         JLabel titre = new JLabel("Création de la partie");
         JLabel nbJoueurText = new JLabel("Nombre de joueurs :");
         String[] valeursJoueur = {"1","2","3","4"};
-        nbJoueurField = new JComboBox(valeursJoueur);
+        nbJoueurField = new JComboBox<String>(valeursJoueur);
         nbJoueurField.setSelectedIndex(0);
         //nbJoueurField.setFormatterFactory(factory);
         JButton valider = new JButton("Valider");
@@ -152,7 +152,7 @@ public class MenuCreation extends JPanel{
 
             String[] valeursCouleur = {"Rouge","Vert","Bleu","Jaune"};
 
-            listeCouleurs[i] = new JComboBox(valeursCouleur);
+            listeCouleurs[i] = new JComboBox<String>(valeursCouleur);
             listeCouleurs[i].setSelectedIndex(i);
 
             //Positionnement
