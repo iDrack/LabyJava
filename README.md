@@ -21,7 +21,7 @@ Le projet se créer avec le script bash nommé ``Automatisation.sh``.
 
 ``./Automatisation.sh -create`` : Permet de compiler les classes Java et créer la Javadoc, le manifeste et le .jar qui permet de lancer le Jeu.
 
-``./Automatisation.sh -jar`` : Permet de lancer notre Jeu via le .jar !
+``./Automatisation.sh -jar`` : Permet de lancer notre Jeu via le .jar **(à lancer dans le répertoir du LabyJava)** !
 
 ## Contenus Java
 
