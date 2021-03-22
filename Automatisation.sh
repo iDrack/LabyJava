@@ -19,8 +19,9 @@ then
         echo "Class-Path: bin/" >> myapp.mf
         echo "Main-Class: MainWindow" >> myapp.mf
 
+        cd ..
         echo -e "\nCréation du .jar Java : "
-        jar cmf myapp.mf myapp.jar *.class
+        jar cmf ./bin/myapp.mf ./bin/myapp.jar ./bin/*.class
     else 
         if [ $1 == "-jar" ] 
         then 
