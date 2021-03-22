@@ -236,11 +236,11 @@ public class VueJeu extends JPanel {
         y.setFont(fontEntered);
         guideCoor.setFont(new Font(Font.DIALOG, Font.ROMAN_BASELINE, 12));
         
-        validerMouvement.setBounds(offset+145,offset2+10,125,29);
+        validerMouvement.setBounds(offset+175,offset2+10,125,29);
         xText.setBounds(offset,offset2,30,50);
-        x.setBounds(offset+30,offset2+10,30,30);
-        yText.setBounds(offset+70,offset2,30,50);
-        y.setBounds(offset+100,offset2+10,30,30);
+        x.setBounds(offset+30,offset2+10,50,30);
+        yText.setBounds(offset+90,offset2,30,50);
+        y.setBounds(offset+120,offset2+10,50,30);
         guideCoor.setBounds(offset,offset2+25,250,50);
        
         this.add(validerMouvement);

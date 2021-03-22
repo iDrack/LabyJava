@@ -232,7 +232,7 @@ public class MenuCreation extends JPanel{
     public static int[] listeAgeToInt() {
         int[] ret = new int[nbJoueurs];
         for(int i=0;i<nbJoueurs;i++){
-            if(! listeAge[i].getText().equals(""))  ret[i] = Integer.parseInt(listeAge[i].getText());
+            if(! listeAge[i].getText().equals("") && ! listeAge[i].getText().contains(","))  ret[i] = Integer.parseInt(listeAge[i].getText());
         }
         return ret;
     }
