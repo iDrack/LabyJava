@@ -73,6 +73,8 @@ public class VueJeu extends JPanel {
      */
     private Boolean dejaInserer;
 
+    private AssetTiles asset;
+
     /**
      * VueJeu correspond au GUI du jeu, affichant le plateau, les coordonnées du joueur actuel, 
      * le couloirs a insérer, un guide d'insertion ainsi que les champs de saisie du joueur.
@@ -82,6 +84,7 @@ public class VueJeu extends JPanel {
     public VueJeu(MainWindow page){
         this.page=page;
         this.dejaInserer = false;
+        this.asset = new AssetTiles();
 
         //Paramétrage de la taille de la fenêtre
         Dimension d = new Dimension(SIZE_COULOIR*9+400,SIZE_COULOIR*9);
@@ -121,7 +124,7 @@ public class VueJeu extends JPanel {
         
         for(int i = 0; i < Plateau.TAILLE;i++){
             for (int j = 0 ; j < Plateau.TAILLE; j++){
-                img = AssetTiles.getCouloirImage(mat[i][j]);
+                img = asset.getCouloirImage(mat[i][j]);
                 JLabel picLabel;
 
                 obj = plateau.getObjectifCase(new Position(i, j));
@@ -135,23 +138,23 @@ public class VueJeu extends JPanel {
                         String[] str1 = listeJoueurs.get(k).toString().split(",");
                         String[] str2 = str1[0].split(" ");
     
-                        BufferedImage img3 = AssetTiles.getPionImage(str2[1]);
-                        BufferedImage img2 = AssetTiles.getObjectifImage(obj);
+                        BufferedImage img3 = asset.getPionImage(str2[1]);
+                        BufferedImage img2 = asset.getObjectifImage(obj);
     
-                        picLabel = new JLabel(new ImageIcon(AssetTiles.combinerImage(AssetTiles.combinerImage(img, img2, true), img3, false)));
+                        picLabel = new JLabel(new ImageIcon(asset.combinerImage(asset.combinerImage(img, img2, true), img3, false)));
     
                     }else if(obj != Objectif.VIDE){
                         //Si on a objectif
-                        BufferedImage img2 = AssetTiles.getObjectifImage(obj);
+                        BufferedImage img2 = asset.getObjectifImage(obj);
     
-                        picLabel = new JLabel(new ImageIcon(AssetTiles.combinerImage(img, img2, true)));
+                        picLabel = new JLabel(new ImageIcon(asset.combinerImage(img, img2, true)));
     
                     }else if(i == posX && j == posY){
                         //Si on a joueur
                         String[] str1 = listeJoueurs.get(k).toString().split(",");
                         String[] str2 = str1[0].split(" ");
-                        BufferedImage img2 = AssetTiles.getPionImage(str2[1]);
-                        picLabel = new JLabel(new ImageIcon(AssetTiles.combinerImage(img, img2, false)));
+                        BufferedImage img2 = asset.getPionImage(str2[1]);
+                        picLabel = new JLabel(new ImageIcon(asset.combinerImage(img, img2, false)));
                     }else{
                         picLabel = new JLabel(new ImageIcon(img));
                     }
@@ -179,7 +182,7 @@ public class VueJeu extends JPanel {
         this.add(obj);
 
         //Image de l'objectif
-        BufferedImage imgObj = AssetTiles.getObjectifImage(joueur.getStack().peek());
+        BufferedImage imgObj = asset.getObjectifImage(joueur.getStack().peek());
 
         JLabel picLabel = new JLabel(new ImageIcon(imgObj));
         picLabel.setBounds(offset+100,SIZE_COULOIR+285,SIZE_OBJECTIF,SIZE_OBJECTIF);
@@ -386,11 +389,11 @@ public class VueJeu extends JPanel {
             BufferedImage img;
     
             if(couloir.getObjectif() != Objectif.VIDE){
-                img = AssetTiles.getCouloirImage(couloir);
-                BufferedImage img2 = AssetTiles.getObjectifImage(couloir.getObjectif());
-                img = AssetTiles.combinerImage(img, img2, true);
+                img = asset.getCouloirImage(couloir);
+                BufferedImage img2 = asset.getObjectifImage(couloir.getObjectif());
+                img = asset.combinerImage(img, img2, true);
             }else{
-                img = AssetTiles.getCouloirImage(couloir);
+                img = asset.getCouloirImage(couloir);
             }
     
             JLabel picLabel = new JLabel(new ImageIcon(img));
@@ -411,7 +414,7 @@ public class VueJeu extends JPanel {
      * Affiche l'image guide d'insertion.
      */
     private void ajoutGuide(){
-        BufferedImage img = AssetTiles.getImage("guide.png");
+        BufferedImage img = asset.getImage("guide.png");
         JLabel picLabel = new JLabel(new ImageIcon(img));
         picLabel.setBounds(SIZE_COULOIR*9,SIZE_COULOIR,345,248);
         add(picLabel);

@@ -36,7 +36,7 @@ public class MenuCreation extends JPanel{
     /**
      * Liste de liste déroulante pour la couleur de chaque joueurs.
      */
-    private static JComboBox<String>[] listeCouleurs;
+    private static JComboBox[] listeCouleurs;
 
     /**
      * Instance de la fenêtre actuel.

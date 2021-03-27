@@ -33,7 +33,8 @@ public class EcranFin extends JPanel {
         fenetre=f;
         
         //Accés à l'image de fond
-        this.img = new ImageIcon("media/img/victoire.png").getImage();
+        AssetTiles asset = new AssetTiles();
+        this.img = asset.getImage("victoire.png");
 
         //Détection de la taille de l'image de fond
         Dimension size = new Dimension(img.getWidth(null), img.getHeight(null));

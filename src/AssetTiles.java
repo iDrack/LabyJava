@@ -10,12 +10,11 @@ import java.io.IOException;
  * Elle contient aussi des méthode permettant la combinaison d'image ainsi que la redimension.
  */
 public class AssetTiles{
-    /**
-     * Renvoie une tile noir si aucune image ne peut être charger.
-     */
-    private static BufferedImage NO_TEXTURE = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
-    static {
-        NO_TEXTURE.setRGB(0, 0, new Color(0, 0, 0).getRGB());
+
+    AssetTiles instance;
+
+    public AssetTiles(){
+        this.instance = this;
     }
 
     /**
@@ -23,14 +22,14 @@ public class AssetTiles{
      * @param url String du nom de l'image à retourner.
      * @return BufferedImage correspond à l'image dans le fichier 'media/img/sprites/'.
      */
-    public static BufferedImage getImage(String url){
-        BufferedImage ret = NO_TEXTURE;
+    public BufferedImage getImage(String url){
         try {
-            ret = ImageIO.read(new File("media/img/sprites/".concat(url)));
+            
+            return (BufferedImage)ImageIO.read(this.getClass().getResource("media/img/".concat(url)));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return ret;
+        return null;
     }
 
     /**
@@ -38,35 +37,35 @@ public class AssetTiles{
      * @param couloir Couloir que l'on veut afficher.
      * @return Image du couloir à afficher.
      */
-    public static BufferedImage getCouloirImage(Couloir couloir){
+    public BufferedImage getCouloirImage(Couloir couloir){
         if(couloir.getForme() == Forme.DROIT) {
             // Si le couloir voulue est un couloir droit, 2 cas (nord,sud) ou (ouest,est)
             if(couloir.getOrientation() == Orientation.EST || couloir.getOrientation() == Orientation.OUEST){
-                return getImage("ligne2.png");
+                return getImage("sprites/ligne2.png");
             }else{
-                return getImage("ligne.png");
+                return getImage("sprites/ligne.png");
             }
         }else if(couloir.getForme() == Forme.COUDE) {
             // Si le couloir voulue est un coude droit, 4 cas nord, sud, ouest, est
             if(couloir.getOrientation() == Orientation.EST){
-                return getImage("angle.png");
+                return getImage("sprites/angle.png");
             }else if(couloir.getOrientation() == Orientation.OUEST){
-                return getImage("angle3.png");
+                return getImage("sprites/angle3.png");
             }else if(couloir.getOrientation() == Orientation.NORD){
-                return getImage("angle4.png");
+                return getImage("sprites/angle4.png");
             }else{
-                return getImage("angle2.png");
+                return getImage("sprites/angle2.png");
             }
         }else {
             // Si le couloir voulue est un formet droit, 4 cas nord, sud, ouest, est
             if(couloir.getOrientation() == Orientation.EST){
-                return getImage("formet4.png");
+                return getImage("sprites/formet4.png");
             }else if(couloir.getOrientation() == Orientation.OUEST){
-                return getImage("formet2.png");
+                return getImage("sprites/formet2.png");
             }else if(couloir.getOrientation() == Orientation.NORD){
-                return getImage("formet3.png");
+                return getImage("sprites/formet3.png");
             }else{
-                return getImage("formet.png");
+                return getImage("sprites/formet.png");
             }
         }
     }
@@ -76,8 +75,8 @@ public class AssetTiles{
      * @param obj Objectif que l'on veut afficher.
      * @return BufferedImage correspondant à l'Objectif voulu dans le fichier 'media/img/sprites/'.
      */
-    public static BufferedImage getObjectifImage(Objectif obj){
-        return getImage(obj.toString().toLowerCase().concat(".png"));
+    public BufferedImage getObjectifImage(Objectif obj){
+        return getImage("sprites/".concat(obj.toString().toLowerCase()).concat(".png"));
     }
 
     /**
@@ -85,8 +84,8 @@ public class AssetTiles{
      * @param pion Pion que l'on veut afficher.
      * @return BufferedImage correspondant au Pion voulu dans le fichier 'media/img/sprites/'.
      */
-    public static BufferedImage getPionImage(String pion){
-        return getImage(pion.toLowerCase().concat(".png"));
+    public BufferedImage getPionImage(String pion){
+        return getImage("sprites/".concat(pion.toLowerCase()).concat(".png"));
     }
 
     /**
@@ -96,7 +95,7 @@ public class AssetTiles{
      * @param centrer Boolean déterminant si il faut centrer image2.
      * @return Image combinant les deux images passées en paramètre.
      */
-    public static BufferedImage combinerImage(BufferedImage image1, BufferedImage image2, Boolean centrer){ 
+    public BufferedImage combinerImage(BufferedImage image1, BufferedImage image2, Boolean centrer){ 
         Graphics2D g2d = image1.createGraphics(); 
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, 
                         RenderingHints.VALUE_ANTIALIAS_ON); 
@@ -120,7 +119,7 @@ public class AssetTiles{
      * @param h Nouvelle Hauteur de img.
      * @return Image redimensionnée.
      */
-    public static BufferedImage redimensionner(BufferedImage img, int w, int h) { 
+    public BufferedImage redimensionner(BufferedImage img, int w, int h) { 
         Image tmp = img.getScaledInstance(w, h, Image.SCALE_SMOOTH);
         BufferedImage dimg = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
     

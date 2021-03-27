@@ -38,7 +38,8 @@ public class MenuPrincipal extends JPanel {
         this.fenetre = fenetre;
 
         //Accés à l'image de fond
-        this.img = new ImageIcon("media/img/labyrinthe.png").getImage();
+        AssetTiles asset = new AssetTiles();
+        this.img = asset.getImage("labyrinthe.png");
 
         //Détection de la taille de l'image de fond
         Dimension size = new Dimension(img.getWidth(null), img.getHeight(null));
